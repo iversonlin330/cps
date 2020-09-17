@@ -8,67 +8,46 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
         </style>
     </head>
-    <body>
-    <form action="{{ url('login') }}" method="post">
-        @csrf
-        <input type="text" name="account">
-        <input type="text" name="role" value="1">
-        <input type="submit" value="submit">
-    </form>
+    <body class="bg-color">
+	<div class="container-fluid">
+		<div class="row banner">
+		<div class="col-12 center-block text-center">
+			<div class="cps">CPS</div>
+			<div class="banner-text">評量系統</div>	
+			<div class="banner-wellcome">WELLCOME</div>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="d-flex justify-content-center">
+					<div class="login-title">
+						<p class="-Login text-center">帳號登入 Login</p>
+					</div>
+				</div>
+				<div class="d-flex justify-content-center">
+					<div class="login-content">
+						<form action="{{ url('login') }}" method="post">
+							@csrf
+							<div class="form-group">
+								<label for="exampleFormControlInput1">帳號</label>
+								<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="請輸入帳號">
+							  </div>
+							<input type="text" name="account">
+							<input type="text" name="role" value="1">
+							<input type="submit" value="submit">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
     </body>
 </html>

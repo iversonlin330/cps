@@ -1,0 +1,90 @@
+:root {
+  --clay-brown: #be5a38;
+  --cocoa: #8c513d;
+  --very-light-pink: #dadada;
+}
+
+.bg-color{
+	background-color: #fffaed;
+}
+
+.banner{
+  height: 200px;
+  background-color: #f5c323;
+  text-align: center;
+}
+
+.cps {
+  //width: 90px;
+  //height: 28px;
+  padding-top: 55px;
+  font-family: Ethnocentric;
+  font-size: 28px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 2.33px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.banner-text{
+  //width: 96px;
+  //height: 24px;
+  font-family: MicrosoftJhengHei;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 6px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.banner-wellcome{
+	padding-top: 5px;
+  //width: 157px;
+  //height: 37px;
+  font-family: MicrosoftJhengHei;
+  font-size: 28px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 2.33px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.login-title{
+width: 410px;
+  height: 45px;
+  border-radius: 5px;
+  box-shadow: 0 -1px 6px 0 rgba(0, 0, 0, 0.13);
+  background-color: var(--clay-brown);
+}
+
+.-Login {
+padding-top: 11px;
+  font-family: MicrosoftJhengHei;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+}
+
+.login-content{
+	width: 410px;
+  height: 325px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13);
+  background-color: #ffffff;
+  padding-right: 45px;
+  padding-left: 45px;
+  padding-top: 45px;
+}
