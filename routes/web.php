@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::post('/login', 'LoginController@login');
 
+Route::get('/main', 'LoginController@main');
+
 Route::resource("users", "UserController");
 Route::resource("cycles", "CycleController");
 Route::resource("classrooms", "ClassroomController");

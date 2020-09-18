@@ -20,8 +20,8 @@
 		<div class="row banner">
 		<div class="col-12 center-block text-center">
 			<div class="cps">CPS</div>
-			<div class="banner-text">評量系統</div>	
-			<div class="banner-wellcome">WELLCOME</div>	
+			<div class="banner-text">評量系統</div>
+			<div class="banner-wellcome">WELLCOME</div>
 			</div>
 		</div>
 		<div class="row">
@@ -36,9 +36,13 @@
 						<form action="{{ url('login') }}" method="post">
 							@csrf
 							<div class="form-group">
-								<label for="exampleFormControlInput1">帳號</label>
-								<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="請輸入帳號">
+								<label>帳號</label>
+								<input name="account" type="text" class="form-control" placeholder="請輸入帳號">
 							  </div>
+                            <div class="form-group">
+                                <label>密碼</label>
+                                <input name="password" type="password" class="form-control" placeholder="請輸入密碼">
+                            </div>
 							<input type="text" name="account">
 							<input type="text" name="role" value="1">
 							<input type="submit" value="submit">
@@ -48,6 +52,6 @@
 			</div>
 		</div>
 	</div>
-    
+
     </body>
 </html>

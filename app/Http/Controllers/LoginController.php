@@ -10,6 +10,7 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
+
         $data = $request->all();
         $user = User::where('account', $data['account'])->first();
 
@@ -64,5 +65,10 @@ class LoginController extends Controller
             }
         }
 
+    }
+
+    public function main(Request $request)
+    {
+        return view("main");
     }
 }
