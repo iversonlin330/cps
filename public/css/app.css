@@ -4,6 +4,10 @@
     --very-light-pink: #dadada;
 }
 
+body{
+	font-family: Microsoft JhengHei;
+}
+
 .bg-color {
     background-color: #fffaed;
 }
@@ -111,4 +115,47 @@
 .master-banner2 {
     height: 50px;
     background-color: var(--clay-brown);
+	padding-top: 15px;
+	padding-left: 112px;
+	padding-right: 112px;
+	font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.btn-r {
+  border-radius: 4px;
+  background-color: var(--clay-brown);
+}
+
+.btn-r {
+  font-family: MicrosoftJhengHei;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.nav-custom{
+	width:100%;
+	padding-left:112px;
+	padding-right:112px;
+	height:50px;
+	background-color: var(--clay-brown);
+}
+
+.nav-link{
+	color: #ffffff;
+}
+
+.main-padding{
+	padding-left:112px;
+	padding-right:112px;
 }

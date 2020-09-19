@@ -24,7 +24,7 @@
 			<div class="banner-wellcome">WELLCOME</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="padding-top:40px">
 			<div class="col-12">
 				<div class="d-flex justify-content-center">
 					<div class="login-title">
@@ -43,9 +43,12 @@
                                 <label>密碼</label>
                                 <input name="password" type="password" class="form-control" placeholder="請輸入密碼">
                             </div>
-							<input type="text" name="account">
-							<input type="text" name="role" value="1">
-							<input type="submit" value="submit">
+							<div class="d-flex justify-content-center">
+								<input type="submit" class="btn btn-r" style="width: 83px;" value="登入">
+							</div>
+							<div class="d-flex justify-content-center">
+								<div>忘記密碼?</div>
+							</div>
 						</form>
 					</div>
 				</div>

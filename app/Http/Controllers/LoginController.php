@@ -10,8 +10,9 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-
-        $data = $request->all();
+		return redirect('main');
+        
+		$data = $request->all();
         $user = User::where('account', $data['account'])->first();
 
         if (!$user) {
