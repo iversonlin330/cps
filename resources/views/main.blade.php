@@ -2,7 +2,7 @@
 @section('title1', 'CPS評量系統')
 @section('title2', '主頁')
 @section('content')
-    <div class="row main-padding">
+    <div class="row main-padding" style="">
         <div class="col-12">
             <!--div style="font-size: 22px;margin-top:40px;">CPS評量系統</div>
             <div>主頁</div>
@@ -12,11 +12,11 @@
 					<div>考券專區</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-brown text-white d-inline-flex"></div>
 					<div class="d-inline-flex">我的考券</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-brown text-white d-inline-flex"></div>
 					<div class="d-inline-flex">所有考券</div>
 				</div>
             </div>
@@ -25,15 +25,15 @@
 					<div>單元專區</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-squash text-white d-inline-flex"></div>
 					<div class="d-inline-flex">我的單元</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-squash text-white d-inline-flex"></div>
 					<div class="d-inline-flex">所有單元</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-squash text-white d-inline-flex"></div>
 					<div class="d-inline-flex">審核單元</div>
 				</div>
             </div>
@@ -42,11 +42,11 @@
 					<div>作答記錄及成績</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-blue text-white d-inline-flex"></div>
 					<div class="d-inline-flex">班級學習成績</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-blue text-white d-inline-flex"></div>
 					<div class="d-inline-flex">單元學習成績</div>
 				</div>
             </div>
@@ -55,19 +55,27 @@
 					<div>資料設定</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-user fa-lg icon"></i>
+					</div>
 					<div class="d-inline-flex">學生資料設定</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-users fa-lg icon"></i>
+					</div>
 					<div class="d-inline-flex">教師資料設定</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-school fa-lg icon"></i>
+					</div>
 					<div class="d-inline-flex">學校窗口資料</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center" data-toggle="modal" data-target="#exampleModal">
-					<div class="main-block-sub-icon-brown text-white d-inline-flex"></div>
+					<div class="main-block-sub-icon bg-scarlet text-white d-inline-flex">
+						<i class="fal fa-exclamation-circle fa-lg icon"></i>
+					</div>
 					<div class="d-inline-flex">年度資料封存</div>
 				</div>
             </div>

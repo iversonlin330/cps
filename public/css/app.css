@@ -1,7 +1,43 @@
 :root {
-    --clay-brown: #be5a38;
-    --cocoa: #8c513d;
-    --very-light-pink: #dadada;
+  --clay-brown: #be5a38;
+  --cocoa: #8c513d;
+  --very-light-pink: #dadada;
+  --squash: #f5a623;
+  --bright-sky-blue: #23c2f5;
+  --warm-grey: #7b7b7b;
+  --scarlet: #d0021b;
+}
+
+.icon{
+	margin:auto;
+}
+
+.bg-brown{
+	background-color: var(--clay-brown);
+}
+
+.bg-cocoa{
+	background-color: var(--cocoa);
+}
+
+.bg-pink{
+	background-color: var(--very-light-pink);
+}
+
+.bg-squash{
+	background-color: var(--squash);
+}
+
+.bg-blue{
+	background-color: var(--bright-sky-blue);
+}
+
+.bg-grey{
+	background-color: var(--warm-grey);
+}
+
+.bg-scarlet{
+	background-color: var(--scarlet);
 }
 
 body{
@@ -132,13 +168,14 @@ a{text-decoration: none}
 
 .login-content {
     width: 410px;
-    height: 325px;
+    height: auto;
     border-radius: 5px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.13);
     background-color: #ffffff;
     padding-right: 45px;
     padding-left: 45px;
     padding-top: 45px;
+	padding-bottom: 35px;
 }
 
 .master-banner {
@@ -225,10 +262,9 @@ a{text-decoration: none}
   margin-right:10px;
 }
 
-.main-block-sub-icon-brown{
+.main-block-sub-icon{
 	margin-right: 10px;
   width: 45px;
   height: 45px;
-  background-color: var(--clay-brown);
   border-radius:999em;
 }

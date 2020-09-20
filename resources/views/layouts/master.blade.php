@@ -9,13 +9,14 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- Styles -->
     <style>
     </style>
 </head>
 <body class="bg-color">
-<div class="container-fluid">
+<div class="container-fluid" style="height:auto;padding-bottom:101px;">
     <div class="row master-banner">
         <div class="col-12 center-block text-center">
             <div class="master-cps">CPS</div>

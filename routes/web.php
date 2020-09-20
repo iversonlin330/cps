@@ -31,6 +31,7 @@ Route::resource("contacts", "ContactController");
 
 Route::get('/teachers/verify', 'TeacherController@verify');
 Route::resource("teachers", "TeacherController");
+Route::get('/students/create-multi', 'StudentController@createMulti');
 Route::resource("students", "StudentController");
 
 

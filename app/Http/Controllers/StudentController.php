@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    public function verify()
+    public function createMulti()
     {
         //
-		return view('teachers.verify');
+		return view('students.create-multi');
     }
 	
 	/**

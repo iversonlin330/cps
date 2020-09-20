@@ -1,26 +1,19 @@
 @extends('layouts.master')
-@section('title1', '新增教師資料')
-@section('title2', '資料設定 / 教師資料設定 / 新增教師資料')
+@section('title1', '新增單筆學生資料')
+@section('title2', '資料設定 / 學生資料設定 / 新增學生單筆資料')
 @section('content')
  <div class="row-fluid main-padding">
 	<div class="row" style="padding-top:24px">
 			<div class="col-12">
 				<div class="d-flex justify-content-center">
 					<div class="login-title " style="width:540px;">
-						<p class="-Login text-center">新增教師資料</p>
+						<p class="-Login text-center">新增單筆學生資料</p>
 					</div>
 				</div>
 				<div class="d-flex justify-content-center">
-					<div class="login-content" style="width:540px;height:501px;">
+					<div class="login-content" style="width:540px;">
 						<form action="{{ url('login') }}" method="post">
 							@csrf
-							
-							<div class="form-group row">
-								<label for="inputEmail3" class="col-3 col-form-label">姓名</label>
-								<div class="col-9">
-								  <input type="email" class="form-control" id="inputEmail3">
-								</div>
-							  </div>
 							
 							<div class="form-group row">
 								<label for="inputEmail3" class="col-3 col-form-label">學校</label>
@@ -33,6 +26,22 @@
 								  <select class="form-control">
 									<option>文德國小</option>
 								  </select>
+								</div>
+							  </div>
+							  
+							  <div class="form-group row">
+								<label for="inputEmail3" class="col-3 col-form-label">班級</label>
+								<div class="col-9">
+								  <select class="form-control">
+									<option>一年戊班</option>
+								  </select>
+								</div>
+							  </div>
+							  
+							<div class="form-group row">
+								<label for="inputEmail3" class="col-3 col-form-label">姓名</label>
+								<div class="col-9">
+								  <input type="email" class="form-control" id="inputEmail3">
 								</div>
 							  </div>
 							  
@@ -59,20 +68,6 @@
 							  
 							  <div class="form-group row">
 								<label for="inputEmail3" class="col-3 col-form-label">密碼</label>
-								<div class="col-9">
-								  <input type="email" class="form-control" id="inputEmail3">
-								</div>
-							  </div>
-							  
-							  <div class="form-group row">
-								<label for="inputEmail3" class="col-3 col-form-label">電子信箱</label>
-								<div class="col-9">
-								  <input type="email" class="form-control" id="inputEmail3">
-								</div>
-							  </div>
-							  
-							  <div class="form-group row">
-								<label for="inputEmail3" class="col-3 col-form-label">教師編號</label>
 								<div class="col-9">
 								  <input type="email" class="form-control" id="inputEmail3">
 								</div>
