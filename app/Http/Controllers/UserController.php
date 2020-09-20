@@ -8,7 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
+    
+	public function contact(){
+		return view("contacts.view");
+	} 
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

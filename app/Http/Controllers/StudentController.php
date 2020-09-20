@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Unit;
+use App\Teacher;
 use Illuminate\Http\Request;
 
-class UnitController extends Controller
+class StudentController extends Controller
 {
-    /**
+    public function verify()
+    {
+        //
+		return view('teachers.verify');
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -15,7 +21,7 @@ class UnitController extends Controller
     public function index()
     {
         //
-		return view('units.view');
+		return view('students.view');
     }
 
     /**
@@ -26,6 +32,7 @@ class UnitController extends Controller
     public function create()
     {
         //
+        return view('students.create');
     }
 
     /**
@@ -42,10 +49,10 @@ class UnitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function show(Unit $unit)
+    public function show(Teacher $teacher)
     {
         //
     }
@@ -53,10 +60,10 @@ class UnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function edit(Unit $unit)
+    public function edit(Teacher $teacher)
     {
         //
     }
@@ -65,10 +72,10 @@ class UnitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Unit  $unit
+     * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Unit $unit)
+    public function update(Request $request, Teacher $teacher)
     {
         //
     }
@@ -76,10 +83,10 @@ class UnitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Unit  $unit
+     * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Unit $unit)
+    public function destroy(Teacher $teacher)
     {
         //
     }

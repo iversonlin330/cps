@@ -7,7 +7,20 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    /**
+    
+	public function score()
+    {
+        //
+		return view('exams.score');
+    }
+	
+	public function my()
+    {
+        //
+		return view('exams.my');
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -15,6 +28,7 @@ class ExamController extends Controller
     public function index()
     {
         //
+		return view('exams.view');
     }
 
     /**

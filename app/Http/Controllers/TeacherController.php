@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    /**
+    public function verify()
+    {
+        //
+		return view('teachers.verify');
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -15,6 +21,7 @@ class TeacherController extends Controller
     public function index()
     {
         //
+		return view('teachers.view');
     }
 
     /**
@@ -25,7 +32,7 @@ class TeacherController extends Controller
     public function create()
     {
         //
-        return view('teachers.');
+        return view('teachers.create');
     }
 
     /**

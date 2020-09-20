@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Unit;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class UnitController extends Controller
+class ContactController extends Controller
 {
-    /**
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -15,7 +17,11 @@ class UnitController extends Controller
     public function index()
     {
         //
-		return view('units.view');
+		return view("contacts.view");
+        $user = User::first();
+        Auth::login($user);
+        dd(Auth::user());
+        dd(Auth::check());
     }
 
     /**
@@ -26,26 +32,32 @@ class UnitController extends Controller
     public function create()
     {
         //
+		return view("contacts.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        $model = new User;
+        $model->fill($data);
+        $model->save();
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Unit $unit)
+    public function show($id)
     {
         //
     }
@@ -53,10 +65,10 @@ class UnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Unit $unit)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +77,10 @@ class UnitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Unit  $unit
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Unit $unit)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +88,10 @@ class UnitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Unit  $unit
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Unit $unit)
+    public function destroy($id)
     {
         //
     }
