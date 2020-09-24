@@ -7,11 +7,12 @@
             <!--div style="font-size: 22px;margin-top:40px;">CPS評量系統</div>
             <div>主頁</div>
             <hr/-->
+			@if(Auth::user()->role == 99)
             <div class="row main-block">
 				<div class="col-12">
 					<div>考券專區</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
 					<div class="main-block-sub-icon bg-brown text-white d-inline-flex"></div>
 					<div class="d-inline-flex">我的考券</div>
 				</div>
@@ -24,7 +25,7 @@
 				<div class="col-12">
 					<div>單元專區</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units') }}'">
 					<div class="main-block-sub-icon bg-squash text-white d-inline-flex"></div>
 					<div class="d-inline-flex">我的單元</div>
 				</div>
@@ -41,7 +42,7 @@
 				<div class="col-12">
 					<div>作答記錄及成績</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/score') }}'">
 					<div class="main-block-sub-icon bg-blue text-white d-inline-flex"></div>
 					<div class="d-inline-flex">班級學習成績</div>
 				</div>
@@ -54,19 +55,19 @@
 				<div class="col-12">
 					<div>資料設定</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('students') }}'">
 					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
 						<i class="fal fa-user fa-lg icon"></i>
 					</div>
 					<div class="d-inline-flex">學生資料設定</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('teachers') }}'">
 					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
 						<i class="fal fa-users fa-lg icon"></i>
 					</div>
 					<div class="d-inline-flex">教師資料設定</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('contacts') }}'">
 					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
 						<i class="fal fa-school fa-lg icon"></i>
 					</div>
@@ -79,6 +80,51 @@
 					<div class="d-inline-flex">年度資料封存</div>
 				</div>
             </div>
+			@elseif(Auth::user()->role == 50)
+			<div class="row main-block">
+				<div class="col-12">
+					<div>我的項目</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-brown text-white d-inline-flex"></div>
+					<div class="d-inline-flex">我的考券</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-squash text-white d-inline-flex"></div>
+					<div class="d-inline-flex">我的單元</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-squash text-white d-inline-flex"></div>
+					<div class="d-inline-flex">所有單元</div>
+				</div>
+            </div>
+			<div class="row main-block">
+				<div class="col-12">
+					<div>作答記錄及成績</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-blue text-white d-inline-flex"></div>
+					<div class="d-inline-flex">班級學習成績</div>
+				</div>
+            </div>
+			<div class="row main-block">
+				<div class="col-12">
+					<div>資料設定</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-user fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">個人資料設定</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-users fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">班級資料設定</div>
+				</div>
+            </div>
+			@endif
         </div>
     </div>
 	<!-- Button trigger modal -->

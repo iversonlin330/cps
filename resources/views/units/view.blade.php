@@ -9,8 +9,8 @@
 	<div class="float-right">
 		<form class="form-inline float-right">
 			<input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">送出搜尋</button>
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">儲存</button>
+			<button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
+			<button class="btn btn-secondary my-2 my-sm-0" type="submit">儲存</button>
 	  </form>
 	</div>
 </div>

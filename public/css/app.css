@@ -178,6 +178,12 @@ a{text-decoration: none}
 	padding-bottom: 35px;
 }
 
+.login-buttom{
+	width: 390px;
+  height: 10px;
+  background-color: var(--clay-brown);
+}
+
 .master-banner {
     height: 40px;
     background-color: #f5c323;
@@ -267,4 +273,9 @@ a{text-decoration: none}
   width: 45px;
   height: 45px;
   border-radius:999em;
+}
+
+.table-scroll{
+	max-height: 351px;
+	overflow: auto;
 }

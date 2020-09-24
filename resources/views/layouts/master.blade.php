@@ -105,7 +105,7 @@
     </ul>
 	<ul class="navbar-nav my-2">
       <li class="nav-item active">
-        <span class="nav-link text-white">Hi, Admin</span>
+        <span class="nav-link text-white">Hi, {{ Auth::user()->name }}</span>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -156,7 +156,7 @@
       </li>
 </ul>
 <ul class="navbar-nav ml-auto">
-<li><span class="nav-link text-white">Hi, Admin</span></a>
+<li><span class="nav-link text-white">Hi, {{ Auth::user()->name }}</span></a>
 <li class="nav-item dropdown">
 		<a class="nav-link  dropdown-toggle text-white" href="#" data-toggle="dropdown" aria-expanded="false"> 選單列 </a>
 	    <ul class="dropdown-menu dropdown-menu-right">

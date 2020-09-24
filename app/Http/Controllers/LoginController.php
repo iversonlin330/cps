@@ -10,6 +10,9 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
+		$data = $request->all();
+		$user = User::where('role', $data['role'])->first();
+		Auth::login($user);
 		return redirect('main');
         
 		$data = $request->all();
