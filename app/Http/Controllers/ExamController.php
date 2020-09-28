@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 class ExamController extends Controller
 {
     
+	public function start()
+    {
+        //
+		return view('exams.start');
+    }
+	
+	public function result()
+    {
+        //
+		return view('exams.result');
+    }
+	
 	public function score()
     {
         //

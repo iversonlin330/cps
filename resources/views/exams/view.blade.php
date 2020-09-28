@@ -37,7 +37,7 @@
       <td>22</td>
       <td>30</td>
 	  <td>檢視</td>
-	  <td><button type="button" class="btn btn-warning btn-sm">作答</button></td>
+	  <td><a href="{{ url('exams/start') }}" class="btn btn-warning btn-sm">作答</a></td>
 	  <td><button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">指派考券</button></td>
 	  <td>
 		<button type="button" class="btn btn-warning btn-sm">複製</button>

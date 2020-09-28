@@ -2,25 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Unit;
+use App\Task;
 use Illuminate\Http\Request;
 
-class UnitController extends Controller
+class TaskController extends Controller
 {
-    
-	public function start()
-    {
-        //
-		return view('units.start');
-    }
-	
-	public function result()
-    {
-        //
-		return view('units.result');
-    }
-	
-	/**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -28,7 +15,7 @@ class UnitController extends Controller
     public function index()
     {
         //
-		return view('units.view');
+		return view('tasks.view');
     }
 
     /**
@@ -39,6 +26,7 @@ class UnitController extends Controller
     public function create()
     {
         //
+		return view('tasks.create');
     }
 
     /**
@@ -55,10 +43,10 @@ class UnitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(Unit $unit)
+    public function show(Task $task)
     {
         //
     }
@@ -66,10 +54,10 @@ class UnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Unit $unit)
+    public function edit(Task $task)
     {
         //
     }
@@ -78,10 +66,10 @@ class UnitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Unit  $unit
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Unit $unit)
+    public function update(Request $request, Task $task)
     {
         //
     }
@@ -89,10 +77,10 @@ class UnitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Unit  $unit
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Unit $unit)
+    public function destroy(Task $task)
     {
         //
     }
