@@ -8,20 +8,29 @@ use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
-	
-	/**
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-		return view("contacts.view");
-        $user = User::first();
-        Auth::login($user);
-        dd(Auth::user());
-        dd(Auth::check());
+        $data = $request->all();
+
+        $users = User::where('role', 2)
+            ->where(function ($query) use ($data) {
+                if ($data) {
+                    foreach ($data as $k => $v) {
+                        if ($v) {
+                            $query->orWhere($k, 'like', '%' . $v . '%');
+                        }
+                    }
+                }
+            })
+            ->get();
+        return view("contacts.view", compact('users'));
     }
 
     /**
@@ -32,13 +41,13 @@ class ContactController extends Controller
     public function create()
     {
         //
-		return view("contacts.create");
+        return view("contacts.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -48,13 +57,13 @@ class ContactController extends Controller
         $model = new User;
         $model->fill($data);
         $model->save();
-        return back();
+        return redirect('contacts');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -65,34 +74,44 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
+        $user = User::find($id);
+        return view('contacts.create', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
+        $data = $request->all();
+        $model = User::find($id);
+        $model->fill($data);
+        $model->save();
+        return redirect('contacts');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+        $user = User::where('id', $id)->first();
+        $user->delete();
+        return back();
     }
 }
