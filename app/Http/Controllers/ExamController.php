@@ -7,32 +7,38 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    
-	public function start()
+    public function start()
     {
         //
-		return view('exams.start');
+        return view('exams.start');
     }
-	
-	public function result()
+
+    public function result()
     {
         //
-		return view('exams.result');
+        $id = 1;
+        $exam = Exam::find($id);
+        $exam->units;
+        foreach ($exam->units as $unit){
+            dd($unit->tasks);
+        }
+        dd($exam->units);
+        return view('exams.result');
     }
-	
-	public function score()
+
+    public function score()
     {
         //
-		return view('exams.score');
+        return view('exams.score');
     }
-	
-	public function my()
+
+    public function my()
     {
         //
-		return view('exams.my');
+        return view('exams.my');
     }
-	
-	/**
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -40,7 +46,7 @@ class ExamController extends Controller
     public function index()
     {
         //
-		return view('exams.view');
+        return view('exams.view');
     }
 
     /**
@@ -51,25 +57,25 @@ class ExamController extends Controller
     public function create()
     {
         //
-		return view('exams.create');
+        return view('exams.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
-		return view('exams.create-order');
+        return view('exams.create-order');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Exam  $exam
+     * @param \App\Exam $exam
      * @return \Illuminate\Http\Response
      */
     public function show(Exam $exam)
@@ -80,7 +86,7 @@ class ExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Exam  $exam
+     * @param \App\Exam $exam
      * @return \Illuminate\Http\Response
      */
     public function edit(Exam $exam)
@@ -91,8 +97,8 @@ class ExamController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Exam  $exam
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Exam $exam
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Exam $exam)
@@ -103,7 +109,7 @@ class ExamController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Exam  $exam
+     * @param \App\Exam $exam
      * @return \Illuminate\Http\Response
      */
     public function destroy(Exam $exam)
