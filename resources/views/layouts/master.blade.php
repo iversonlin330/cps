@@ -157,12 +157,16 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link text-white" href="{{  url('main') }}">回主頁 <span
-                                class="sr-only">(current)</span></a>
+                        <a class="nav-link text-white" href="{{  url('main') }}">
+                            <div class="home-icon bg-white text-brown d-inline-flex">
+                                <i class="fas fa-home fa-lg icon"></i>
+                            </div>
+                            回主頁 <span class="sr-only">(current)</span>
+                        </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li><span class="nav-link text-white">Hi, {{ Auth::user()->name }}</span></a>
+                    <li><span class="nav-link text-white">Hi, {{ Auth::user()->name }}</span></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link  dropdown-toggle text-white" href="#" data-toggle="dropdown"
                            aria-expanded="false"> 選單列 </a>
@@ -197,6 +201,7 @@
                                     <li><a class="dropdown-item" href="">年度資料封存</a></li>
                                 </ul>
                             </li>
+                            <li><a class="dropdown-item" href="{{ url('logout') }}">登出</a>
                         </ul>
                     </li>
                 </ul>

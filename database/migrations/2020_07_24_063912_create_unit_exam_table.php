@@ -17,6 +17,7 @@ class CreateUnitExamTable extends Migration
             $table->id();
             $table->integer('exam_id');
             $table->integer('unit_id');
+            $table->integer('order');
             $table->timestamps();
         });
     }

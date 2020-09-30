@@ -22,8 +22,10 @@ Route::post('/login', 'LoginController@login');
 
 Route::get('/main', 'LoginController@main');
 Route::get('/exams/score', 'ExamController@score');
+Route::get('/exams/score-detail', 'ExamController@scoreDetail');
 Route::get('/exams/start', 'ExamController@start');
 Route::get('/exams/result', 'ExamController@result');
+Route::post('/exams/order', 'ExamController@order');
 Route::get('/units/start', 'UnitController@start');
 Route::get('/units/result', 'UnitController@result');
 

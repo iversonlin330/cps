@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
+    public function order()
+    {
+        //
+        return redirect('exams');
+    }
+
     public function start()
     {
         //
@@ -19,7 +25,7 @@ class ExamController extends Controller
         $id = 1;
         $exam = Exam::find($id);
         $exam->units;
-        foreach ($exam->units as $unit){
+        foreach ($exam->units as $unit) {
             dd($unit->tasks);
         }
         dd($exam->units);
@@ -29,7 +35,15 @@ class ExamController extends Controller
     public function score()
     {
         //
-        return view('exams.score');
+        $targets = config('map.target');
+        return view('exams.score', compact('targets'));
+    }
+
+    public function scoreDetail()
+    {
+        //
+        $targets = config('map.target');
+        return view('exams.score-detail', compact('targets'));
     }
 
     public function my()
@@ -46,7 +60,8 @@ class ExamController extends Controller
     public function index()
     {
         //
-        return view('exams.view');
+        $targets = config('map.target');
+        return view('exams.view', compact('targets'));
     }
 
     /**

@@ -169,8 +169,8 @@
 3.務必於每學期結束後執行一次資料封存。上學期資料封存日期：1/25~2/15，下學期資料封存日期：7/15~8/15。
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">確認</button>
+        <button type="button" class="btn btn-r" data-dismiss="modal">取消</button>
       </div>
     </div>
   </div>

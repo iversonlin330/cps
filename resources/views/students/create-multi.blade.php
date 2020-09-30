@@ -12,9 +12,8 @@
 				</div>
 				<div class="d-flex justify-content-center">
 					<div class="login-content" style="width:540px;">
-						<form action="{{ url('login') }}" method="post">
+						<form action="{{ url('students/create-multi') }}" method="post">
 							@csrf
-							
 							<div class="form-group row">
 								<label for="inputEmail3" class="col-3 col-form-label">學校</label>
 								<div class="col-4">
@@ -28,14 +27,14 @@
 								  </select>
 								</div>
 							  </div>
-							  
+
 							<div class="form-group row">
 								<label for="inputEmail3" class="col-3 col-form-label">資料筆數</label>
 								<div class="col-9">
 								  <input type="number" class="form-control" id="inputEmail3">
 								</div>
 							  </div>
-							  
+
 							<div class="d-flex justify-content-center">
 								<input type="submit" class="btn btn-r" style="width: 83px;" value="儲存">
 							</div>

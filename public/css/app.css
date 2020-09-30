@@ -82,12 +82,12 @@ a{text-decoration: none}
 	.dropdown-menu li{
 		position: relative;
 	}
-	.nav-item .submenu{ 
+	.nav-item .submenu{
 		display: none;
 		position: absolute;
 		left:100%; top:-7px;
 	}
-	.nav-item .submenu-left{ 
+	.nav-item .submenu-left{
 		right:100%; left:auto;
 	}
 	.dropdown-menu > li:hover{ background-color: #f1f1f1 }
@@ -221,7 +221,7 @@ a{text-decoration: none}
   letter-spacing: normal;
   color: #ffffff;
 }
-
+/*
 .btn-r {
   border-radius: 4px;
   background-color: var(--clay-brown);
@@ -236,6 +236,12 @@ a{text-decoration: none}
   line-height: 1.5;
   letter-spacing: normal;
   color: #ffffff;
+}
+ */
+
+.btn-r {
+    color: #ffffff;
+    background-color: var(--clay-brown);
 }
 
 .nav-custom{
@@ -279,6 +285,12 @@ a{text-decoration: none}
   border-radius:999em;
 }
 
+.home-icon{
+    width: 29px;
+    height: 29px;
+    border-radius:999em;
+}
+
 .table-scroll{
 	max-height: 351px;
 	overflow: auto;
@@ -300,7 +312,7 @@ a{text-decoration: none}
 .exam-img img{
 	 width: 100%;
 }
-   
+
  .exam-content-title{
 	 font-family: MicrosoftJhengHei;
   font-size: 18px;
@@ -311,7 +323,7 @@ a{text-decoration: none}
   letter-spacing: normal;
   color: var(--clay-brown);
  }
- 
+
  .exam-content-text{
 	 font-family: MicrosoftJhengHei;
   font-size: 18px;
@@ -322,7 +334,7 @@ a{text-decoration: none}
   letter-spacing: normal;
   color: #3f3f3f;
  }
- 
+
 .nav-task{
 	 background-color: #fffaed;
 	 color:#373a3c;
@@ -330,4 +342,9 @@ a{text-decoration: none}
 
 .nav-task > a{
 	 color:#373a3c;
+}
+
+.thead-r{
+    color: #fff;
+    background-color: var(--clay-brown);
 }

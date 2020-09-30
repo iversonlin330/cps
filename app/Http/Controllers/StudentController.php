@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Teacher;
+use App\User;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -12,7 +13,17 @@ class StudentController extends Controller
         //
 		return view('students.create-multi');
     }
-	
+
+    public function postCreateMulti(Request $request)
+    {
+        //
+        $data = $request->all();
+        $model = new User;
+        $model->fill($data);
+        $model->save();
+        return redirect('students');
+    }
+
 	/**
      * Display a listing of the resource.
      *
@@ -44,6 +55,11 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        $model = new User;
+        $model->fill($data);
+        $model->save();
+        return redirect('students');
     }
 
     /**
