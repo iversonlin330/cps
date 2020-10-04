@@ -15,6 +15,8 @@ class ClassroomController extends Controller
     public function index()
     {
         //
+		$users = [];
+		return view('classrooms.view',compact('users'));
     }
 
     /**
