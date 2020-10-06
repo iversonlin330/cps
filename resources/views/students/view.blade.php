@@ -28,17 +28,18 @@
 
     <div class="row main-padding">
         <div class="col-12">
-            <table class="table table-striped">
+            <table class="table table-striped bg-white">
                 <thead>
                 <tr>
                     <th scope="col">學年度</th>
                     <th scope="col">學校</th>
                     <th scope="col">班級</th>
-                    <th scope="col">編號</th>
+                    <th scope="col">座號</th>
                     <th scope="col">姓名</th>
                     <th scope="col">性別</th>
                     <th scope="col">帳號</th>
                     <th scope="col">密碼</th>
+                    <th scope="col">原住民身份</th>
                     <th scope="col">動作</th>
                 </tr>
                 </thead>
@@ -48,11 +49,12 @@
                         <td>109</td>
                         <td>新北市立文德國民小學</td>
                         <td>五年丁班</td>
-                        <td>000001</td>
+                        <td>50</td>
                         <td>黃小玲</td>
                         <td>女</td>
                         <td>000001</td>
                         <td>000001</td>
+                        <td>是</td>
                         <td>
                             <button type="button" class="btn btn-warning btn-sm">編輯</button>
                             <button type="button" class="btn btn-warning btn-sm">刪除</button>

@@ -91,25 +91,97 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新增單元</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">新增任務</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('login') }}" method="post">
+                    <form action="{{ url('tasks') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>單元名稱</label>
-                            <input name="account" type="text" class="form-control" placeholder="輸入單元名稱...">
+                            <label>任務名稱</label>
+                            <input name="account" type="text" class="form-control" placeholder="輸入任務名稱...">
                         </div>
                     </form>
+                    <hr>
+                    <div class="px-5">
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <button id="add-task" class="btn btn-r float-right">新增架構</button>
+                            </div>
+                        </div>
+                        <div id="str" class="str">
+                            <div class="row mb-2">
+                                <div class="col-10">
+                                    <button class="btn btn-block btn-dark">1-1</button>
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-light">＋</button>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="offset-2 col-8">
+                                    <button class="btn btn-block btn-light">1-1-1</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ url('tasks') }}" class="btn btn-r">確認</a>
+                    <input type="submit" href="{{ url('tasks') }}" class="btn btn-r" value="確認">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        let str_array = [];
+
+        function add_parent(){
+            // let length = str_array.length;
+            // let newNo = length + 1;
+            // str_array.push(newNo);
+            str_array.push(1);
+        }
+
+        $("#add-task").click(function () {
+            let length = str_array.length;
+            let newNo = length + 1;
+            str_array.push(newNo);
+            /*
+            let length = $("#str .col-10").length;
+            let newNo = length + 1;
+            $("#str").append("<div class=\"row mb-2\">\n" +
+                "                                <div class=\"col-10\" id='parent-" + newNo + "'>\n" +
+                "                                    <button class=\"btn btn-block btn-dark\">1-" + newNo + "</button>\n" +
+                "                                </div>\n" +
+                "                                <div class=\"col-2\">\n" +
+                "                                    <button class=\"btn btn-light\" onclick='add_sub(this)'>＋</button>\n" +
+                "                                </div>\n" +
+                "                            </div>")
+                */
+        });
+
+        function add_sub(num) {
+            /*
+            //let parentNo = $(obj).data('parent');
+            let newNo = str_array[num].length + 1;
+            //$(obj).parent('div').find('row').after();
+            str_array[num].push(newNo);
+             */
+            let newNo = str_array[num] + 1;
+            str_array[num] = newNo;
+        }
+
+        function refresh() {
+            for (let x in str_array) {
+                for(let y=0;y<str_array;y++){
+                    str_array[x];
+                }
+            }
+        }
+    </script>
 @endsection

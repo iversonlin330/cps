@@ -19,13 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('name')->nullable();
             $table->string('gender')->nullable();
             $table->string('teacher_id')->nullable();
-            $table->string('city')->nullable();
-            $table->string('school')->nullable();;
+            $table->string('school_id')->nullable();
             $table->string('email')->nullable();
             //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('classroom_id')->nullable();;
+            $table->integer('classroom_id')->nullable();
             $table->integer('role');//訪客-1 窗口-2 學生-3 老師-4 管理員-9
+
+            $table->integer('school_year')->nullable();
+            $table->integer('seat_number')->nullable();
+            $table->integer('is_local')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

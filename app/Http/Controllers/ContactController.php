@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Traits\MyTraits;
 
 class ContactController extends Controller
 {
 
+    use MyTraits;
     /**
      * Display a listing of the resource.
      *
@@ -40,8 +42,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
-        return view("contacts.create");
+        $citys = $this->getCity();
+        return view("contacts.create", compact('citys'));
     }
 
     /**

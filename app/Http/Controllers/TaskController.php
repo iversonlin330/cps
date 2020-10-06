@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Unit;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Integer;
 
 class TaskController extends Controller
 {
@@ -35,11 +37,21 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @param Integer $unit_id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $unit_id)
     {
         //
+        $data = $request->all();
+        foreach ($data as $index => $unit) {
+            $unit['order'] = $index;
+            $model = new Unit();
+            $model->fill($unit);
+            $model->save();
+        }
+
+        return redirect('task');
     }
 
     /**

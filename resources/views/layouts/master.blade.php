@@ -229,7 +229,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    刪除將無法復原，確認要刪除此<span class="keyword"></span>？
+                    該<span class="keyword"></span>刪除後，將影響學生各項成績，請問您確定要刪除？？
                 </div>
                 <div class="modal-footer">
                     <form action="" method="POST">

@@ -39,6 +39,13 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="inputEmail3" class="col-3 col-form-label">座號</label>
+                                <div class="col-9">
+                                    <input type="number" name="seat_number" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">姓名</label>
                                 <div class="col-9">
                                     <input type="text" name="name" class="form-control" id="inputEmail3">
@@ -57,6 +64,20 @@
                                         <input class="form-check-input" type="radio" name="gender"
                                                id="inlineRadio2" value="2" required>
                                         <label class="form-check-label" for="inlineRadio2">女</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-3 col-form-label">是否為原住民</label>
+                                <div class="col-9">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_local" value="1" required>
+                                        <label class="form-check-label">是</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="is_local" value="0" required>
+                                        <label class="form-check-label">否</label>
                                     </div>
                                 </div>
                             </div>
