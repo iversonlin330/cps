@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Unit;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
 {
-    
+
 	public function start()
     {
         //
 		return view('units.start');
     }
-	
+
 	public function result()
     {
         //
 		return view('units.result');
     }
-	
+
 	/**
      * Display a listing of the resource.
      *
@@ -28,7 +30,9 @@ class UnitController extends Controller
     public function index()
     {
         //
-		return view('units.view');
+        $units = Unit::all();
+
+		return view('units.view',compact('units'));
     }
 
     /**
@@ -50,6 +54,13 @@ class UnitController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->except('_token');
+        $data['user_id'] = Auth::user()->id;
+        $model = new Unit;
+        $model->fill($data);
+        $model->save();
+
+        return redirect('tasks/?unit_id='.$model->id);
     }
 
     /**
@@ -95,5 +106,8 @@ class UnitController extends Controller
     public function destroy(Unit $unit)
     {
         //
+        //$user = User::where('id', $id)->first();
+        $unit->delete();
+        return back();
     }
 }

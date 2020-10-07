@@ -17,8 +17,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->integer('unit_id');
             $table->string('name');
-            $table->string('pic_path');
-            $table->string('is_chosen');
+            $table->integer('order');
             $table->string('content');
             $table->timestamps();
         });

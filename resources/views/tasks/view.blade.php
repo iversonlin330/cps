@@ -31,19 +31,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+                @foreach($tasks as $task)
                     <tr>
-                        <td>確定使用何種方式進行調查</td>
+                        <td>{{ $task->name }}</td>
                         <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
                             <button type="button" class="btn btn-secondary btn-sm">編輯</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-r btn-sm">刪除</button>
+                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                    data-target="#deleteModal" data-keyword="任務"
+                                    data-url="{{ url('tasks/'.$task->id) }}">刪除
+                            </button>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -96,42 +99,46 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ url('tasks') }}" method="post">
-                        @csrf
+                <form action="{{ url('tasks') }}" method="post">
+                    @csrf
+                    <input type="text" name="unit_id" value="{{ $unit_id }}" hidden>
+                    <input type="text" name="order" value="{{ $tasks->count()+1 }}" hidden>
+                    <input type="text" name="content" value="" hidden>
+                    <div class="modal-body">
                         <div class="form-group">
                             <label>任務名稱</label>
-                            <input name="account" type="text" class="form-control" placeholder="輸入任務名稱...">
+                            <input name="name" type="text" class="form-control" placeholder="輸入任務名稱...">
                         </div>
-                    </form>
-                    <hr>
-                    <div class="px-5">
-                        <div class="row mb-2">
-                            <div class="col-12">
-                                <button id="add-task" class="btn btn-r float-right">新增架構</button>
-                            </div>
-                        </div>
-                        <div id="str" class="str">
+                        <hr>
+                        <div class="px-5">
                             <div class="row mb-2">
-                                <div class="col-10">
-                                    <button class="btn btn-block btn-dark">1-1</button>
-                                </div>
-                                <div class="col-2">
-                                    <button class="btn btn-light">＋</button>
+                                <div class="col-12">
+                                    <a id="add-task" class="btn btn-r float-right" onclick="add_parent()">新增架構
+                                    </a>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="offset-2 col-8">
-                                    <button class="btn btn-block btn-light">1-1-1</button>
+                            <div id="str" class="str">
+                                <div class="row mb-2">
+                                    <div class="col-10">
+                                        <button class="btn btn-block btn-dark">1-1</button>
+                                    </div>
+                                    <div class="col-2">
+                                        <a class="btn btn-light" onclick="add_sub(1)">＋</a>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="offset-2 col-8">
+                                        <button class="btn btn-block btn-light">1-1-1</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" href="{{ url('tasks') }}" class="btn btn-r" value="確認">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-                </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-r" value="確認">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -140,31 +147,31 @@
     <script>
         let str_array = [];
 
-        function add_parent(){
+        function add_parent() {
             // let length = str_array.length;
             // let newNo = length + 1;
             // str_array.push(newNo);
             str_array.push(1);
+            refresh();
         }
 
-        $("#add-task").click(function () {
-            let length = str_array.length;
-            let newNo = length + 1;
-            str_array.push(newNo);
-            /*
-            let length = $("#str .col-10").length;
-            let newNo = length + 1;
-            $("#str").append("<div class=\"row mb-2\">\n" +
-                "                                <div class=\"col-10\" id='parent-" + newNo + "'>\n" +
-                "                                    <button class=\"btn btn-block btn-dark\">1-" + newNo + "</button>\n" +
-                "                                </div>\n" +
-                "                                <div class=\"col-2\">\n" +
-                "                                    <button class=\"btn btn-light\" onclick='add_sub(this)'>＋</button>\n" +
-                "                                </div>\n" +
-                "                            </div>")
-                */
-        });
-
+        /*
+                $("#add-task").click(function () {
+                    let length = str_array.length;
+                    let newNo = length + 1;
+                    str_array.push(newNo);
+                    let length = $("#str .col-10").length;
+                    let newNo = length + 1;
+                    $("#str").append("<div class=\"row mb-2\">\n" +
+                        "                                <div class=\"col-10\" id='parent-" + newNo + "'>\n" +
+                        "                                    <button class=\"btn btn-block btn-dark\">1-" + newNo + "</button>\n" +
+                        "                                </div>\n" +
+                        "                                <div class=\"col-2\">\n" +
+                        "                                    <button class=\"btn btn-light\" onclick='add_sub(this)'>＋</button>\n" +
+                        "                                </div>\n" +
+                        "
+                });
+        */
         function add_sub(num) {
             /*
             //let parentNo = $(obj).data('parent');
@@ -174,14 +181,37 @@
              */
             let newNo = str_array[num] + 1;
             str_array[num] = newNo;
+            refresh();
         }
 
         function refresh() {
-            for (let x in str_array) {
-                for(let y=0;y<str_array;y++){
-                    str_array[x];
+            let order = $("[name='order']").val();
+            let html = "";
+            for (let x = 1; x <= str_array.length; x++) {
+                for (let y = 1; y <= str_array[x - 1]; y++) {
+                    if (y == 1) {
+                        html = html + "<div class=\"row mb-2\">\n" +
+                            "                                    <div class=\"col-10\">\n" +
+                            "                                        <a class=\"btn btn-block btn-dark\">" + order + "-" + x + "</a>\n" +
+                            "                                    </div>\n" +
+                            "                                    <div class=\"col-2\">\n" +
+                            "                                        <a class=\"btn btn-light\" onclick=\"add_sub("+(x-1)+")\">＋</a>\n" +
+                            "                                    </div>\n" +
+                            "                                </div>";
+                        console.log(order + "-" + x);
+                    } else {
+                        html = html + "<div class=\"row mb-2\">\n" +
+                            "                                    <div class=\"offset-2 col-8\">\n" +
+                            "                                        <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
+                            "                                    </div>\n" +
+                            "                                </div>";
+                        console.log(order + "-" + x + "-" + (y - 1));
+                    }
+
                 }
             }
+            $("#str").html(html);
+            $("[name='content']").val(str_array);
         }
     </script>
 @endsection

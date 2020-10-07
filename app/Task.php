@@ -8,6 +8,8 @@ class Task extends Model
 {
     //
 
+    protected $guarded =['id'];
+
     protected $casts = [
         'content' => 'array'
     ];

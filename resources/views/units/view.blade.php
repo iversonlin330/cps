@@ -34,28 +34,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+                @foreach($units as $unit)
                     <tr>
-                        <td>單元名稱ＯＯＯＯＯ</td>
-                        <td>22</td>
-                        <td>30</td>
+                        <td>{{ $unit->name }}</td>
+                        <td>{{ $unit->average_score() }}</td>
+                        <td>{{ $unit->max_score() }}</td>
                         <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
                         <td>
-                            <select class="form-control-sm">
-                                <option>公開</option>
-                                <option>不公開</option>
+                            <select name="is_open[{{$unit->id}}]" class="form-control-sm">
+                                <option value="1" {{ ($unit->is_open == 1)? 'selected' : '' }}>公開</option>
+                                <option value="0" {{ ($unit->is_open == 0)? 'selected' : '' }}>不公開</option>
                             </select>
                         </td>
-                        <td><a href="{{ url('units/start') }}" class="btn btn-warning btn-sm">作答</a></td>
+                        <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
                         <td>
                             <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
                             <button type="button" class="btn btn-secondary btn-sm">編輯</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-r btn-sm">刪除</button>
+                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                    data-target="#deleteModal" data-keyword="單元"
+                                    data-url="{{ url('units/'.$unit->id) }}">刪除</button>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -111,19 +113,20 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ url('units') }}" method="post">
-                        @csrf
+                <form action="{{ url('units') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
                         <div class="form-group">
                             <label>單元名稱</label>
-                            <input name="account" type="text" class="form-control" placeholder="輸入單元名稱...">
+                            <input name="name" type="text" class="form-control" placeholder="輸入單元名稱...">
+                            <input name="is_open" type="number" value="0" hidden>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="{{ url('tasks') }}" class="btn btn-r">確認</a>
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-r" value="確認">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

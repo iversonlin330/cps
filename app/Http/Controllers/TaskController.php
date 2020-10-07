@@ -14,10 +14,13 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('tasks.view');
+        $data = $request->all();
+        $unit_id = $data['unit_id'];
+        $tasks = Task::where("unit_id")->get();
+        return view('tasks.view', compact('unit_id','tasks'));
     }
 
     /**
@@ -40,16 +43,25 @@ class TaskController extends Controller
      * @param Integer $unit_id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $unit_id)
+    public function store(Request $request)
     {
         //
-        $data = $request->all();
+        $data = $request->except('_token');
+        $data['content'] = explode(',',$data['content']);
+        dd($data);
+        $model = new Task;
+        $model->fill($data);
+        $model->save();
+
+
+        /*
         foreach ($data as $index => $unit) {
             $unit['order'] = $index;
             $model = new Unit();
             $model->fill($unit);
             $model->save();
         }
+        */
 
         return redirect('task');
     }
@@ -97,5 +109,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+        $task->delete();
+        return back();
     }
 }

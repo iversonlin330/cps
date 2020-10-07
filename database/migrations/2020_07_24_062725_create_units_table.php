@@ -16,7 +16,8 @@ class CreateUnitsTable extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('teacher_id');
+            $table->integer('is_open');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
