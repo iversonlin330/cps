@@ -13,21 +13,21 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserSeeder::class);
         DB::table('users')->insert([
-            'account' => 'twpirls2021@gmail.com',
+            'account' => '9',
             'name' => "管理員",
-            'role' => 99,
+            'role' => 9,
             'classroom_id' => 1,
             //'email' => 'twpirls2021@gmail.com',
-            'password' => '66396688',
+            'password' => '9',
         ]);
 
         DB::table('users')->insert([
-            'account' => 'twpirls20212@gmail.com',
+            'account' => '4',
             'name' => "林老師",
-            'role' => 50,
+            'role' => 4,
             'classroom_id' => 1,
             //'email' => 'twpirls2021@gmail.com',
-            'password' => '66396688',
+            'password' => '4',
         ]);
 
         $cycle_name = (date("yy") - 1911)."1";

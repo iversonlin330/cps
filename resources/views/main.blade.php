@@ -7,7 +7,7 @@
             <!--div style="font-size: 22px;margin-top:40px;">CPS評量系統</div>
             <div>主頁</div>
             <hr/-->
-			@if(Auth::user()->role == 99)
+			@if(Auth::user()->role == 9)
             <div class="row main-block">
 				<div class="col-12">
 					<div>考券專區</div>
@@ -94,7 +94,7 @@
 					<div class="d-inline-flex">年度資料封存</div>
 				</div>
             </div>
-			@elseif(Auth::user()->role == 50)
+			@elseif(Auth::user()->role == 4)
 			<div class="row main-block">
 				<div class="col-12">
 					<div>我的項目</div>

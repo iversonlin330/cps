@@ -11,9 +11,17 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 		$data = $request->all();
-		$user = User::where('role', $data['role'])->first();
-		Auth::login($user);
-		return redirect('main');
+		
+		$user = User::where('account', $data['account'])
+                ->where('password', $data['password'])
+                ->first();
+				
+		if (!$user) {
+            return back();
+        }else{
+			Auth::login($user);
+			return redirect('main');
+		}
         
 		$data = $request->all();
         $user = User::where('account', $data['account'])->first();
@@ -74,5 +82,11 @@ class LoginController extends Controller
     public function main(Request $request)
     {
         return view("main");
+    }
+	
+	public function logout()
+    {
+        Auth::logout();
+		return redirect('/');
     }
 }

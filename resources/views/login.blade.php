@@ -44,10 +44,10 @@
                                 <label>密碼</label>
                                 <input name="password" type="password" class="form-control" placeholder="請輸入密碼">
 							</div>
-							<div class="form-group">
+							<!--div class="form-group">
                                 <label>身分</label>
                                 <input name="role" type="text" class="form-control" placeholder="請輸入身分99-管理員、50-老師">
-							</div>
+							</div-->
 							<div class="d-flex justify-content-center">
 								<input type="submit" class="btn btn-r" style="width: 83px;" value="登入">
 							</div>

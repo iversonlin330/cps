@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Route::get('/login', 'LoginController@login');
 Route::post('/login', 'LoginController@login');
+Route::get('/logout', 'LoginController@logout');
 
 Route::get('/main', 'LoginController@main');
 Route::get('/exams/score', 'ExamController@score');
