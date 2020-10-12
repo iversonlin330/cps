@@ -149,7 +149,7 @@
             </nav>
         @endif
 
-        <nav class="navbar navbar-expand-lg navbar-light nav-custom">
+        <nav class="navbar navbar-expand navbar-light nav-custom">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav">
                 <span class="navbar-toggler-icon"></span>
             </button>

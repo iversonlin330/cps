@@ -9,14 +9,17 @@
                 <a href="{{ url('teachers/verify') }}" class="btn btn-warning">待審核資料</a>
             </div>
             <div class="float-right">
-                <form class="form-inline float-right">
-                    <select class="form-control mr-sm-2">
-                        <option>縣市</option>
+                <form action="{{ url('teachers') }}" class="form-inline float-right">
+                    <select name="city_id" class="form-control mr-sm-2">
+                        @foreach($citys as $city => $school)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
                     </select>
-                    <select class="form-control mr-sm-2">
-                        <option>學校</option>
+                    <select name="school_id" class="form-control mr-sm-2">
+                        <option value="">學校</option>
                     </select>
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>
@@ -39,21 +42,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+
+                @foreach($users as $user)
                     <tr>
-                        <td>黃小玲</td>
-                        <td>新北市立文德國民小學</td>
-                        <td>女</td>
-                        <td>OOOOOOOOOOO</td>
-                        <td>OOOOOOOOOOO</td>
-                        <td>OOOOOO@xxx.edu.tw</td>
-                        <td>A0010432900</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->school->fullName() }}</td>
+                        <td>{{ $user->gender }}</td>
+                        <td>{{ $user->account }}</td>
+                        <td>{{ $user->password }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->teacherid }}</td>
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm">編輯</button>
-                            <button type="button" class="btn btn-warning btn-sm">刪除</button>
+                            <a href="{{ url('teachers/'.$user->id.'/edit') }}" class="btn btn-warning btn-sm">編輯</a>
+                            <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
+                                    data-target="#deleteModal" data-keyword="教師"
+                                    data-url="{{ url('teachers/'.$user->id) }}">刪除
+                            </button>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -98,4 +105,19 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html);
+        });
+        $("[name='city_id']").trigger('change');
+    </script>
 @endsection

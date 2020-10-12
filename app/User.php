@@ -39,6 +39,27 @@ class User extends Authenticatable
 //        'email_verified_at' => 'datetime',
 //    ];
 
+    //訪客-1 窗口-2 學生-3 老師-4 管理員-9
+    public function scopeGuest($query){
+        return $query->where('role', 1);
+    }
+
+    public function scopeContact($query){
+        return $query->where('role', 2);
+    }
+
+    public function scopeStudent($query){
+        return $query->where('role', 3);
+    }
+
+    public function scopeTeacher($query){
+        return $query->where('role', 4);
+    }
+
+    public function scopeAdmin($query){
+        return $query->where('role', 9);
+    }
+
     public function classrooms()
     {
         return $this->hasMany('\App\Classroom', 'user_id');
@@ -47,5 +68,10 @@ class User extends Authenticatable
     public function classroom()
     {
         return $this->hasOne('\App\Classroom', 'id', 'classroom_id');
+    }
+
+    public function school()
+    {
+        return $this->hasOne('\App\School', 'id', 'school_id');
     }
 }

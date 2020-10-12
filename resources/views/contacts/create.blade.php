@@ -73,22 +73,24 @@
 @endsection
 @section('script')
     <script>
-            @if(isset($user))
-        var user = @json($user);
-        for (const [key, value] of Object.entries(user)) {
-            $("[name='" + key + "']").val(value);
-        }
-            @endif
-        var citys = @json($citys);
+        let citys = @json($citys);
         $("[name='city_id']").change(function () {
-            var city_val = $(this).val();
+            let city_val = $(this).val();
             $("[name='school_id']").empty();
-            var html = '';
+            let html = '';
             for (x in citys[city_val]) {
                 html = html + "<option value='" + citys[city_val][x] + "'>" + citys[city_val][x] + "</option>";
             }
             $("[name='school_id']").append(html);
         });
         $("[name='city_id']").trigger('change');
+            @if(isset($user))
+        let user = @json($user);
+        for (const [key, value] of Object.entries(user)) {
+            $("[name='" + key + "']").val(value);
+        }
+        $("[name='city_id']").trigger('change');
+        $("[name='school_id']").val(user['school_id']);
+        @endif
     </script>
 @endsection

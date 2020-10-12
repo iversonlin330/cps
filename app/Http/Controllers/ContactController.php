@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\School;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\MyTraits;
 
 class ContactController extends Controller
 {
 
     use MyTraits;
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +22,9 @@ class ContactController extends Controller
         //
         $data = $request->all();
 
-        $users = User::where('role', 2)
+        unset($data['city_id']);
+
+        $users = User::contact()
             ->where(function ($query) use ($data) {
                 if ($data) {
                     foreach ($data as $k => $v) {
@@ -32,7 +35,10 @@ class ContactController extends Controller
                 }
             })
             ->get();
-        return view("contacts.view", compact('users'));
+
+        $citys = $this->getSchool();
+
+        return view("contacts.view", compact('users', 'citys'));
     }
 
     /**
@@ -55,10 +61,17 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->all();
+        $data = $request->except('_token');
+
+        $school = School::firstOrCreate(['city' => $data['city_id'], 'name' => $data['school_id']]);
+
+        unset($data['city_id']);
+        $data['school_id'] = $school->id;
+
         $model = new User;
         $model->fill($data);
         $model->save();
+
         return redirect('contacts');
     }
 
@@ -83,7 +96,12 @@ class ContactController extends Controller
     {
         //
         $user = User::find($id);
-        return view('contacts.create', compact('user'));
+        $citys = $this->getCity();
+
+        $user->school_id = $user->school->name;
+        $user->city_id = $user->school->city;
+
+        return view('contacts.create', compact('user','citys'));
     }
 
     /**
@@ -96,7 +114,13 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $data = $request->all();
+        $data = $request->except('_token');
+
+        $school = School::firstOrCreate(['city' => $data['city_id'], 'name' => $data['school_id']]);
+
+        unset($data['city_id']);
+        $data['school_id'] = $school->id;
+
         $model = User::find($id);
         $model->fill($data);
         $model->save();

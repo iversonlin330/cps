@@ -9,10 +9,12 @@
             </div>
             <div class="float-right">
                 <form action="{{ url('contacts') }}" class="form-inline float-right">
-                    <select name="city" class="form-control mr-sm-2">
-                        <option value="">縣市</option>
+                    <select name="city_id" class="form-control mr-sm-2">
+                        @foreach($citys as $city => $school)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
                     </select>
-                    <select name="school" class="form-control mr-sm-2">
+                    <select name="school_id" class="form-control mr-sm-2">
                         <option value="">學校</option>
                     </select>
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
@@ -39,7 +41,7 @@
                 <tbody>
                 @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->city . $user->school }}</td>
+                        <td>{{ $user->school->fullName() }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->account }}</td>
                         <td>{{ $user->password }}</td>
@@ -63,6 +65,16 @@
 @endsection
 @section('script')
     <script>
-
+        var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html);
+        });
+        $("[name='city_id']").trigger('change');
     </script>
 @endsection

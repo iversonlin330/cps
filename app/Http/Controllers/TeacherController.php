@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\MyTraits;
+use App\School;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    use MyTraits;
+
     public function verify()
     {
         //
@@ -19,11 +23,26 @@ class TeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $users = User::where('role', 4)->get();
-        return view('teachers.view', compact('users'));
+        $data = $request->all();
+
+        unset($data['city_id']);
+
+        $users = User::Teacher()
+            ->where(function ($query) use ($data) {
+                if ($data) {
+                    foreach ($data as $k => $v) {
+                        if ($v) {
+                            $query->orWhere($k, 'like', '%' . $v . '%');
+                        }
+                    }
+                }
+            })
+            ->get();
+        $citys = $this->getSchool();
+        return view('teachers.view', compact('users', 'citys'));
     }
 
     /**
@@ -34,7 +53,8 @@ class TeacherController extends Controller
     public function create()
     {
         //
-        return view('teachers.create');
+        $citys = $this->getSchool();
+        return view('teachers.create', compact('citys'));
     }
 
     /**
@@ -46,10 +66,12 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->all();
+        $data = $request->except(['_token', 'city_id']);
+
         $model = new User;
         $model->fill($data);
         $model->save();
+
         return redirect('teachers');
     }
 
@@ -74,7 +96,12 @@ class TeacherController extends Controller
     {
         //
         $user = User::find($id);
-        return view('teachers.create', compact('user'));
+        $citys = $this->getSchool();
+
+        $user->school_id = $user->school->id;
+        $user->city_id = $user->school->city;
+
+        return view('teachers.create', compact('user', 'citys'));
     }
 
     /**
@@ -87,7 +114,7 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $data = $request->all();
+        $data = $request->except(['_token', 'city_id']);
         $model = User::find($id);
         $model->fill($data);
         $model->save();
