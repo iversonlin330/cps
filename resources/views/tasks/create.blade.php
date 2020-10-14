@@ -6,22 +6,12 @@
         <!-- Nav tabs -->
         <div class="col-11">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active text-dark" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="true">1-1</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link text-dark" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                       aria-controls="profile" aria-selected="false">1-2</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link text-dark" id="messages-tab" data-toggle="tab" href="#messages" role="tab"
-                       aria-controls="messages" aria-selected="false">1-3</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link text-dark" id="settings-tab" data-toggle="tab" href="#settings" role="tab"
-                       aria-controls="settings" aria-selected="false">1-4</a>
-                </li>
+                @foreach($task->content['count'] as $index => $value)
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-dark" data-toggle="tab" href="#tab_{{ $index }}" role="tab"
+                           aria-controls="tab_{{ $index }}" aria-selected="false">{{ $task->order }}-{{ $index+1 }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
         <div class="col-1 ml-auto">
@@ -29,69 +19,80 @@
         </div>
         <div class="col-12">
             <!-- Tab panes -->
-            <div class="tab-content" style="    max-height: 90vh;overflow-y: auto;">
-                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="d-flex justify-content-center" style="background-color: #fff5dd;">
-                        <div class="row" style="width:80%;">
-                            <div class="col-12 font-weight-bold mt-4" style="font-size:22px;">1-1</div>
-                            <div class="col-12 bg-white p-4">
-                                <div class="row mb-2">
-                                    <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述</div>
-                                    <div class="col-3">
-                                        <select class="form-control">
-                                            <option>有選項欄位</option>
-                                            <option>無選項欄位</option>
-                                        </select>
+            <div class="tab-content" style="max-height: 90vh;overflow-y: auto;">
+                @foreach($task->content['count'] as $index => $value)
+                    <div class="tab-pane" id="tab_{{ $index }}" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="d-flex justify-content-center" style="background-color: #fff5dd;">
+                            <div class="row" style="width:80%;">
+                                @for( $sub = 0; $sub < $value; $sub++)
+                                    <div class="col-12 font-weight-bold mt-4" style="font-size:22px;">
+                                        {{ $task->order }}-{{ $index+1 }}{{ ($sub == 0)? '' : '-' . $sub }}
                                     </div>
-                                    <div class="col-4">
-                                        <select class="form-control">
-                                            <option>選擇測試指標</option>
-                                            @foreach($targets as $k=>$v)
-                                                <option value="{{ $k }}">{{ $v }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <textarea class="form-control mb-2" placeholder="敘述一"></textarea>
-                                <textarea class="form-control mb-2" placeholder="敘述二"></textarea>
-                                <textarea class="form-control mb-2" placeholder="敘述三"></textarea>
-                                <textarea class="form-control mb-2" placeholder="敘述四"></textarea>
-                                <textarea class="form-control mb-2" placeholder="敘述五"></textarea>
-                                <div class="form-group">
-                                    <label>圖片</label>
-                                    <input name="account" type="text" class="form-control" placeholder="輸入圖片網址...">
-                                </div>
-                                <div class="mb-2 font-weight-bold" style="font-size:22px;">選項內容</div>
-                                @for($i=0;$i<=4;$i++)
-                                    <div class="row mb-2">
-                                        <div class="col-8">
-                                            <textarea class="form-control" placeholder="選項一"></textarea>
+                                    <div class="col-12 bg-white p-4">
+                                        <div class="row mb-2">
+                                            <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述</div>
+                                            <div class="col-3">
+                                                <select name="is_item[{{$index}}][{{$sub}}]" class="form-control">
+                                                    <option value="1">有選項欄位</option>
+                                                    <option value="0">無選項欄位</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <select name="target[{{$index}}][{{$sub}}]" class="form-control">
+                                                    <option>選擇測試指標</option>
+                                                    @foreach($targets as $k=>$v)
+                                                        <option value="{{ $k }}">{{ $v }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-2">
-                                            <select class="form-control form-control-sm">
-                                                <option>前往題組</option>
-                                                <option>1-1-3</option>
-                                                <option>1-1-4</option>
-                                                <option>1-1-5</option>
-                                            </select>
+                                        <textarea class="form-control mb-2" placeholder="敘述一"
+                                                  name="desc1[{{$index}}][{{$sub}}]"></textarea>
+                                        <textarea class="form-control mb-2" placeholder="敘述二"
+                                                  name="desc2[{{$index}}][{{$sub}}]"></textarea>
+                                        <textarea class="form-control mb-2" placeholder="敘述三"
+                                                  name="desc3[{{$index}}][{{$sub}}]"></textarea>
+                                        <textarea class="form-control mb-2" placeholder="敘述四"
+                                                  name="desc4[{{$index}}][{{$sub}}]"></textarea>
+                                        <textarea class="form-control mb-2" placeholder="敘述五"
+                                                  name="desc5[{{$index}}][{{$sub}}]"></textarea>
+                                        <div class="form-group">
+                                            <label>圖片</label>
+                                            <input name="pic[{{$index}}][{{$sub}}]" type="text" class="form-control"
+                                                   placeholder="輸入圖片網址...">
                                         </div>
-                                        <div class="col-2">
-                                            <select class="form-control form-control-sm">
-                                                <option>配分</option>
-                                                @for($j=1;$j<=$scoreNum;$j++)
-                                                    <option value="{{ $j }}">{{ $j }}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
+                                        <div class="mb-2 font-weight-bold is_item" style="font-size:22px;">選項內容</div>
+                                        @for($i=0;$i<=4;$i++)
+                                            <div class="row mb-2">
+                                                <div class="col-8">
+                                                    <textarea name="question[{{$index}}][{{$sub}}][{{$i}}]"
+                                                              class="form-control" placeholder="選項一"></textarea>
+                                                </div>
+                                                <div class="col-2">
+                                                    <select class="form-control form-control-sm">
+                                                        <option>前往題組</option>
+                                                        @for( $goto = $sub+1; $goto < $value; $goto++)
+                                                            <option value="{{ $goto }}">{{ $task->order }}
+                                                                -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="col-2">
+                                                    <select class="form-control form-control-sm">
+                                                        <option name="score[{{$index}}][{{$sub}}][{{$i}}]">配分</option>
+                                                        @for($j=1;$j<=$scoreNum;$j++)
+                                                            <option value="{{ $j }}">{{ $j }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endfor
                                     </div>
                                 @endfor
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">1</div>
-                <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">2</div>
-                <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">2</div>
+                @endforeach
             </div>
         </div>
     </div>

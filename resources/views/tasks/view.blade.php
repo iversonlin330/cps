@@ -91,7 +91,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">新增任務</h5>
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                             <div id="str" class="str">
-                                <div class="row mb-2">
+                                <!--div class="row mb-2">
                                     <div class="col-10">
                                         <button class="btn btn-block btn-dark">1-1</button>
                                     </div>
@@ -130,7 +130,7 @@
                                     <div class="offset-2 col-8">
                                         <button class="btn btn-block btn-light">1-1-1</button>
                                     </div>
-                                </div>
+                                </div-->
                             </div>
                         </div>
                     </div>

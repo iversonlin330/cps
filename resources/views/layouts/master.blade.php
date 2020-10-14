@@ -167,40 +167,63 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li><span class="nav-link text-white">Hi, {{ Auth::user()->name }}</span></li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link  dropdown-toggle text-white" href="#" data-toggle="dropdown"
                            aria-expanded="false"> 選單列 </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a class="dropdown-item dropdown-toggle" href="#"> 考券專區 </a>
-                                <ul class="submenu submenu-left dropdown-menu">
-                                    <li><a class="dropdown-item" href="">我的考券</a></li>
-                                    <li><a class="dropdown-item" href="">所有考券</a></li>
-                                </ul>
-                            </li>
+                            @if(Auth::user()->role == 9)
+                                <li><a class="dropdown-item dropdown-toggle" href="#"> 考券專區 </a>
+                                    <ul class="submenu submenu-left dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url('exams') }}">我的考券</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('exams') }}">所有考券</a></li>
+                                    </ul>
+                                </li>
 
-                            <li><a class="dropdown-item dropdown-toggle" href="#">單元專區</a>
-                                <ul class="submenu submenu-left dropdown-menu">
-                                    <li><a class="dropdown-item" href="">我的單元</a></li>
-                                    <li><a class="dropdown-item" href="">所有單元</a></li>
-                                    <li><a class="dropdown-item" href="">審核單元</a></li>
-                                </ul>
-                            </li>
+                                <li><a class="dropdown-item dropdown-toggle" href="#">單元專區</a>
+                                    <ul class="submenu submenu-left dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url('units') }}">我的單元</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('units') }}">所有單元</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('units') }}">待審核單元</a></li>
+                                    </ul>
+                                </li>
 
-                            <li><a class="dropdown-item dropdown-toggle" href="#">作答記錄及成績</a>
-                                <ul class="submenu submenu-left dropdown-menu">
-                                    <li><a class="dropdown-item" href="">班級學習成績</a></li>
-                                    <li><a class="dropdown-item" href="">單元學習成績</a></li>
-                                </ul>
-                            </li>
+                                <li><a class="dropdown-item dropdown-toggle" href="#">作答記錄及成績</a>
+                                    <ul class="submenu submenu-left dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url('exams/score') }}">班級學習成績</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('units/score') }}">單元學習成績</a></li>
+                                    </ul>
+                                </li>
 
-                            <li><a class="dropdown-item dropdown-toggle" href="#">資料設定</a>
-                                <ul class="submenu submenu-left dropdown-menu">
-                                    <li><a class="dropdown-item" href="">學生資料設定</a></li>
-                                    <li><a class="dropdown-item" href="">教師資料設定</a></li>
-                                    <li><a class="dropdown-item" href="">學校窗口資料</a></li>
-                                    <li><a class="dropdown-item" href="">年度資料封存</a></li>
-                                </ul>
-                            </li>
+                                <li><a class="dropdown-item dropdown-toggle" href="#">資料設定</a>
+                                    <ul class="submenu submenu-left dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ url('students') }}">學生資料設定</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('teachers') }}">教師資料設定</a></li>
+                                        <li><a class="dropdown-item" href="">待審核教師資料</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('contacts') }}">學校窗口資料</a></li>
+                                    </ul>
+                                </li>
+                            @elseif(Auth::user()->role == 4)
+                                <li><a class="dropdown-item" href="{{ url('exams') }}">我的考券</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">我的單元</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">所有單元</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">班級學習成績</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">個人資料設定</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">班級資料設定</a>
+                            @elseif(Auth::user()->role == 3)
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">班級考券</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">個人學習專區</a>
+                                <li><a class="dropdown-item" href="{{ url('exams/score') }}">班級學習成績</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">個人學習成績</a>
+                                <li><a class="dropdown-item" href="{{ url('password') }}">密碼修改</a>
+                            @elseif(Auth::user()->role == 2)
+                                <li><a class="dropdown-item" href="{{ url('classrooms') }}">班級資料設定</a>
+                                <li><a class="dropdown-item" href="{{ url('teachers') }}">教師資料設定</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">個人資料設定</a>
+                            @elseif(Auth::user()->role == 1)
+                                <li><a class="dropdown-item" href="{{ url('units') }}">公開單元</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">作答記錄</a>
+                            @endif
                             <li><a class="dropdown-item" href="{{ url('logout') }}">登出</a>
                         </ul>
                     </li>

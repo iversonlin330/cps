@@ -19,8 +19,8 @@ class TaskController extends Controller
         //
         $data = $request->all();
         $unit_id = $data['unit_id'];
-        $tasks = Task::where("unit_id")->get();
-        return view('tasks.view', compact('unit_id','tasks'));
+        $tasks = Task::where("unit_id", $unit_id)->get();
+        return view('tasks.view', compact('unit_id', 'tasks'));
     }
 
     /**
@@ -28,12 +28,16 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $data = $request->all();
+        $task_id = $data['task_id'];
+        $task = Task::find($task_id);
+
         $targets = config('map.target');
         $scoreNum = 5;
-        return view('tasks.create', compact('targets', 'scoreNum'));
+        return view('tasks.create', compact('targets', 'scoreNum', 'task'));
     }
 
     /**
@@ -47,8 +51,9 @@ class TaskController extends Controller
     {
         //
         $data = $request->except('_token');
-        $data['content'] = explode(',',$data['content']);
-        dd($data);
+        $content = $data['content'];
+        $data['content'] = [];
+        $data['content']['count'] = explode(',', $content);
         $model = new Task;
         $model->fill($data);
         $model->save();
@@ -63,7 +68,7 @@ class TaskController extends Controller
         }
         */
 
-        return redirect('task');
+        return redirect('tasks');
     }
 
     /**
