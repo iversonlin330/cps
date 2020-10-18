@@ -7,7 +7,23 @@ use Illuminate\Http\Request;
 
 class CycleController extends Controller
 {
-    /**
+    public function newCycle()
+    {
+        //
+		$cycle = Cycle::orderby('created_at', 'desc')->first();
+		
+		//$new_cycle = $cycle_name = (date("yy") - 1911)."1";
+		
+		$new_cycle = (date("yy") - 1911).(substr($cycle->name,-1)+1);
+		
+		$model = new Cycle;
+		$model->name = $new_cycle;
+		$model->save();
+		
+		return back();
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

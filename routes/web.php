@@ -21,6 +21,7 @@ Route::get('/login', 'LoginController@login');
 Route::post('/login', 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
+Route::post('/newCycle', 'CycleController@newCycle');
 Route::get('/main', 'LoginController@main');
 Route::get('/exams/score', 'ExamController@score');
 Route::get('/exams/score-detail', 'ExamController@scoreDetail');

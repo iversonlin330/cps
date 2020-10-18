@@ -101,7 +101,7 @@
                                                     </div>
                                                 @endfor
                                             </div>
-                                            <div id="no_item_{{ $q_id }}">
+                                            <div id="no_item_{{ $q_id }}" style="display:none">
                                                 <select name="goto[{{$q_id}}]"
                                                         class="form-control form-control-sm">
                                                     <option>前往題組</option>
@@ -215,6 +215,8 @@
                 $("#no_item_"+qid).show();
             }
         }
+		
+		$("#myTab a:eq(0)").click();
     </script>
 @endsection
 

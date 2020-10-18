@@ -68,7 +68,7 @@ class TaskController extends Controller
         }
         */
 
-        return redirect('tasks');
+        return redirect('tasks/create?task_id='.$model->id);
     }
 
     /**
