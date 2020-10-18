@@ -37,7 +37,7 @@
                         <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                            <button type="button" class="btn btn-secondary btn-sm">編輯</button>
+                            <a href="{{ url('tasks/create?task_id='.$task->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                         </td>
                         <td>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"

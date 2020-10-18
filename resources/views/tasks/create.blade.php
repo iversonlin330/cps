@@ -15,85 +15,113 @@
             </ul>
         </div>
         <div class="col-1 ml-auto">
-            <a href="{{ url('tasks') }}" class="btn btn-warning">儲存</a>
+            <a id="submit_btn" class="btn btn-warning">儲存</a>
         </div>
         <div class="col-12">
-            <!-- Tab panes -->
-            <div class="tab-content" style="max-height: 90vh;overflow-y: auto;">
-                @foreach($task->content['count'] as $index => $value)
-                    <div class="tab-pane" id="tab_{{ $index }}" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="d-flex justify-content-center" style="background-color: #fff5dd;">
-                            <div class="row" style="width:80%;">
-                                @for( $sub = 0; $sub < $value; $sub++)
-                                    <div class="col-12 font-weight-bold mt-4" style="font-size:22px;">
-                                        {{ $task->order }}-{{ $index+1 }}{{ ($sub == 0)? '' : '-' . $sub }}
-                                    </div>
-                                    <div class="col-12 bg-white p-4">
-                                        <div class="row mb-2">
-                                            <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述</div>
-                                            <div class="col-3">
-                                                <select name="is_item[{{$index}}][{{$sub}}]" class="form-control">
-                                                    <option value="1">有選項欄位</option>
-                                                    <option value="0">無選項欄位</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-4">
-                                                <select name="target[{{$index}}][{{$sub}}]" class="form-control">
-                                                    <option>選擇測試指標</option>
-                                                    @foreach($targets as $k=>$v)
-                                                        <option value="{{ $k }}">{{ $v }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+            <form id="main_form" action="{{ url('tasks/'.$task->id) }}" method="post">
+                @method("put")
+                @csrf
+                <div class="tab-content" style="max-height: 90vh;overflow-y: auto;">
+                    <!-- Tab panes -->
+                    <input type="text" name="count" value="{{ implode(',',$task->content['count']) }}" hidden>
+                    @php
+                        $q_id = 0;
+                    @endphp
+                    @foreach($task->content['count'] as $index => $value)
+                        <div class="tab-pane" id="tab_{{ $index }}" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="d-flex justify-content-center" style="background-color: #fff5dd;">
+                                <div class="row" style="width:80%;">
+                                    @for( $sub = 0; $sub < $value; $sub++)
+                                        <div class="col-12 font-weight-bold mt-4" style="font-size:22px;">
+                                            {{ $task->order }}-{{ $index+1 }}{{ ($sub == 0)? '' : '-' . $sub }}
                                         </div>
-                                        <textarea class="form-control mb-2" placeholder="敘述一"
-                                                  name="desc1[{{$index}}][{{$sub}}]"></textarea>
-                                        <textarea class="form-control mb-2" placeholder="敘述二"
-                                                  name="desc2[{{$index}}][{{$sub}}]"></textarea>
-                                        <textarea class="form-control mb-2" placeholder="敘述三"
-                                                  name="desc3[{{$index}}][{{$sub}}]"></textarea>
-                                        <textarea class="form-control mb-2" placeholder="敘述四"
-                                                  name="desc4[{{$index}}][{{$sub}}]"></textarea>
-                                        <textarea class="form-control mb-2" placeholder="敘述五"
-                                                  name="desc5[{{$index}}][{{$sub}}]"></textarea>
-                                        <div class="form-group">
-                                            <label>圖片</label>
-                                            <input name="pic[{{$index}}][{{$sub}}]" type="text" class="form-control"
-                                                   placeholder="輸入圖片網址...">
-                                        </div>
-                                        <div class="mb-2 font-weight-bold is_item" style="font-size:22px;">選項內容</div>
-                                        @for($i=0;$i<=4;$i++)
+                                        <div class="col-12 bg-white p-4">
                                             <div class="row mb-2">
-                                                <div class="col-8">
-                                                    <textarea name="question[{{$index}}][{{$sub}}][{{$i}}]"
-                                                              class="form-control" placeholder="選項一"></textarea>
+                                                <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述
                                                 </div>
-                                                <div class="col-2">
-                                                    <select class="form-control form-control-sm">
-                                                        <option>前往題組</option>
-                                                        @for( $goto = $sub+1; $goto < $value; $goto++)
-                                                            <option value="{{ $goto }}">{{ $task->order }}
-                                                                -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
-                                                        @endfor
+                                                <div class="col-3">
+                                                    <select name="is_item[{{$q_id}}]" class="form-control" data-qid="{{ $q_id }}" onchange="item_change(this)">
+                                                        <option value="1">有選項欄位</option>
+                                                        <option value="0">無選項欄位</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-2">
-                                                    <select class="form-control form-control-sm">
-                                                        <option name="score[{{$index}}][{{$sub}}][{{$i}}]">配分</option>
-                                                        @for($j=1;$j<=$scoreNum;$j++)
-                                                            <option value="{{ $j }}">{{ $j }}</option>
-                                                        @endfor
+                                                <div class="col-4">
+                                                    <select name="target[{{$q_id}}]" class="form-control">
+                                                        <option>選擇測試指標</option>
+                                                        @foreach($targets as $k=>$v)
+                                                            <option value="{{ $k }}">{{ $v }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                        @endfor
-                                    </div>
-                                @endfor
+                                            <textarea class="form-control mb-2" placeholder="敘述一"
+                                                      name="desc1[{{$q_id}}]"></textarea>
+                                            <textarea class="form-control mb-2" placeholder="敘述二"
+                                                      name="desc2[{{$q_id}}]"></textarea>
+                                            <textarea class="form-control mb-2" placeholder="敘述三"
+                                                      name="desc3[{{$q_id}}]"></textarea>
+                                            <textarea class="form-control mb-2" placeholder="敘述四"
+                                                      name="desc4[{{$q_id}}]"></textarea>
+                                            <textarea class="form-control mb-2" placeholder="敘述五"
+                                                      name="desc5[{{$q_id}}]"></textarea>
+                                            <div class="form-group">
+                                                <label>圖片</label>
+                                                <input name="pic[{{$q_id}}]" type="text" class="form-control"
+                                                       placeholder="輸入圖片網址...">
+                                            </div>
+                                            <div id="is_item_{{ $q_id }}">
+                                                <div class="mb-2 font-weight-bold" style="font-size:22px;">選項內容
+                                                </div>
+                                                @for($i=0;$i<=4;$i++)
+                                                    <div class="row mb-2">
+                                                        <div class="col-8">
+                                                    <textarea name="question[{{$q_id}}][{{$i}}]"
+                                                              class="form-control"
+                                                              placeholder="選項{{config('map.chineseNum')[$i+1]}}"></textarea>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <select name="goto[{{$q_id}}][{{$i}}]"
+                                                                    class="form-control form-control-sm">
+                                                                <option>前往題組</option>
+                                                                @for( $goto = $sub+1; $goto < $value; $goto++)
+                                                                    <option value="{{ $goto }}">{{ $task->order }}
+                                                                        -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <select class="form-control form-control-sm">
+                                                                <option name="score[{{$q_id}}][{{$i}}]">配分
+                                                                </option>
+                                                                @for($j=1;$j<=$scoreNum;$j++)
+                                                                    <option value="{{ $j }}">{{ $j }}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                            <div id="no_item_{{ $q_id }}">
+                                                <select name="goto[{{$q_id}}]"
+                                                        class="form-control form-control-sm">
+                                                    <option>前往題組</option>
+                                                    @for( $goto = $sub+1; $goto < $value; $goto++)
+                                                        <option value="{{ $goto }}">{{ $task->order }}
+                                                            -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+                                        @php
+                                            $q_id++;
+                                        @endphp
+                                    @endfor
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            </form>
         </div>
     </div>
 
@@ -171,6 +199,22 @@
             e.target // newly activated tab
             e.relatedTarget // previous active tab
         })
+
+        $("#submit_btn").click(function () {
+            $('#main_form').submit();
+        });
+
+        function item_change(obj){
+            let is_item = $(obj).val();
+            let qid = $(obj).data('qid');
+            if(is_item == 1){
+                $("#is_item_"+qid).show();
+                $("#no_item_"+qid).hide();
+            }else{
+                $("#is_item_"+qid).hide();
+                $("#no_item_"+qid).show();
+            }
+        }
     </script>
 @endsection
 

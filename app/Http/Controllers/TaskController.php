@@ -103,6 +103,10 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
+        $data = $request->except(['_token','_method']);
+        $count = explode(',', $data['count']);;
+        $data['count'] = $count;
+        dd($data);
     }
 
     /**
