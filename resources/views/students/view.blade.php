@@ -9,15 +9,20 @@
                 <a href="{{ url('students/create-multi') }}" class="btn btn-warning">批次新增</a>
             </div>
             <div class="float-right">
-                <form class="form-inline float-right">
-                    <select class="form-control mr-sm-2">
+                <form action="{{ url('students') }}" class="form-inline float-right">
+                    <select name="cycle_id" class="form-control mr-sm-2">
+                        @foreach($cycles as $cycle)
+                            <option value="{{ $cycle->id }}">{{ $cycle->name }}</option>
+                        @endforeach
                         <option>109/01/01~109/12/31</option>
                     </select>
-                    <select class="form-control mr-sm-2">
-                        <option>縣市</option>
+                    <select name="city_id" class="form-control mr-sm-2">
+                        @foreach($citys as $city => $school)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
                     </select>
-                    <select class="form-control mr-sm-2">
-                        <option>學校</option>
+                    <select name="school_id" class="form-control mr-sm-2">
+                        <option value="">學校</option>
                     </select>
                     <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
@@ -44,23 +49,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+                @foreach($users as $user)
                     <tr>
-                        <td>109</td>
-                        <td>新北市立文德國民小學</td>
-                        <td>五年丁班</td>
-                        <td>50</td>
-                        <td>黃小玲</td>
-                        <td>女</td>
-                        <td>000001</td>
-                        <td>000001</td>
-                        <td>是</td>
+                        <td>{{ $user->cycle->name }}</td>
+                        <td>{{ $user->school->fullName() }}</td>
+                        <td>{{ $user->classroom_id }}</td>
+                        <td>{{ $user->seat_number }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ config('map.gender')[$user->gender] }}</td>
+                        <td>{{ $user->account }}</td>
+                        <td>{{ $user->password }}</td>
+                        <td>{{ config('map.boolean')[$user->is_local] }}</td>
                         <td>
                             <button type="button" class="btn btn-warning btn-sm">編輯</button>
                             <button type="button" class="btn btn-warning btn-sm">刪除</button>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -105,4 +110,19 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html);
+        });
+        $("[name='city_id']").trigger('change');
+    </script>
 @endsection

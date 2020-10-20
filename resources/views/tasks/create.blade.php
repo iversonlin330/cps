@@ -40,14 +40,15 @@
                                                 <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述
                                                 </div>
                                                 <div class="col-3">
-                                                    <select name="is_item[{{$q_id}}]" class="form-control" data-qid="{{ $q_id }}" onchange="item_change(this)">
-                                                        <option value="1">有選項欄位</option>
+                                                    <select name="is_item[{{$q_id}}]" class="form-control"
+                                                            data-qid="{{ $q_id }}" onchange="item_change(this)"
+                                                            required>
+                                                        <option value="1" selected>有選項欄位</option>
                                                         <option value="0">無選項欄位</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-4">
-                                                    <select name="target[{{$q_id}}]" class="form-control">
-                                                        <option>選擇測試指標</option>
+                                                    <select name="target[{{$q_id}}]" class="form-control" required>
                                                         @foreach($targets as $k=>$v)
                                                             <option value="{{ $k }}">{{ $v }}</option>
                                                         @endforeach
@@ -55,7 +56,7 @@
                                                 </div>
                                             </div>
                                             <textarea class="form-control mb-2" placeholder="敘述一"
-                                                      name="desc1[{{$q_id}}]"></textarea>
+                                                      name="desc1[{{$q_id}}]" required></textarea>
                                             <textarea class="form-control mb-2" placeholder="敘述二"
                                                       name="desc2[{{$q_id}}]"></textarea>
                                             <textarea class="form-control mb-2" placeholder="敘述三"
@@ -82,7 +83,8 @@
                                                         <div class="col-2">
                                                             <select name="goto[{{$q_id}}][{{$i}}]"
                                                                     class="form-control form-control-sm">
-                                                                <option>前往題組</option>
+                                                                <option value="next">前往下一任務</option>
+                                                                <option value="quit">結束</option>
                                                                 @for( $goto = $sub+1; $goto < $value; $goto++)
                                                                     <option value="{{ $goto }}">{{ $task->order }}
                                                                         -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
@@ -90,8 +92,9 @@
                                                             </select>
                                                         </div>
                                                         <div class="col-2">
-                                                            <select class="form-control form-control-sm">
-                                                                <option name="score[{{$q_id}}][{{$i}}]">配分
+                                                            <select name="score[{{$q_id}}][{{$i}}]"
+                                                                    class="form-control form-control-sm">
+                                                                <option disabled selected hidden>配分
                                                                 </option>
                                                                 @for($j=1;$j<=$scoreNum;$j++)
                                                                     <option value="{{ $j }}">{{ $j }}</option>
@@ -104,7 +107,8 @@
                                             <div id="no_item_{{ $q_id }}" style="display:none">
                                                 <select name="goto[{{$q_id}}]"
                                                         class="form-control form-control-sm">
-                                                    <option>前往題組</option>
+                                                    <option value="next">前往下一任務</option>
+                                                    <option value="quit">結束</option>
                                                     @for( $goto = $sub+1; $goto < $value; $goto++)
                                                         <option value="{{ $goto }}">{{ $task->order }}
                                                             -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
@@ -124,75 +128,7 @@
             </form>
         </div>
     </div>
-
-    <!-- Button trigger modal -->
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">各項指標分數</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col">指標</th>
-                            <th scope="col">過往平均</th>
-                            <th scope="col">滿分</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @for($i=0;$i<=305;$i++)
-                            <tr>
-                                <td>A1發現團隊成員的觀點與能力</td>
-                                <td>3</td>
-                                <td>5</td>
-                            </tr>
-                        @endfor
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">新增單元</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ url('login') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label>單元名稱</label>
-                            <input name="account" type="text" class="form-control" placeholder="輸入單元名稱...">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="{{ url('tasks') }}" class="btn btn-r">確認</a>
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+@endsection
 @section('script')
     <script>
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -204,20 +140,18 @@
             $('#main_form').submit();
         });
 
-        function item_change(obj){
+        function item_change(obj) {
             let is_item = $(obj).val();
             let qid = $(obj).data('qid');
-            if(is_item == 1){
-                $("#is_item_"+qid).show();
-                $("#no_item_"+qid).hide();
-            }else{
-                $("#is_item_"+qid).hide();
-                $("#no_item_"+qid).show();
+            if (is_item == 1) {
+                $("#is_item_" + qid).show();
+                $("#no_item_" + qid).hide();
+            } else {
+                $("#is_item_" + qid).hide();
+                $("#no_item_" + qid).show();
             }
         }
-		
-		$("#myTab a:eq(0)").click();
-    </script>
-@endsection
 
+        $("#myTab a:eq(0)").click();
+    </script>
 @endsection

@@ -31,6 +31,9 @@ Route::post('/exams/order', 'ExamController@order');
 Route::get('/units/start', 'UnitController@start');
 Route::get('/units/result', 'UnitController@result');
 
+Route::get('/students/create-multi', 'StudentController@createMulti');
+Route::post('/students/create-multi', 'StudentController@postCreateMulti');
+
 Route::resource("users", "UserController");
 Route::resource("cycles", "CycleController");
 Route::resource("classrooms", "ClassroomController");
@@ -41,7 +44,6 @@ Route::resource("contacts", "ContactController");
 
 Route::get('/teachers/verify', 'TeacherController@verify');
 Route::resource("teachers", "TeacherController");
-Route::get('/students/create-multi', 'StudentController@createMulti');
 Route::resource("students", "StudentController");
 
 

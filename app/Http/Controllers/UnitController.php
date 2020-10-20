@@ -27,10 +27,21 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $units = Unit::all();
+        $data = $request->all();
+
+        $units = Unit::where(function ($query) use ($data) {
+                if ($data) {
+                    foreach ($data as $k => $v) {
+                        if ($v) {
+                            $query->orWhere($k, 'like', '%' . $v . '%');
+                        }
+                    }
+                }
+            })
+            ->get();
 
 		return view('units.view',compact('units'));
     }

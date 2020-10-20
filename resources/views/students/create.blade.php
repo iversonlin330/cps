@@ -18,12 +18,14 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">學校</label>
                                 <div class="col-4">
-                                    <select name="city" class="form-control">
-                                        <option>新北市</option>
+                                    <select name="city_id" class="form-control">
+                                        @foreach($citys as $city => $school)
+                                            <option value="{{ $city }}">{{ $city }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-5">
-                                    <select name="school" class="form-control">
+                                    <select name="school_id" class="form-control">
                                         <option>文德國小</option>
                                     </select>
                                 </div>
@@ -105,4 +107,32 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html);
+        });
+        $("[name='city_id']").trigger('change');
+
+            @if(isset($user))
+        var user = @json($user);
+        for (const [key, value] of Object.entries(user)) {
+            if (key == 'gender') {
+                continue;
+            }
+            $("[name='" + key + "']").val(value);
+        }
+        $("[name='city_id']").trigger('change');
+        $("[name='school_id']").val(user['school_id']);
+        $("[name='gender']").filter('[value=' + user.gender + ']').prop('checked', true);
+        @endif
+    </script>
 @endsection

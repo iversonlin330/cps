@@ -17,6 +17,7 @@ class CreateUnitsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('is_open');
+            $table->integer('status');//1-草稿 5-送審中 9-已審核
             $table->integer('user_id');
             $table->timestamps();
         });

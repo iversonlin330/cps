@@ -37,7 +37,8 @@
                         <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                            <a href="{{ url('tasks/create?task_id='.$task->id) }}" class="btn btn-secondary btn-sm">編輯</a>
+                            <a href="{{ url('tasks/create?task_id='.$task->id) }}"
+                               class="btn btn-secondary btn-sm">編輯</a>
                         </td>
                         <td>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
@@ -66,20 +67,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col">任務名稱</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @for($i=0;$i<=305;$i++)
-                            <tr>
-                                <td>確定使用何種方式進行調查</td>
-                            </tr>
-                        @endfor
-                        </tbody>
-                    </table>
+                    <ul id="group_sort">
+                        @foreach($tasks as $task)
+                            <li class="btn btn-light add-btn mt-2 btn-block">{{ $task->name }}
+                                <input name="order[]" value="{{ $task->id }}" hidden>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
@@ -145,6 +139,7 @@
 @endsection
 @section('script')
     <script>
+        $("#group_sort").sortable();
         let str_array = [];
 
         function add_parent() {
@@ -191,20 +186,20 @@
                 for (let y = 1; y <= str_array[x - 1]; y++) {
                     if (y == 1) {
                         html = html + "<div class=\"row mb-2\">\n" +
-                            "                                    <div class=\"col-10\">\n" +
-                            "                                        <a class=\"btn btn-block btn-dark\">" + order + "-" + x + "</a>\n" +
-                            "                                    </div>\n" +
-                            "                                    <div class=\"col-2\">\n" +
-                            "                                        <a class=\"btn btn-light\" onclick=\"add_sub("+(x-1)+")\">＋</a>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>";
+                            "              <div class=\"col-10\">\n" +
+                            "                  <a class=\"btn btn-block btn-dark\">" + order + "-" + x + "</a>\n" +
+                            "              </div>\n" +
+                            "              <div class=\"col-2\">\n" +
+                            "                  <a class=\"btn btn-light\" onclick=\"add_sub(" + (x - 1) + ")\">＋</a>\n" +
+                            "              </div>\n" +
+                            "           </div>";
                         console.log(order + "-" + x);
                     } else {
                         html = html + "<div class=\"row mb-2\">\n" +
-                            "                                    <div class=\"offset-2 col-8\">\n" +
-                            "                                        <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>";
+                            "              <div class=\"offset-2 col-8\">\n" +
+                            "                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
+                            "              </div>\n" +
+                            "          </div>";
                         console.log(order + "-" + x + "-" + (y - 1));
                     }
 
