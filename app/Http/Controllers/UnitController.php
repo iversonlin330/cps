@@ -10,19 +10,21 @@ use Illuminate\Support\Facades\Auth;
 class UnitController extends Controller
 {
 
-	public function start()
+    public function start($id)
     {
         //
-		return view('units.start');
+        $unit = Unit::find($id);
+
+        return view('units.start', compact('unit'));
     }
 
-	public function result()
+    public function result()
     {
         //
-		return view('units.result');
+        return view('units.result');
     }
 
-	/**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -33,17 +35,17 @@ class UnitController extends Controller
         $data = $request->all();
 
         $units = Unit::where(function ($query) use ($data) {
-                if ($data) {
-                    foreach ($data as $k => $v) {
-                        if ($v) {
-                            $query->orWhere($k, 'like', '%' . $v . '%');
-                        }
+            if ($data) {
+                foreach ($data as $k => $v) {
+                    if ($v) {
+                        $query->orWhere($k, 'like', '%' . $v . '%');
                     }
                 }
-            })
+            }
+        })
             ->get();
 
-		return view('units.view',compact('units'));
+        return view('units.view', compact('units'));
     }
 
     /**
@@ -59,7 +61,7 @@ class UnitController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -71,13 +73,13 @@ class UnitController extends Controller
         $model->fill($data);
         $model->save();
 
-        return redirect('tasks/?unit_id='.$model->id);
+        return redirect('tasks/?unit_id=' . $model->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param \App\Unit $unit
      * @return \Illuminate\Http\Response
      */
     public function show(Unit $unit)
@@ -88,7 +90,7 @@ class UnitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Unit  $unit
+     * @param \App\Unit $unit
      * @return \Illuminate\Http\Response
      */
     public function edit(Unit $unit)
@@ -99,8 +101,8 @@ class UnitController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Unit  $unit
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Unit $unit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Unit $unit)
@@ -111,7 +113,7 @@ class UnitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Unit  $unit
+     * @param \App\Unit $unit
      * @return \Illuminate\Http\Response
      */
     public function destroy(Unit $unit)

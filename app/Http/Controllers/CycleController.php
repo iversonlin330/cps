@@ -10,20 +10,29 @@ class CycleController extends Controller
     public function newCycle()
     {
         //
-		$cycle = Cycle::orderby('created_at', 'desc')->first();
-		
-		//$new_cycle = $cycle_name = (date("yy") - 1911)."1";
-		
-		$new_cycle = (date("yy") - 1911).(substr($cycle->name,-1)+1);
-		
-		$model = new Cycle;
-		$model->name = $new_cycle;
-		$model->save();
-		
-		return back();
+        $cycle = Cycle::orderby('created_at', 'desc')->first();
+
+        //$new_cycle = $cycle_name = (date("yy") - 1911)."1";
+
+        $year = substr($cycle->name, 0, 3);
+        $period = substr($cycle->name, -1);
+
+        if ($period == 1) {
+            $new_cycle = $year.($period+1);
+        } else {
+            $new_cycle = ($year+1)."1";
+        }
+
+        //$new_cycle = (date("yy") - 1911) . (substr($cycle->name, -1) + 1);
+
+        $model = new Cycle;
+        $model->name = $new_cycle;
+        $model->save();
+
+        return back();
     }
-	
-	/**
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -47,7 +56,7 @@ class CycleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -65,7 +74,7 @@ class CycleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cycle  $cycle
+     * @param \App\Cycle $cycle
      * @return \Illuminate\Http\Response
      */
     public function show(Cycle $cycle)
@@ -76,7 +85,7 @@ class CycleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cycle  $cycle
+     * @param \App\Cycle $cycle
      * @return \Illuminate\Http\Response
      */
     public function edit(Cycle $cycle)
@@ -87,8 +96,8 @@ class CycleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cycle  $cycle
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Cycle $cycle
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Cycle $cycle)
@@ -99,7 +108,7 @@ class CycleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cycle  $cycle
+     * @param \App\Cycle $cycle
      * @return \Illuminate\Http\Response
      */
     public function destroy(Cycle $cycle)

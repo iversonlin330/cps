@@ -37,7 +37,17 @@ class TaskController extends Controller
 
         $targets = config('map.target');
         $scoreNum = 5;
-        return view('tasks.create', compact('targets', 'scoreNum', 'task'));
+
+        $map = [];
+        $q_id = 0;
+        foreach ($task->content['count'] as $index => $q_count) {
+            for ($sub = 0; $sub < $q_count; $sub++) {
+                $map[$index][$sub] = $q_id;
+                $q_id++;
+            }
+        }
+
+        return view('tasks.create', compact('targets', 'scoreNum', 'task', 'map'));
     }
 
     /**
@@ -68,7 +78,7 @@ class TaskController extends Controller
         }
         */
 
-        return redirect('tasks/create?task_id='.$model->id);
+        return redirect('tasks/create?task_id=' . $model->id);
     }
 
     /**
@@ -103,10 +113,18 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
-        $data = $request->except(['_token','_method']);
+        $data = $request->except(['_token', '_method']);
         $count = explode(',', $data['count']);;
         $data['count'] = $count;
-        dd($data);
+
+        $result = [];
+        $result['content'] = $data;
+
+        //$model = new Task;
+        $task->fill($result);
+        $task->save();
+
+        return redirect('tasks?unit_id=' . $task->unit_id);
     }
 
     /**

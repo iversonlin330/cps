@@ -27,11 +27,11 @@
                     @php
                         $q_id = 0;
                     @endphp
-                    @foreach($task->content['count'] as $index => $value)
+                    @foreach($task->content['count'] as $index => $q_count)
                         <div class="tab-pane" id="tab_{{ $index }}" role="tabpanel" aria-labelledby="home-tab">
                             <div class="d-flex justify-content-center" style="background-color: #fff5dd;">
                                 <div class="row" style="width:80%;">
-                                    @for( $sub = 0; $sub < $value; $sub++)
+                                    @for( $sub = 0; $sub < $q_count; $sub++)
                                         <div class="col-12 font-weight-bold mt-4" style="font-size:22px;">
                                             {{ $task->order }}-{{ $index+1 }}{{ ($sub == 0)? '' : '-' . $sub }}
                                         </div>
@@ -84,20 +84,25 @@
                                                             <select name="goto[{{$q_id}}][{{$i}}]"
                                                                     class="form-control form-control-sm">
                                                                 <option value="next">前往下一任務</option>
-                                                                <option value="quit">結束</option>
-                                                                @for( $goto = $sub+1; $goto < $value; $goto++)
-                                                                    <option value="{{ $goto }}">{{ $task->order }}
+                                                                @for( $goto = $sub+1; $goto < $q_count; $goto++)
+                                                                    <option
+                                                                        value="{{ $map[$index][$goto] }}">{{ $task->order }}
                                                                         -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
                                                                 @endfor
+                                                                @if($index < count($task->content['count'])-1)
+                                                                    <option
+                                                                        value="{{ $map[$index+1][0] }}">{{ $task->order }}
+                                                                        -{{ $index+2 }}</option>
+                                                                @endif
                                                             </select>
                                                         </div>
                                                         <div class="col-2">
                                                             <select name="score[{{$q_id}}][{{$i}}]"
                                                                     class="form-control form-control-sm">
-                                                                <option disabled selected hidden>配分
-                                                                </option>
-                                                                @for($j=1;$j<=$scoreNum;$j++)
-                                                                    <option value="{{ $j }}">{{ $j }}</option>
+                                                                <!--option disabled selected hidden>配分
+                                                                </option-->
+                                                                @for($j=1; $j<=$scoreNum; $j++)
+                                                                    <option value="{{ $j }}" selected>{{ $j }}</option>
                                                                 @endfor
                                                             </select>
                                                         </div>
@@ -108,11 +113,15 @@
                                                 <select name="goto[{{$q_id}}]"
                                                         class="form-control form-control-sm">
                                                     <option value="next">前往下一任務</option>
-                                                    <option value="quit">結束</option>
-                                                    @for( $goto = $sub+1; $goto < $value; $goto++)
+                                                    @for( $goto = $sub+1; $goto < $q_count; $goto++)
                                                         <option value="{{ $goto }}">{{ $task->order }}
                                                             -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
                                                     @endfor
+                                                    @if($index < count($task->content['count'])-1)
+                                                        <option
+                                                            value="{{ $map[$index+1][0] }}">{{ $task->order }}
+                                                            -{{ $index+2 }}</option>
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>

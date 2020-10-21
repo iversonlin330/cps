@@ -104,7 +104,7 @@
                             <input name="name" type="text" class="form-control" placeholder="輸入任務名稱...">
                         </div>
                         <hr>
-                        <div class="px-5">
+                        <div class="px-1">
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <a id="add-task" class="btn btn-r float-right" onclick="add_parent()">新增架構
@@ -179,6 +179,18 @@
             refresh();
         }
 
+        function delete_sub(num) {
+            /*
+            //let parentNo = $(obj).data('parent');
+            let newNo = str_array[num].length + 1;
+            //$(obj).parent('div').find('row').after();
+            str_array[num].push(newNo);
+             */
+            let newNo = str_array[num] - 1;
+            str_array[num] = newNo;
+            refresh();
+        }
+
         function refresh() {
             let order = $("[name='order']").val();
             let html = "";
@@ -186,17 +198,21 @@
                 for (let y = 1; y <= str_array[x - 1]; y++) {
                     if (y == 1) {
                         html = html + "<div class=\"row mb-2\">\n" +
-                            "              <div class=\"col-10\">\n" +
+                            "              <div class=\"col-9\">\n" +
                             "                  <a class=\"btn btn-block btn-dark\">" + order + "-" + x + "</a>\n" +
                             "              </div>\n" +
-                            "              <div class=\"col-2\">\n" +
-                            "                  <a class=\"btn btn-light\" onclick=\"add_sub(" + (x - 1) + ")\">＋</a>\n" +
+                            "              <div class=\"col-3\">\n" +
+                            "                  <button class=\"btn btn-light\" onclick=\"add_sub(" + (x - 1) + ")\">＋</button>\n" +
+                            "                  <button class=\"btn btn-light\" onclick=\"delete_sub(" + (x - 1) + ")\">－</button>\n" +
                             "              </div>\n" +
+                            //"              <div class=\"col-2\">\n" +
+                            //"                  <a class=\"btn btn-light\" onclick=\"delete_sub(" + (x - 1) + ")\">－</a>\n" +
+                            //"              </div>\n" +
                             "           </div>";
                         console.log(order + "-" + x);
                     } else {
                         html = html + "<div class=\"row mb-2\">\n" +
-                            "              <div class=\"offset-2 col-8\">\n" +
+                            "              <div class=\"offset-1 col-8\">\n" +
                             "                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
                             "              </div>\n" +
                             "          </div>";

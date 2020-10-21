@@ -33,7 +33,9 @@ class DatabaseSeeder extends Seeder
         $cycle_name = (date("yy") - 1911)."1";
 
         DB::table('cycles')->insert([
-            'name' => $cycle_name
+            'name' => $cycle_name,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 }

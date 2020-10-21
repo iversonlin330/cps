@@ -20,7 +20,6 @@ class StudentController extends Controller
 
         if ($user) {
             return $user->account + 1;
-
         } else {
             $new_school_id = str_pad($school_id, 3, '0', STR_PAD_LEFT);
             return $cycle->name . $new_school_id . "001";
