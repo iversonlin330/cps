@@ -17,7 +17,7 @@ class CreateUserUnitTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('unit_id');
-            $table->integer('score');
+            $table->text('score');
             $table->timestamps();
         });
     }

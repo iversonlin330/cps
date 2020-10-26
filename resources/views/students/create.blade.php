@@ -123,7 +123,7 @@
         $("[name='city_id']").trigger('change');
 
             @if(isset($user))
-        var user = @json($user);
+        let user = @json($user);
         for (const [key, value] of Object.entries(user)) {
             if (key == 'gender') {
                 continue;

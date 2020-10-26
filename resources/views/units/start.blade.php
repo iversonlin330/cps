@@ -15,80 +15,105 @@
                 </div>
             </div>
         </div>
-        @foreach($unit->tasks as $task)
-            @php
-                $q_id = 0;
-            @endphp
-            @foreach($task['content']['count'] as $index => $q_count)
-                @for($i = 0; $i < $q_count; $i++)
-                    <div class="row" style="padding-top:24px">
-                        <div class="col-6 pr-0">
-                            <div class="pl-4 exam-content bg-brown">
-                                <div class="row">
-                                    <div class="col-12 mt-4 exam-content-title">題目</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 mt-4 exam-content-text">
-                                        <ul>
-                                            @if($task['content']['desc1'][$q_id])
-                                                <li>{{ $task['content']['desc1'][$q_id] }}</li>
-                                            @endif
-                                            @if($task['content']['desc2'][$q_id])
-                                                <li>{{ $task['content']['desc2'][$q_id] }}</li>
-                                            @endif
-                                            @if($task['content']['desc3'][$q_id])
-                                                <li>{{ $task['content']['desc3'][$q_id] }}</li>
-                                            @endif
-                                            @if($task['content']['desc4'][$q_id])
-                                                <li>{{ $task['content']['desc4'][$q_id] }}</li>
-                                            @endif
-                                            @if($task['content']['desc5'][$q_id])
-                                                <li>{{ $task['content']['desc5'][$q_id] }}</li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 mt-4 exam-content-title">選項</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 mt-4 exam-content-text">
-                                        @if($task['content']['is_item'][$q_id])
-                                            @for($j = 0; $j < 5; $j++)
-                                                @if($task['content']['question'][$q_id][$j])
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio"
-                                                               name="answer[{{$task->id}}][{{$q_id}}]"
-                                                               value="{{ $task['content']['score'][$q_id][$j] }}">
-                                                        <label class="form-check-label" for="exampleRadios1">
-                                                            {{ $task['content']['question'][$q_id][$j] }}
-                                                        </label>
-                                                    </div>
-                                                @endif
-                                            @endfor
-                                        @else
-                                            <a class="btn btn-r">前往下一題</a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <div class="d-flex justify-content-center exam-img bg-white p-4">
-                                <img class="m-auto"
-                                     src="{{ $task['content']['pic'][$q_id] }}">
-                            </div>
-                        </div>
-                    </div>
+        <form action="{{ url('user_unit') }}" method="post">
+            @foreach($unit->tasks as $task_index =>$task)
                 @php
-                    $q_id++;
+                    $q_id = 0;
                 @endphp
-            @endfor
-        @endforeach
-    @endforeach
-    <!--div class="d-flex justify-content-center">
-		<input type="submit" class="btn  btn-light" style="width: 83px;margin-top:20px;" value="上一步">
-			<input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="確認">
-		</div-->
+                @foreach($task['content']['count'] as $index => $q_count)
+                    @for($i = 0; $i < $q_count; $i++)
+                        <div id="q_{{ $task_index }}_{{ $q_id }}" class="row question"
+                             style="padding-top:24px;display: none;">
+                            <div class="col-6 pr-0">
+                                <div class="pl-4 exam-content bg-brown">
+                                    <div class="row">
+                                        <div class="col-12 mt-4 exam-content-title">題目</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-4 exam-content-text">
+                                            <ul>
+                                                @if($task['content']['desc1'][$q_id])
+                                                    <li>{{ $task['content']['desc1'][$q_id] }}</li>
+                                                @endif
+                                                @if($task['content']['desc2'][$q_id])
+                                                    <li>{{ $task['content']['desc2'][$q_id] }}</li>
+                                                @endif
+                                                @if($task['content']['desc3'][$q_id])
+                                                    <li>{{ $task['content']['desc3'][$q_id] }}</li>
+                                                @endif
+                                                @if($task['content']['desc4'][$q_id])
+                                                    <li>{{ $task['content']['desc4'][$q_id] }}</li>
+                                                @endif
+                                                @if($task['content']['desc5'][$q_id])
+                                                    <li>{{ $task['content']['desc5'][$q_id] }}</li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-4 exam-content-title">選項</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-4 exam-content-text">
+                                            @if($task['content']['is_item'][$q_id])
+                                                @for($j = 0; $j < 5; $j++)
+                                                    @if($task['content']['question'][$q_id][$j])
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="answer[{{$task->id}}][{{$q_id}}]"
+                                                                   value="{{ $task['content']['score'][$q_id][$j] }}"
+                                                                   data-goto="{{ $task['content']['goto'][$q_id][$j] }}"
+                                                                   data-task="{{ $task_index }}" onclick="goto(this)">
+                                                            <label class="form-check-label" for="exampleRadios1">
+                                                                {{ $task['content']['question'][$q_id][$j] }}
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                @endfor
+                                            @else
+                                                <a class="btn btn-r">前往下一題</a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 pl-0">
+                                <div class="d-flex justify-content-center exam-img bg-white p-4">
+                                    <img class="m-auto"
+                                         src="{{ $task['content']['pic'][$q_id] }}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                            $q_id++;
+                        @endphp
+                    @endfor
+                @endforeach
+            @endforeach
+        </form>
     </div>
+@endsection
+@section('script')
+    <script>
+        let task_length = {!! count($unit->tasks) !!};
+        console.log(task_length);
+        $(".question:first").show();
+
+        function goto(obj) {
+            let task = $(obj).data('task');
+            let goto = $(obj).data('goto');
+            $(".question").hide();
+
+            if (goto == "next") {
+                task = task + 1;
+                if (task + 1 == task_length) {
+                    $("#unit_form").submit();
+                } else {
+                    $("#q_" + task + "_0").show();
+                }
+            } else {
+                $("#q_" + task + "_" + goto).show();
+            }
+        }
+    </script>
 @endsection

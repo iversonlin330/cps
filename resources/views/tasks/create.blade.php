@@ -40,7 +40,7 @@
                                                 <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述
                                                 </div>
                                                 <div class="col-3">
-                                                    <select name="is_item[{{$q_id}}]" class="form-control"
+                                                    <select name="is_item[{{$q_id}}]" class="form-control is_item_select"
                                                             data-qid="{{ $q_id }}" onchange="item_change(this)"
                                                             required>
                                                         <option value="1" selected>有選項欄位</option>
@@ -110,11 +110,11 @@
                                                 @endfor
                                             </div>
                                             <div id="no_item_{{ $q_id }}" style="display:none">
-                                                <select name="goto[{{$q_id}}]"
+                                                <select name="goto_no_item[{{$q_id}}]"
                                                         class="form-control form-control-sm">
                                                     <option value="next">前往下一任務</option>
                                                     @for( $goto = $sub+1; $goto < $q_count; $goto++)
-                                                        <option value="{{ $goto }}">{{ $task->order }}
+                                                        <option value="{{ $map[$index][$goto] }}">{{ $task->order }}
                                                             -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
                                                     @endfor
                                                     @if($index < count($task->content['count'])-1)
@@ -141,10 +141,9 @@
 @section('script')
     <script>
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            e.target // newly activated tab
-            e.relatedTarget // previous active tab
-        })
-
+            e.target; // newly activated tab
+            e.relatedTarget; // previous active tab
+        });
         $("#submit_btn").click(function () {
             $('#main_form').submit();
         });
@@ -162,5 +161,24 @@
         }
 
         $("#myTab a:eq(0)").click();
+
+            @if(isset($task->content['question']))
+        let content = @json($task->content);
+        console.log(content);
+        for (let x in content) {
+            content[x].forEach(function (value, i) {
+                if (Array.isArray(value)) {
+                    console.log(value);
+                    for (let y in value) {
+                        $("[name='" + x + "[" + i + "][" + y + "]']").val(value[y]);
+                    }
+                } else {
+                    $("[name='" + x + "[" + i + "]']").val(value);
+                }
+            });
+        }
+        $(".is_item_select").trigger('change');
+        @endif
+
     </script>
 @endsection

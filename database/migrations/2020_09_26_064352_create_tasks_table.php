@@ -18,7 +18,7 @@ class CreateTasksTable extends Migration
             $table->integer('unit_id');
             $table->string('name');
             $table->integer('order');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
         });
     }
