@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-3 col-form-label">是否為原住民</label>
+                                <label for="inputEmail3" class="col-3 col-form-label">原住民身份</label>
                                 <div class="col-9">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="is_local" value="1" required>

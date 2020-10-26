@@ -12,9 +12,9 @@
                 <form action="{{ url('students') }}" class="form-inline float-right">
                     <select name="cycle_id" class="form-control mr-sm-2">
                         @foreach($cycles as $cycle)
-                            <option value="{{ $cycle->id }}">{{ $cycle->name }}</option>
+                            <option value="{{ $cycle->id }}">{{ $cycle->getRange() }}</option>
                         @endforeach
-                        <option>109/01/01~109/12/31</option>
+                        <!--option>109/01/01~109/12/31</option-->
                     </select>
                     <select name="city_id" class="form-control mr-sm-2">
                         @foreach($citys as $city => $school)

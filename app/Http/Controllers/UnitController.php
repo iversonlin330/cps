@@ -44,8 +44,10 @@ class UnitController extends Controller
             }
         })
             ->get();
+			
+			$targets = config('map.target');
 
-        return view('units.view', compact('units'));
+        return view('units.view', compact('units','targets'));
     }
 
     /**

@@ -89,13 +89,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($i=0;$i<=305;$i++)
+                        @foreach($targets as $k=>$v)
                             <tr>
-                                <td>A1發現團隊成員的觀點與能力</td>
+                                <td>{{ $v }}</td>
                                 <td>3</td>
                                 <td>5</td>
                             </tr>
-                        @endfor
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
