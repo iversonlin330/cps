@@ -30,6 +30,7 @@ Route::get('/exams/result', 'ExamController@result');
 Route::post('/exams/order', 'ExamController@order');
 Route::get('/units/start/{id}', 'UnitController@start');
 Route::get('/units/result', 'UnitController@result');
+Route::post('/tasks/{id}', 'TaskController@updateStr');
 
 Route::get('/students/create-multi', 'StudentController@createMulti');
 Route::post('/students/create-multi', 'StudentController@postCreateMulti');

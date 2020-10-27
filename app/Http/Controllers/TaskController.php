@@ -81,6 +81,24 @@ class TaskController extends Controller
         return redirect('tasks/create?task_id=' . $model->id);
     }
 
+    public function updateStr(Request $request, $id)
+    {
+        //
+        $data = $request->except('_token');
+        $content = $data['content'];
+
+        $result = [];
+        $result['name'] = $data['name'];
+
+        $model = Task::find($id);
+        $result['content'] = $model['content'];
+        $result['content']['count'] = explode(',', $content);
+        $model->fill($result);
+        $model->save();
+
+        return redirect('tasks/create?task_id=' . $model->id);
+    }
+
     /**
      * Display the specified resource.
      *

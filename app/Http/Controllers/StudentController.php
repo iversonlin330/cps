@@ -110,6 +110,11 @@ class StudentController extends Controller
     {
         //
         $data = $request->except(['_token', 'city_id']);
+
+        $account = $this->getAccount($data['school_id']);
+        $data['account'] = $account;
+        $data['password'] = $account;
+
         $model = new User;
         $model->fill($data);
         $model->save();

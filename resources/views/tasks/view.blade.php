@@ -5,7 +5,7 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-left">
-                <a href="#" data-toggle="modal" data-target="#createModal" class="btn btn-warning">新增任務</a>
+                <button class="btn btn-warning" onclick="create_modal()">新增任務</button>
                 <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#orderModal">任務排序
                 </button>
             </div>
@@ -37,8 +37,14 @@
                         <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                            <a href="{{ url('tasks/create?task_id='.$task->id) }}"
-                               class="btn btn-secondary btn-sm">編輯</a>
+                        <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"
+                               class="btn btn-secondary btn-sm">編輯</a-->
+                            <button class="btn btn-secondary btn-sm"
+                                    data-url="{{ url('tasks/'.$task->id) }}"
+                                    data-count="{{ implode(',',$task->content['count']) }}"
+                                    data-name="{{ $task->name }}"
+                                    onclick="edit_modal(this)">編輯
+                            </button>
                         </td>
                         <td>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
@@ -142,6 +148,32 @@
         $("#group_sort").sortable();
         let str_array = [];
 
+        function create_modal() {
+            $("form").attr('action', "{{ url('tasks') }}");
+            $("form").find("[name='name']").val('');
+            str_array = [];
+            refresh();
+            $('#createModal').modal('show');
+        }
+
+        function edit_modal(obj) {
+            let count = $(obj).data('count');
+            let name = $(obj).data('name');
+            let url = $(obj).data('url');
+
+            $("form").attr('action', url);
+            $("form").find("[name='name']").val(name);
+
+            if (count.length > 2) {
+                str_array = count.split(",");
+            } else {
+                str_array = [count];
+            }
+
+            refresh();
+            $('#createModal').modal('show');
+        }
+
         function add_parent() {
             // let length = str_array.length;
             // let newNo = length + 1;
@@ -187,7 +219,12 @@
             str_array[num].push(newNo);
              */
             let newNo = str_array[num] - 1;
-            str_array[num] = newNo;
+            if (newNo == 0) {
+                str_array.splice(num, 1);
+            } else {
+                str_array[num] = newNo;
+            }
+            console.log(str_array);
             refresh();
         }
 
