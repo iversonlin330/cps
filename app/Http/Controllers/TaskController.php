@@ -70,11 +70,14 @@ class TaskController extends Controller
 
 
         /*
+         * update order
+        if(isset($data['order'])){
         foreach ($data as $index => $unit) {
             $unit['order'] = $index;
-            $model = new Unit();
+            $model = Task()::find($taks_id);
             $model->fill($unit);
             $model->save();
+        }
         }
         */
 
