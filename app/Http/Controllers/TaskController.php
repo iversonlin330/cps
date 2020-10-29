@@ -21,14 +21,21 @@ class TaskController extends Controller
     {
         //
 		$data = $request->all();
-		dd($data);
+		//dd($data);
+		$result = [];
+		$targets = config('map.target');
+		foreach($targets as $target_id => $value){
+			$result[$target_id] = 0;
+		}
+		
+		//算分數
 		foreach($data['answer'] as $task_id => $question){
-			foreach($question as $q_id => $answer){
-				
+			foreach($question as $q_id => $score){
+				$task = Task::find($task_id);
+				$target_id = $task->content['target'][$q_id];
+				$result[$target_id] = $result[$target_id] + $score;
+				dd($result);	
 			}
-			$task = Task::find($task_id);
-			$score = $task->content['target'][$q_id]
-			$score = $task->content['score'][$q_id]
 		}
         
 
