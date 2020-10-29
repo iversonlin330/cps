@@ -34,7 +34,7 @@
                 @foreach($tasks as $task)
                     <tr>
                         <td>{{ $task->name }}</td>
-                        <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
+                        <td><a href="{{ url('tasks/start/'.$task->id) }}">檢視</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
                         <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"

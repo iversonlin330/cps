@@ -9,7 +9,33 @@ use Ramsey\Uuid\Type\Integer;
 
 class TaskController extends Controller
 {
-    /**
+    public function start($id)
+    {
+        //
+        $task = Task::find($id);
+
+        return view('tasks.start', compact('task'));
+    }
+	
+	public function postStart(Request $request,$id)
+    {
+        //
+		$data = $request->all();
+		dd($data);
+		foreach($data['answer'] as $task_id => $question){
+			foreach($question as $q_id => $answer){
+				
+			}
+			$task = Task::find($task_id);
+			$score = $task->content['target'][$q_id]
+			$score = $task->content['score'][$q_id]
+		}
+        
+
+        return view('tasks.start', compact('task'));
+    }
+	
+	/**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
