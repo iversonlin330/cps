@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('title1', '作答結果')
-@section('title2', '首頁 / 我的單元 / 單元作答 / 作答結果')
+@section('title2', '首頁 / 我的任務 / 任務作答 / 作答結果')
 @section('content')
  <div class="row-fluid main-padding">
 	<div class="row" style="padding-top:24px">
 		<div class="col-12">
 			<div class="d-flex justify-content-center exam-title bg-squash">
-					<p class="-Login text-center mt-2">作答結果<br>半開窗</p>
+					<p class="-Login text-center mt-2">作答結果<br>{{ $task->name }}</p>
 			</div>
 		</div>
 	</div>
@@ -27,14 +27,14 @@
 					</tr>
 				  </thead>
 				  <tbody>
-				  @for($i=0;$i<=12;$i++)
-					<tr>
-					  <td>A1發現團隊成員的觀點與能力</td>
-					  <td>3</td>
-					  <td>3</td>
-					  <td>5</td>
-					</tr>
-					@endfor
+                  @foreach($targets as $k=>$v)
+                      <tr>
+                          <td>{{ $v }}</td>
+                          <td>{{ $result[$k] }}</td>
+                          <td>4</td>
+                          <td>{{ $total[$k] }}</td>
+                      </tr>
+                  @endforeach
 				  </tbody>
 				</table>
 			</div>

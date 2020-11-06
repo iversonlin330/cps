@@ -102,7 +102,7 @@
                                                                 <!--option disabled selected hidden>配分
                                                                 </option-->
                                                                 @for($j=1; $j<=$scoreNum; $j++)
-                                                                    <option value="{{ $j }}" selected>{{ $j }}</option>
+                                                                    <option value="{{ $j }}" {{ ($j==1)? 'selected' : '' }}>{{ $j }}</option>
                                                                 @endfor
                                                             </select>
                                                         </div>

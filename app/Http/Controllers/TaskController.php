@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Task;
-use App\Unit;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Integer;
 
@@ -16,32 +15,42 @@ class TaskController extends Controller
 
         return view('tasks.start', compact('task'));
     }
-	
+
 	public function postStart(Request $request,$id)
     {
         //
 		$data = $request->all();
 		//dd($data);
 		$result = [];
+        $total = [];
 		$targets = config('map.target');
 		foreach($targets as $target_id => $value){
 			$result[$target_id] = 0;
+            $total[$target_id] = 0;
 		}
-		
+
+        $task = Task::find($id);
 		//算分數
 		foreach($data['answer'] as $task_id => $question){
-			foreach($question as $q_id => $score){
-				$task = Task::find($task_id);
+		    foreach($question as $q_id => $score){
 				$target_id = $task->content['target'][$q_id];
 				$result[$target_id] = $result[$target_id] + $score;
-				dd($result);	
 			}
 		}
-        
+		//算滿分
+        $questions = $task->content['is_item'];
+		foreach ($questions as $index => $is_item){
+		    if($is_item == 1){
+		        $target = $task->content['target'][$index];
+		        $total[$target] = $total[$target] + max($task->content['score'][$index]);
+            }
+        }
+        //算平均
 
-        return view('tasks.start', compact('task'));
+
+        return view('tasks.result', compact('task','targets','result','total'));
     }
-	
+
 	/**
      * Display a listing of the resource.
      *
