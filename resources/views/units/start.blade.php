@@ -15,8 +15,9 @@
                 </div>
             </div>
         </div>
-        <form action="{{ url('user_unit') }}" method="post">
-            @foreach($unit->tasks as $task_index =>$task)
+        <form id="unit_form" action="{{ url('units/start/'.$unit->id) }}" method="post">
+            @csrf
+			@foreach($unit->tasks as $task_index =>$task)
                 @php
                     $q_id = 0;
                 @endphp
@@ -106,7 +107,7 @@
 
             if (goto == "next") {
                 task = task + 1;
-                if (task + 1 == task_length) {
+                if (task == task_length) {
                     $("#unit_form").submit();
                 } else {
                     $("#q_" + task + "_0").show();

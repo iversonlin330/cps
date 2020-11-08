@@ -14,7 +14,7 @@
 		<div class="col-12">
 			<div class="d-flex justify-content-center bg-white">
 					<p class="text-center mt-2 text-brown">測驗完成！
-<br>您的總指標分數：25 分<br><span style="color: #3f3f3f;">學生過往平均指標分數：21 分<span></p>
+<br>您的總指標分數：{{ $person_score }} 分<br><span style="color: #3f3f3f;">學生過往平均指標分數：0 分<span></p>
 			</div>
 			<div class="d-flex justify-content-center bg-white m-auto">
 				<table class="table table-striped" style="max-width:500px">
@@ -31,7 +31,7 @@
                       <tr>
                           <td>{{ $v }}</td>
                           <td>{{ $result[$k] }}</td>
-                          <td>4</td>
+                          <td>0</td>
                           <td>{{ $total[$k] }}</td>
                       </tr>
                   @endforeach
@@ -39,7 +39,7 @@
 				</table>
 			</div>
 			<div class="d-flex justify-content-center bg-white pb-4">
-			<input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="回列表">
+			<a href="{{ url('tasks?unit_id='.$task->unit_id) }}" class="btn btn-r" style="width: 83px;margin-top:20px;">回列表</a>
 		</div>
 		</div>
 	</div>

@@ -23,6 +23,7 @@ class TaskController extends Controller
 		//dd($data);
 		$result = [];
         $total = [];
+		$person_score = 0;
 		$targets = config('map.target');
 		foreach($targets as $target_id => $value){
 			$result[$target_id] = 0;
@@ -35,6 +36,7 @@ class TaskController extends Controller
 		    foreach($question as $q_id => $score){
 				$target_id = $task->content['target'][$q_id];
 				$result[$target_id] = $result[$target_id] + $score;
+				$person_score = $person_score + $score;
 			}
 		}
 		//算滿分
@@ -48,7 +50,7 @@ class TaskController extends Controller
         //算平均
 
 
-        return view('tasks.result', compact('task','targets','result','total'));
+        return view('units.result', compact('task','targets','result','total','person_score'));
     }
 
 	/**

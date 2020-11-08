@@ -5,7 +5,7 @@
     <div class="row-fluid main-padding">
         <div class="row" style="padding-top:24px">
             <div class="col-12">
-                <div class="d-flex exam-title bg-squash">
+                <div class="d-flex exam-title bg-grey">
                     <div class="mr-auto mt-4 ml-4">
                         <p class="-Login">{{ $task->name }}</p>
                     </div>

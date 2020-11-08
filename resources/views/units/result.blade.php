@@ -6,7 +6,7 @@
 	<div class="row" style="padding-top:24px">
 		<div class="col-12">
 			<div class="d-flex justify-content-center exam-title bg-squash">
-					<p class="-Login text-center mt-2">作答結果<br>半開窗</p>
+					<p class="-Login text-center mt-2">作答結果<br>{{ $unit->name }}</p>
 			</div>
 		</div>
 	</div>
@@ -14,7 +14,7 @@
 		<div class="col-12">
 			<div class="d-flex justify-content-center bg-white">
 					<p class="text-center mt-2 text-brown">測驗完成！
-<br>您的總指標分數：25 分<br><span style="color: #3f3f3f;">學生過往平均指標分數：21 分<span></p>
+<br>您的總指標分數：{{ $person_score }} 分<br><span style="color: #3f3f3f;">學生過往平均指標分數：21 分<span></p>
 			</div>
 			<div class="d-flex justify-content-center bg-white m-auto">
 				<table class="table table-striped" style="max-width:500px">
@@ -27,14 +27,14 @@
 					</tr>
 				  </thead>
 				  <tbody>
-				  @for($i=0;$i<=12;$i++)
-					<tr>
-					  <td>A1發現團隊成員的觀點與能力</td>
-					  <td>3</td>
-					  <td>3</td>
-					  <td>5</td>
-					</tr>
-					@endfor
+				  @foreach($targets as $k=>$v)
+                      <tr>
+                          <td>{{ $v }}</td>
+                          <td>{{ $result[$k] }}</td>
+                          <td>0</td>
+                          <td>{{ $total[$k] }}</td>
+                      </tr>
+                  @endforeach
 				  </tbody>
 				</table>
 			</div>
