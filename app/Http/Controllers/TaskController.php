@@ -50,7 +50,7 @@ class TaskController extends Controller
         //算平均
 
 
-        return view('units.result', compact('task','targets','result','total','person_score'));
+        return view('tasks.result', compact('task','targets','result','total','person_score'));
     }
 
 	/**
