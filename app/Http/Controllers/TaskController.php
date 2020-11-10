@@ -16,44 +16,66 @@ class TaskController extends Controller
         return view('tasks.start', compact('task'));
     }
 
-	public function postStart(Request $request,$id)
+    public function postStart(Request $request, $id)
     {
         //
-		$data = $request->all();
-		//dd($data);
-		$result = [];
+        $data = $request->all();
+        //dd($data);
+        $result = [];
         $total = [];
-		$person_score = 0;
-		$targets = config('map.target');
-		foreach($targets as $target_id => $value){
-			$result[$target_id] = 0;
+        $count = [];
+        $person_score = 0;
+        $targets = config('map.target');
+        foreach ($targets as $target_id => $value) {
+            $result[$target_id] = 0;
             $total[$target_id] = 0;
-		}
+            $count[$target_id] = 0;
+        }
 
         $task = Task::find($id);
-		//算分數
-		foreach($data['answer'] as $task_id => $question){
-		    foreach($question as $q_id => $score){
-				$target_id = $task->content['target'][$q_id];
-				$result[$target_id] = $result[$target_id] + $score;
-				$person_score = $person_score + $score;
-			}
-		}
-		//算滿分
-        $questions = $task->content['is_item'];
-		foreach ($questions as $index => $is_item){
-		    if($is_item == 1){
-		        $target = $task->content['target'][$index];
-		        $total[$target] = $total[$target] + max($task->content['score'][$index]);
+
+        //算題數
+        $count_list = array_count_values($task->content['target']);
+        foreach ($count_list as $k => $v) {
+            $count[$k] = $v;
+        }
+
+        //算分數
+        foreach ($data['answer'] as $task_id => $question) {
+            foreach ($question as $q_id => $score) {
+                $target_id = $task->content['target'][$q_id];
+                $result[$target_id] = $result[$target_id] + $score;
             }
         }
+
+        foreach ($result as $k => $v) {
+            if ($count[$k] != 0) {
+                $result[$k] = round($v / $count[$k], 1);
+                $person_score = $person_score + $result[$k];
+            }
+        }
+
+        //算滿分
+        $questions = $task->content['is_item'];
+        foreach ($questions as $index => $is_item) {
+            if ($is_item == 1) {
+                $target = $task->content['target'][$index];
+                $total[$target] = $total[$target] + max($task->content['score'][$index]);
+            }
+        }
+
+        foreach ($total as $k => $v) {
+            if ($count[$k] != 0) {
+                $total[$k] = round($v / $count[$k], 1);
+            }
+        }
+
         //算平均
 
-
-        return view('tasks.result', compact('task','targets','result','total','person_score'));
+        return view('tasks.result', compact('task', 'targets', 'result', 'total', 'person_score', 'count'));
     }
 
-	/**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -63,7 +85,9 @@ class TaskController extends Controller
         //
         $data = $request->all();
         $unit_id = $data['unit_id'];
-        $tasks = Task::where("unit_id", $unit_id)->get();
+        $tasks = Task::ordered()
+            ->where("unit_id", $unit_id)
+            ->get();
         return view('tasks.view', compact('unit_id', 'tasks'));
     }
 
@@ -105,14 +129,20 @@ class TaskController extends Controller
     {
         //
         $data = $request->except('_token');
-        $content = $data['content'];
-        $data['content'] = [];
-        $data['content']['count'] = explode(',', $content);
-        $model = new Task;
-        $model->fill($data);
-        $model->save();
 
-
+        if (array_key_exists('order', $data)) {
+            foreach ($data['order'] as $index => $template_id) {
+                Task::find($template_id)->update(['order' => $index + 1]);
+            }
+            return back();
+        } else {
+            $content = $data['content'];
+            $data['content'] = [];
+            $data['content']['count'] = explode(',', $content);
+            $model = new Task;
+            $model->fill($data);
+            $model->save();
+        }
         /*
          * update order
         if(isset($data['order'])){
@@ -184,7 +214,6 @@ class TaskController extends Controller
 
         $result = [];
         $result['content'] = $data;
-
         //$model = new Task;
         $task->fill($result);
         $task->save();

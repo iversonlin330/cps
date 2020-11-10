@@ -123,6 +123,11 @@
             }
             $("[name='school_id']").append(html);
         });
+
+        @if($data)
+            $("[name='school_id']").val({{ $data['school_id'] }});
+            $("[name='cycle_id']").val({{ $data['cycle_id'] }});
+        @endif
         $("[name='city_id']").trigger('change');
     </script>
 @endsection

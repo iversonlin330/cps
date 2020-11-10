@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+use App\Cycle;
 use App\School;
 
 trait MyTraits {
@@ -26,5 +27,11 @@ trait MyTraits {
         }
 
         return $citys;
+    }
+
+    public function getStudentNow(){
+
+        $cycle = Cycle::latest()->first();
+        return User::Student()->where('cycle_id',$cycle->id)->get();
     }
 }

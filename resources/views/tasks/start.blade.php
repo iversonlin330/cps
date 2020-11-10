@@ -72,7 +72,7 @@
                                                     @endif
                                                 @endfor
                                             @else
-                                                <a class="btn btn-r">前往下一題</a>
+                                                <a class="btn btn-r" data-goto="next" onclick="goto(this)">前往下一題</a>
                                             @endif
                                         </div>
                                     </div>
@@ -101,16 +101,17 @@
         function goto(obj) {
             let task = $(obj).data('task');
             let goto = $(obj).data('goto');
-            $(".question").hide();
 
             if (goto == "next") {
                 task = task + 1;
 				if (task == task_length) {
                     $("#task_form").submit();
                 } else {
+                    $(".question").hide();
                     $("#q_" + task + "_0").show();
                 }
             } else {
+                $(".question").hide();
                 $("#q_" + task + "_" + goto).show();
             }
         }

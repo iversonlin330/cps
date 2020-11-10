@@ -72,19 +72,22 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <ul id="group_sort">
-                        @foreach($tasks as $task)
-                            <li class="btn btn-light add-btn mt-2 btn-block">{{ $task->name }}
-                                <input name="order[]" value="{{ $task->id }}" hidden>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
-                </div>
+                <form action="{{ url('tasks') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <ul id="group_sort">
+                            @foreach($tasks as $task)
+                                <li class="btn btn-light add-btn mt-2 btn-block">{{ $task->name }}
+                                    <input name="order[]" value="{{ $task->id }}" hidden>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-secondary" value="確認">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

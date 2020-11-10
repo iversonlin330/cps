@@ -14,6 +14,11 @@ class Task extends Model
         'content' => 'array'
     ];
 
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order', 'asc');
+    }
+
     public function maxScore()
     {
         $this->content;

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\MyTraits;
 use App\Unit;
-use App\User;
+use App\UserUnit;
 use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
 {
+    use MyTraits;
 
     public function start($id)
     {
@@ -19,50 +21,95 @@ class UnitController extends Controller
         return view('units.start', compact('unit'));
     }
 
-	public function postStart(Request $request,$id)
+    public function postStart(Request $request, $id)
     {
         //
-		$data = $request->all();
-		//dd($data);
-		$result = [];
+        $data = $request->all();
+        $user = Auth::user();
+        if ($user->role == 3) {
+            $user_unit = new UserUnit;
+            $user_unit->fill([
+                'user_id' => $user->id,
+                'unit_id' => $id,
+                'score' => $data['answer']
+            ]);
+            $user_unit->save();
+        }
+
+        //dd($data);
+        $result = [];
         $total = [];
-		$person_score = 0;
-		$targets = config('map.target');
-		foreach($targets as $target_id => $value){
-			$result[$target_id] = 0;
+        $count = [];
+        $person_score = 0;
+        $targets = config('map.target');
+        foreach ($targets as $target_id => $value) {
+            $result[$target_id] = 0;
             $total[$target_id] = 0;
-		}
+            $count[$target_id] = 0;
+        }
 
-		$unit = Unit::find($id);
-		
+        $unit = Unit::find($id);
+
+        //算題數
+        $tasks = $unit->tasks;
+        foreach ($tasks as $task) {
+            $count_list = array_count_values($task->content['target']);
+            foreach ($count_list as $k => $v) {
+                $count[$k] = $count[$k] + $v;
+            }
+        }
+
         //$task = Task::find($id);
-		//算分數
-		foreach($data['answer'] as $task_id => $question){
-			$task = Task::find($task_id);
-		    foreach($question as $q_id => $score){
-				$target_id = $task->content['target'][$q_id];
-				$result[$target_id] = $result[$target_id] + $score;
-				$person_score = $person_score + $score;
-			}
-		}
-		//算滿分
-		
-		$tasks = $unit->tasks;
-		
-		foreach($tasks as $task){		
-			$questions = $task->content['is_item'];
-			foreach ($questions as $index => $is_item){
-				if($is_item == 1){
-					$target = $task->content['target'][$index];
-					$total[$target] = $total[$target] + max($task->content['score'][$index]);
-				}
-			}
-		}
-        //算平均
+        //算分數
+        foreach ($data['answer'] as $task_id => $question) {
+            $task = Task::find($task_id);
+            foreach ($question as $q_id => $score) {
+                $target_id = $task->content['target'][$q_id];
+                $result[$target_id] = $result[$target_id] + $score;
+            }
+        }
 
-        return view('units.result', compact('unit','targets','result','total','person_score'));
+        foreach ($result as $k => $v) {
+            if ($count[$k] != 0) {
+                $result[$k] = round($v / $count[$k], 1);
+                $person_score = $person_score + $result[$k];
+            }
+        }
+
+        //算滿分
+
+        $tasks = $unit->tasks;
+
+        foreach ($tasks as $task) {
+            $questions = $task->content['is_item'];
+            foreach ($questions as $index => $is_item) {
+                if ($is_item == 1) {
+                    $target = $task->content['target'][$index];
+                    $total[$target] = $total[$target] + max($task->content['score'][$index]);
+                }
+            }
+        }
+
+        foreach ($total as $k => $v) {
+            if ($count[$k] != 0) {
+                $total[$k] = round($v / $count[$k], 1);
+            }
+        }
+
+        //算平均
+        $students = $this->getStudentNow();
+        $user_scores =UserUnit::where('unit_id',$id)
+            ->whereIn('user_id',$students->pluck('id')->toArray())
+            ->get();
+
+        foreach ($user_scores as $user_score){
+            $user_score->score;
+        }
+
+
+        return view('units.result', compact('unit', 'targets', 'result', 'total', 'person_score'));
     }
-	
+
     public function result()
     {
         //
@@ -89,10 +136,10 @@ class UnitController extends Controller
             }
         })
             ->get();
-			
-			$targets = config('map.target');
 
-        return view('units.view', compact('units','targets'));
+        $targets = config('map.target');
+
+        return view('units.view', compact('units', 'targets'));
     }
 
     /**

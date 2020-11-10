@@ -16,7 +16,7 @@ class StudentController extends Controller
     {
         $cycle = Cycle::latest()->first();
 
-        $user = User::where('school_id', $school_id)->where('cycle_id', $cycle->id)->orderBy('id','desc')->first();
+        $user = User::where('school_id', $school_id)->where('cycle_id', $cycle->id)->orderBy('id', 'desc')->first();
 
         if ($user) {
             return $user->account + 1;
@@ -68,6 +68,10 @@ class StudentController extends Controller
         //
         $data = $request->all();
 
+        if (!$data) {
+            $data['cycle_id'] = Cycle::latest()->first()->id;
+        }
+
         unset($data['city_id']);
 
         $users = User::Student()
@@ -85,13 +89,13 @@ class StudentController extends Controller
 
         $cycles = Cycle::all();
 
-        return view('students.view', compact('users', 'citys', 'cycles'));
+        return view('students.view', compact('users', 'citys', 'cycles', 'data'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
