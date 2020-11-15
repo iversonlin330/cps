@@ -4,6 +4,7 @@ namespace App\Http\Traits;
 
 use App\Cycle;
 use App\School;
+use App\User;
 
 trait MyTraits {
     public function getCity() {
