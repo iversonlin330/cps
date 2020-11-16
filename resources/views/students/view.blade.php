@@ -124,7 +124,7 @@
             $("[name='school_id']").append(html);
         });
 
-        @if($data)
+        @if(array_key_exists('school_id',$data))
             $("[name='school_id']").val({{ $data['school_id'] }});
             $("[name='cycle_id']").val({{ $data['cycle_id'] }});
         @endif

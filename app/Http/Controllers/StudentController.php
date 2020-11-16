@@ -87,7 +87,7 @@ class StudentController extends Controller
             ->get();
         $citys = $this->getSchool();
 
-        $cycles = Cycle::all();
+        $cycles = Cycle::orderBy('id','desc')->get();
 
         return view('students.view', compact('users', 'citys', 'cycles', 'data'));
     }

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             //'email' => 'twpirls2021@gmail.com',
             'password' => '9',
         ]);
-
+		/*
         DB::table('users')->insert([
             'account' => '4',
             'name' => "林老師",
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             //'email' => 'twpirls2021@gmail.com',
             'password' => '4',
         ]);
-
+*/
         $cycle_name = (date("yy") - 1911)."1";
 
         DB::table('cycles')->insert([
