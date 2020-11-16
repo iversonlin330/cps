@@ -78,7 +78,7 @@
                         <ul id="group_sort">
                             @foreach($tasks as $task)
                                 <li class="btn btn-light add-btn mt-2 btn-block">{{ $task->name }}
-                                    <input name="order[]" value="{{ $task->id }}" hidden>
+                                    <input name="update_order[]" value="{{ $task->id }}" hidden>
                                 </li>
                             @endforeach
                         </ul>

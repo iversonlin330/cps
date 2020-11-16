@@ -130,8 +130,8 @@ class TaskController extends Controller
         //
         $data = $request->except('_token');
 
-        if (array_key_exists('order', $data)) {
-            foreach ($data['order'] as $index => $template_id) {
+        if (array_key_exists('update_order', $data)) {
+            foreach ($data['update_order'] as $index => $template_id) {
                 Task::find($template_id)->update(['order' => $index + 1]);
             }
             return back();
