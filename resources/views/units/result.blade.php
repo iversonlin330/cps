@@ -14,7 +14,7 @@
 		<div class="col-12">
 			<div class="d-flex justify-content-center bg-white">
 					<p class="text-center mt-2 text-brown">測驗完成！
-<br>您的總指標分數：{{ $person_score }} 分<br><span style="color: #3f3f3f;">學生過往平均指標分數：21 分<span></p>
+<br>您的總指標分數：{{ $person_score }} 分<br><span style="color: #3f3f3f;">學生過往平均指標分數：{{ $avg_score }} 分<span></p>
 			</div>
 			<div class="d-flex justify-content-center bg-white m-auto">
 				<table class="table table-striped" style="max-width:500px">
@@ -31,7 +31,7 @@
                       <tr>
                           <td>{{ $v }}</td>
                           <td>{{ $result[$k] }}</td>
-                          <td>0</td>
+                          <td>{{ $avg[$k] }}</td>
                           <td>{{ $total[$k] }}</td>
                       </tr>
                   @endforeach
