@@ -43,6 +43,7 @@
                                     data-url="{{ url('tasks/'.$task->id) }}"
                                     data-count="{{ implode(',',$task->content['count']) }}"
                                     data-name="{{ $task->name }}"
+                                    data-order="{{ $task->order }}"
                                     onclick="edit_modal(this)">編輯
                             </button>
                         </td>
@@ -154,6 +155,7 @@
         function create_modal() {
             $("form").attr('action', "{{ url('tasks') }}");
             $("form").find("[name='name']").val('');
+            $("[name='order']").val({{ $tasks->count()+1 }});
             str_array = [];
             refresh();
             $('#createModal').modal('show');
@@ -163,6 +165,9 @@
             let count = $(obj).data('count');
             let name = $(obj).data('name');
             let url = $(obj).data('url');
+            let order = $(obj).data('order');
+
+            $("[name='order']").val(order);
 
             $("form").attr('action', url);
             $("form").find("[name='name']").val(name);
