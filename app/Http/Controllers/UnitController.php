@@ -37,16 +37,13 @@ class UnitController extends Controller
         }
 
         //dd($data);
-        $result = [];
-        $total = [];
-        $count = [];
+        $result = $this->getTargetInitial();
+        $total = $this->getTargetInitial();
+		$avg = $this->getTargetInitial();
+        $count = $this->getTargetInitial();
         $person_score = 0;
+		$avg_score = 0;
         $targets = config('map.target');
-        foreach ($targets as $target_id => $value) {
-            $result[$target_id] = 0;
-            $total[$target_id] = 0;
-            $count[$target_id] = 0;
-        }
 
         $unit = Unit::find($id);
 
@@ -60,7 +57,9 @@ class UnitController extends Controller
         }
 
         //$task = Task::find($id);
-        //算分數
+        //算個人分數
+		$result = $this->calScore($data['answer'],$count);
+		/*
         foreach ($data['answer'] as $task_id => $question) {
             $task = Task::find($task_id);
             foreach ($question as $q_id => $score) {
@@ -68,14 +67,15 @@ class UnitController extends Controller
                 $result[$target_id] = $result[$target_id] + $score;
             }
         }
+		*/
 
         foreach ($result as $k => $v) {
             if ($count[$k] != 0) {
-                $result[$k] = round($v / $count[$k], 1);
                 $person_score = $person_score + $result[$k];
             }
         }
-
+		
+		
         //算滿分
 
         $tasks = $unit->tasks;
@@ -98,16 +98,25 @@ class UnitController extends Controller
 
         //算平均
         $students = $this->getStudentNow();
-        $user_scores =UserUnit::where('unit_id',$id)
-            ->whereIn('user_id',$students->pluck('id')->toArray())
-            ->get();
+        
+		$user_scores =UserUnit::where('unit_id',$id)
+			->whereIn('user_id',$students->pluck('id')->toArray())
+			->get();
+		if($user_scores->count() > 0 ){
+			foreach ($user_scores as $user_score){
+				$avg = $this->calScore($user_score->score,$count);
+			}
+			
+			foreach ($avg as $k => $v) {
+				if ($count[$k] != 0) {
+					$avg[$k] = round($v / $students->count(), 1);
+					$avg_score = $avg_score + $avg[$k];
+				}
+			}
+		}
 
-        foreach ($user_scores as $user_score){
-            $user_score->score;
-        }
 
-
-        return view('units.result', compact('unit', 'targets', 'result', 'total', 'person_score'));
+        return view('units.result', compact('unit', 'targets', 'result', 'total','avg', 'person_score','avg_score'));
     }
 
     public function result()
