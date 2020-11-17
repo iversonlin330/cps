@@ -39,7 +39,8 @@
 				</table>
 			</div>
 			<div class="d-flex justify-content-center bg-white pb-4">
-			<input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="回列表">
+			<a href="{{ url('units') }}" class="btn btn-r"
+                       style="width: 83px;margin-top:20px;">回列表</a>
 		</div>
 		</div>
 	</div>

@@ -72,7 +72,7 @@
                                                     @endif
                                                 @endfor
                                             @else
-                                                <a class="btn btn-r">前往下一題</a>
+                                                <a class="btn btn-r" data-goto="{{ $task['content']['goto_no_item'][$q_id][$j] }}" data-task="{{ $task_index }}" onclick="goto(this)">前往下一題</a>
                                             @endif
                                         </div>
                                     </div>
