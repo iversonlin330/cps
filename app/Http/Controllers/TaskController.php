@@ -35,9 +35,19 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         //算題數
+        /*
         $count_list = array_count_values($task->content['target']);
         foreach ($count_list as $k => $v) {
             $count[$k] = $v;
+        }
+        */
+
+        $is_item_array = $task->content['is_item'];
+        foreach ($is_item_array as $index => $is_item) {
+            if ($is_item == 1) {
+                $target = $task->content['target'][$index];
+                $count[$target] = $count[$target] +1;
+            }
         }
 
         //算分數
