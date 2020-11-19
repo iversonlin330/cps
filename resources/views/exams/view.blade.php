@@ -33,9 +33,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+                @foreach($exams as $exam)
                     <tr>
-                        <td>考卷名稱ＯＯＯＯＯ</td>
+                        <td>{{ $exam->name }}</td>
                         <td>單元Ａ/單元B/單元C</td>
                         <td>22</td>
                         <td>30</td>
@@ -52,11 +52,11 @@
                         </td>
                         <td>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="考券" data-url="{{ url('exams/'.$i) }}">刪除
+                                    data-target="#deleteModal" data-keyword="考券" data-url="{{ url('exams/'.$exam->id) }}">刪除
                             </button>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
                 </tbody>
             </table>
         </div>

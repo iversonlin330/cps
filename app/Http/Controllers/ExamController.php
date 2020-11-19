@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exam;
+use App\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -61,7 +63,10 @@ class ExamController extends Controller
     {
         //
         $targets = config('map.target');
-        return view('exams.view', compact('targets'));
+
+        $exams = Exam::all();
+
+        return view('exams.view', compact('exams', 'targets'));
     }
 
     /**
@@ -72,7 +77,12 @@ class ExamController extends Controller
     public function create()
     {
         //
-        return view('exams.create');
+        $user = Auth::user();
+        $myUnits = Unit::where('user_id', $user->id)->get();
+
+        $openUnits = Unit::where('is_open', 1)->get();
+
+        return view('exams.create', compact('myUnits', 'openUnits'));
     }
 
     /**
@@ -84,6 +94,19 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->except('_token');
+
+        $user = Auth::user();
+
+        $model = new Exam;
+        $model->fill([
+            'name' => $data['name'],
+            'user_id' => $user->id
+        ]);
+        $model->save();
+
+        //$model->units()->attach($data['unit_id']);
+
         return view('exams.create-order');
     }
 

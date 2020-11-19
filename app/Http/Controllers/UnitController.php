@@ -39,10 +39,10 @@ class UnitController extends Controller
         //dd($data);
         $result = $this->getTargetInitial();
         $total = $this->getTargetInitial();
-		$avg = $this->getTargetInitial();
+        $avg = $this->getTargetInitial();
         $count = $this->getTargetInitial();
         $person_score = 0;
-		$avg_score = 0;
+        $avg_score = 0;
         $targets = config('map.target');
 
         $unit = Unit::find($id);
@@ -58,8 +58,8 @@ class UnitController extends Controller
 
         //$task = Task::find($id);
         //算個人分數
-		$result = $this->calScore($data['answer'],$count);
-		/*
+        $result = $this->calScore($data['answer'], $count);
+        /*
         foreach ($data['answer'] as $task_id => $question) {
             $task = Task::find($task_id);
             foreach ($question as $q_id => $score) {
@@ -67,15 +67,15 @@ class UnitController extends Controller
                 $result[$target_id] = $result[$target_id] + $score;
             }
         }
-		*/
+        */
 
         foreach ($result as $k => $v) {
             if ($count[$k] != 0) {
                 $person_score = $person_score + $result[$k];
             }
         }
-		
-		
+
+
         //算滿分
 
         $tasks = $unit->tasks;
@@ -98,25 +98,25 @@ class UnitController extends Controller
 
         //算平均
         $students = $this->getStudentNow();
-        
-		$user_scores =UserUnit::where('unit_id',$id)
-			->whereIn('user_id',$students->pluck('id')->toArray())
-			->get();
-		if($user_scores->count() > 0 ){
-			foreach ($user_scores as $user_score){
-				$avg = $this->calScore($user_score->score,$count);
-			}
-			
-			foreach ($avg as $k => $v) {
-				if ($count[$k] != 0) {
-					$avg[$k] = round($v / $students->count(), 1);
-					$avg_score = $avg_score + $avg[$k];
-				}
-			}
-		}
+
+        $user_scores = UserUnit::where('unit_id', $id)
+            ->whereIn('user_id', $students->pluck('id')->toArray())
+            ->get();
+        if ($user_scores->count() > 0) {
+            foreach ($user_scores as $user_score) {
+                $avg = $this->calScore($user_score->score, $count);
+            }
+
+            foreach ($avg as $k => $v) {
+                if ($count[$k] != 0) {
+                    $avg[$k] = round($v / $students->count(), 1);
+                    $avg_score = $avg_score + $avg[$k];
+                }
+            }
+        }
 
 
-        return view('units.result', compact('unit', 'targets', 'result', 'total','avg', 'person_score','avg_score'));
+        return view('units.result', compact('unit', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score'));
     }
 
     public function result()
@@ -148,7 +148,9 @@ class UnitController extends Controller
 
         $targets = config('map.target');
 
-        return view('units.view', compact('units', 'targets'));
+        $user = Auth::user();
+
+        return view('units.view', compact('user', 'units', 'targets'));
     }
 
     /**

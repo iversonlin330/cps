@@ -10,7 +10,8 @@
             </div>
             <div class="float-right">
                 <form action="{{ url('units') }}" class="form-inline float-right">
-                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
                     <button class="btn btn-warning my-2 my-sm-0" type="submit">儲存</button>
                 </form>
@@ -29,7 +30,9 @@
                     <th scope="col">各項指標</th>
                     <th scope="col">狀態</th>
                     <th scope="col">測驗</th>
-                    <th scope="col">審核</th>
+                    @if($user->role == 3)
+                        <th scope="col">審核</th>
+                    @endif
                     <th scope="col">動作</th>
                     <th scope="col">刪除單元</th>
                 </tr>
@@ -48,7 +51,11 @@
                             </select>
                         </td>
                         <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
-                        <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-secondary btn-sm">送出審核</a></td>
+                        @if($user->role == 3)
+                            <td>
+                                <a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-secondary btn-sm">送出審核</a>
+                            </td>
+                        @endif
                         <td>
                             <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
                             <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>
