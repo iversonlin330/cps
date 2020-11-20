@@ -13,6 +13,25 @@ class UnitController extends Controller
 {
     use MyTraits;
 
+    public function copy($id)
+    {
+        $unit = Unit::find($id)->replicate();
+        $unit->name = $unit->name . "(複製)";
+        $unit->is_open = 0;
+        $unit->status = 0;
+        $unit->save();
+
+        $tasks = Task::where('unit_id', $unit->id)->get();
+        foreach ($tasks as $task) {
+            $task = Task::find($task->id)->replicate();
+            $task->unit_id = $unit->id;
+            $task->save();
+        }
+
+        return "OK";
+        return back();
+    }
+
     public function start($id)
     {
         //
@@ -48,11 +67,24 @@ class UnitController extends Controller
         $unit = Unit::find($id);
 
         //算題數
+        /*
         $tasks = $unit->tasks;
         foreach ($tasks as $task) {
             $count_list = array_count_values($task->content['target']);
             foreach ($count_list as $k => $v) {
                 $count[$k] = $count[$k] + $v;
+            }
+        }
+        */
+
+        $tasks = $unit->tasks;
+        foreach ($tasks as $task) {
+            $is_item_array = $task->content['is_item'];
+            foreach ($is_item_array as $index => $is_item) {
+                if ($is_item == 1) {
+                    $target = $task->content['target'][$index];
+                    $count[$target] = $count[$target] + 1;
+                }
             }
         }
 

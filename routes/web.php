@@ -26,14 +26,19 @@ Route::get('/main', 'LoginController@main');
 Route::get('/exams/score', 'ExamController@score');
 Route::get('/exams/score-detail', 'ExamController@scoreDetail');
 Route::get('/exams/start/{id}', 'ExamController@start');
+Route::post('/exams/start/{id}', 'ExamController@postStart');
 Route::get('/exams/result', 'ExamController@result');
 Route::post('/exams/order', 'ExamController@order');
+
 Route::get('/units/start/{id}', 'UnitController@start');
 Route::post('/units/start/{id}', 'UnitController@postStart');
 Route::get('/units/result', 'UnitController@result');
+Route::get('/units/copy/{id}', 'UnitController@copy');
+
 Route::post('/tasks/{id}', 'TaskController@updateStr');
 Route::get('/tasks/start/{id}', 'TaskController@start');
 Route::post('/tasks/start/{id}', 'TaskController@postStart');
+Route::get('/tasks/copy/{id}', 'TaskController@copy');
 
 Route::get('/students/create-multi', 'StudentController@createMulti');
 Route::post('/students/create-multi', 'StudentController@postCreateMulti');

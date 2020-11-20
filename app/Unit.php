@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
     public function tasks()
     {
-        return $this->hasMany('\App\Task');
+        return $this->hasMany('\App\Task')->orderBy('order', 'desc');
     }
 
     public function average_score()

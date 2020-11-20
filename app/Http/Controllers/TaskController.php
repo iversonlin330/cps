@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\MyTraits;
 use App\Task;
+use App\Unit;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Type\Integer;
 
 class TaskController extends Controller
 {
+    use MyTraits;
+
+    public function copy($id)
+    {
+        $task = Task::find($id)->replicate();
+        $task->order = Task::where('unit_id', $task->unit_id)->max('order') + 1;
+        $task->name = $task->name . "(複製)";
+        $task->save();
+
+        return "OK";
+        return back();
+    }
+
     public function start($id)
     {
         //
@@ -34,7 +49,6 @@ class TaskController extends Controller
 
         $task = Task::find($id);
 
-        //算題數
         /*
         $count_list = array_count_values($task->content['target']);
         foreach ($count_list as $k => $v) {
@@ -42,11 +56,12 @@ class TaskController extends Controller
         }
         */
 
+        //算題數
         $is_item_array = $task->content['is_item'];
         foreach ($is_item_array as $index => $is_item) {
             if ($is_item == 1) {
                 $target = $task->content['target'][$index];
-                $count[$target] = $count[$target] +1;
+                $count[$target] = $count[$target] + 1;
             }
         }
 
