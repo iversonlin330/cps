@@ -35,6 +35,9 @@ class TaskController extends Controller
     {
         //
         $data = $request->all();
+        if(!array_key_exists('answer',$data)){
+            return "無作答紀錄";
+        }
         //dd($data);
         $result = [];
         $total = [];

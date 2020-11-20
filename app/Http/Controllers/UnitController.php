@@ -44,6 +44,9 @@ class UnitController extends Controller
     {
         //
         $data = $request->all();
+        if(!array_key_exists('answer',$data)){
+            return "無作答紀錄";
+        }
         $user = Auth::user();
         if ($user->role == 3) {
             $user_unit = new UserUnit;
