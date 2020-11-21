@@ -5,8 +5,7 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-left">
-                <a href="{{ url('classrooms/create') }}" class="btn btn-warning">新增班級</a>
-				<a href="{{ url('students/apply') }}" class="btn btn-secondary">申請學生帳號</a>
+                <a class="btn btn-warning" data-toggle="modal" data-target="#addModal">新增班級</a>
             </div>
             <div class="float-right">
                 <form action="{{ url('classrooms') }}" class="form-inline float-right">
@@ -25,25 +24,17 @@
                 <tr>
                     <th scope="col">班級</th>
                     <th scope="col">人數</th>
-					<th scope="col">班級資料</th>
                     <th scope="col">學生資料</th>
-                    <th scope="col">所屬教師</th>
-                    <th scope="col">刪除班級</th>
+                    <th scope="col">已指派的考卷</th>
+                    <th scope="col">移除班級</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>五年丁班</td>
                     <td>29</td>
-                    <td>
-						<a href="{{ url('exams/start') }}" class="btn btn-secondary btn-sm">編輯</a>
-					</td>
-                    <td>
-						<a href="{{ url('users/contact-students-edit') }}" class="btn btn-secondary btn-sm">編輯</a>
-					</td>
-					<td>
-						林小揚
-					</td>
+                    <td><a href="{{ url('exams/start') }}">檢視</a></td>
+                    <td><a href="{{ url('exams/start') }}">檢視</a></td>
                     <td>
                         <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
                                 data-target="#deleteModal" data-keyword="班級" data-url="{{ url('classrooms/1') }}">刪除

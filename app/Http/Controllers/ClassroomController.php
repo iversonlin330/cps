@@ -27,6 +27,8 @@ class ClassroomController extends Controller
     public function create()
     {
         //
+		$classrooms = [];
+		return view('classrooms.create',compact('classrooms'));
     }
 
     /**

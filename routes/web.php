@@ -41,7 +41,13 @@ Route::post('/tasks/start/{id}', 'TaskController@postStart');
 Route::get('/tasks/copy/{id}', 'TaskController@copy');
 
 Route::get('/students/create-multi', 'StudentController@createMulti');
+Route::get('/students/apply', 'StudentController@apply');
 Route::post('/students/create-multi', 'StudentController@postCreateMulti');
+
+Route::get('/users/contact-edit', 'UserController@contactEdit');
+Route::get('/users/contact-teachers-edit', 'UserController@contactTeachersEdit');
+Route::get('/users/contact-students-edit', 'UserController@contactStudentsEdit');
+
 
 Route::resource("users", "UserController");
 Route::resource("cycles", "CycleController");

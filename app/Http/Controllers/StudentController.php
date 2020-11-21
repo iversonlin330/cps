@@ -25,6 +25,12 @@ class StudentController extends Controller
             return $cycle->name . $new_school_id . "001";
         }
     }
+	
+	public function apply()
+    {
+        //
+        return view('students.apply');
+    }
 
     public function createMulti()
     {

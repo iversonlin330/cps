@@ -146,6 +146,76 @@
 					<div class="d-inline-flex">班級資料設定</div>
 				</div>
             </div>
+			@elseif(Auth::user()->role == 2)
+			<div class="row main-block">
+				<div class="col-12">
+					<div>資料設定</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('classrooms') }}'">
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-users fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">班級資料設定</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('/users/contact-teachers-edit') }}'">
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-users fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">教師資料設定</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('/users/contact-edit') }}'">
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-user fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">個人資料設定</div>
+				</div>
+            </div>
+			@elseif(Auth::user()->role == 3)
+			<div class="row main-block">
+				<div class="col-12">
+					<div>我的項目</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-brown text-white d-inline-flex">
+						<i class="fal fa-database fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">班級考卷</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units') }}'">
+					<div class="main-block-sub-icon bg-squash text-white d-inline-flex">
+						<i class="fal fa-file-alt fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">個人學習專區</div>
+				</div>
+            </div>
+			<div class="row main-block">
+				<div class="col-12">
+					<div>作答記錄及成績</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/score') }}'">
+					<div class="main-block-sub-icon bg-blue text-white d-inline-flex">
+						<i class="fal fa-clipboard-check fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">班級學習成績</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/score') }}'">
+					<div class="main-block-sub-icon bg-blue text-white d-inline-flex">
+						<i class="fal fa-clipboard-check fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">個人學習成績</div>
+				</div>
+            </div>
+			<div class="row main-block">
+				<div class="col-12">
+					<div>資料設定</div>
+				</div>
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
+						<i class="fal fa-user fa-lg icon"></i>
+					</div>
+					<div class="d-inline-flex">密碼修改</div>
+				</div>
+            </div>
 			@endif
         </div>
     </div>

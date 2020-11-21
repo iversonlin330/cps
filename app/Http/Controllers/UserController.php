@@ -9,9 +9,23 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     
-	public function contact(){
-		return view("contacts.view");
-	} 
+	public function contactEdit(){
+		$user = Auth::user();
+		
+		return view("users.contact-edit",compact('user'));
+	}
+	
+	public function contactTeachersEdit(){
+		$users = Auth::user();
+		
+		return view("users.contact-teachers-edit",compact('users'));
+	}
+	
+	public function contactStudentsEdit(){
+		$users = Auth::user();
+		
+		return view("users.contact-students-edit",compact('users'));
+	}
 	
 	/**
      * Display a listing of the resource.
@@ -47,7 +61,7 @@ class UserController extends Controller
     {
         //
         $data = $request->all();
-        $model = new User;
+		$model = new User;
         $model->fill($data);
         $model->save();
         return back();
@@ -85,6 +99,13 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+		$data = $request->except('_method','_token');
+		
+		$model = User::find($id);
+        $model->fill($data);
+        $model->save();
+		
+        return redirect('main');
     }
 
     /**
