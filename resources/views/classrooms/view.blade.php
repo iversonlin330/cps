@@ -36,7 +36,7 @@
                     <td>五年丁班</td>
                     <td>29</td>
                     <td>
-						<a href="{{ url('exams/start') }}" class="btn btn-secondary btn-sm">編輯</a>
+						<a href="{{ url('classrooms/create') }}" class="btn btn-secondary btn-sm">編輯</a>
 					</td>
                     <td>
 						<a href="{{ url('users/contact-students-edit') }}" class="btn btn-secondary btn-sm">編輯</a>

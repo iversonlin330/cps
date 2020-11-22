@@ -40,6 +40,7 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         //
+		return redirect('classrooms');
     }
 
     /**
@@ -62,6 +63,8 @@ class ClassroomController extends Controller
     public function edit(Classroom $classroom)
     {
         //
+		$classrooms = [];
+		return view('classrooms.create',compact('classrooms'));
     }
 
     /**

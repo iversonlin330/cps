@@ -29,11 +29,14 @@ Route::get('/exams/start/{id}', 'ExamController@start');
 Route::post('/exams/start/{id}', 'ExamController@postStart');
 Route::get('/exams/result', 'ExamController@result');
 Route::post('/exams/order', 'ExamController@order');
+Route::get('/exams/student-view', 'ExamController@studentView');
 
 Route::get('/units/start/{id}', 'UnitController@start');
 Route::post('/units/start/{id}', 'UnitController@postStart');
 Route::get('/units/result', 'UnitController@result');
 Route::get('/units/copy/{id}', 'UnitController@copy');
+Route::get('/units/student-view', 'UnitController@studentView');
+Route::get('/units/student-score', 'UnitController@studentScore');
 
 Route::post('/tasks/{id}', 'TaskController@updateStr');
 Route::get('/tasks/start/{id}', 'TaskController@start');

@@ -3,7 +3,7 @@
 @section('title2', '資料設定 / 班級資料設定 / 新增班級')
 @section('content')
     <div class="row-fluid main-padding">
-        <form action="{{ url('exams') }}" method="post">
+        <form action="{{ url('classrooms') }}" method="post">
             @csrf
             <div class="row" style="">
                 <div class="col-12">
@@ -89,6 +89,9 @@
 @section('script')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        
+		$( "table" ).sortable({
+		items: 'tbody > tr',
+		  connectWith: "table"
+		});
     </script>
 @endsection

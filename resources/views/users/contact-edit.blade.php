@@ -31,13 +31,14 @@
                                     <input type="password" class="form-control" id="inputEmail3" value="{{ $user->password}}">
                                 </div>
                             </div>
-
+@if($user->role == 2)
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">電子信箱</label>
                                 <div class="col-9">
                                     <input name="email" type="email" class="form-control" value="{{ $user->email}}">
                                 </div>
                             </div>
+						@endif
                             <div class="d-flex justify-content-center">
                                 <input type="submit" class="btn btn-r" style="width: 83px;" value="儲存">
                             </div>

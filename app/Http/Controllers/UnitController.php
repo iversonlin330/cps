@@ -159,6 +159,37 @@ class UnitController extends Controller
         //
         return view('units.result');
     }
+	
+	public function studentView(Request $request)
+    {
+        //
+        $data = $request->all();
+
+        $units = Unit::where(function ($query) use ($data) {
+            if ($data) {
+                foreach ($data as $k => $v) {
+                    if ($v) {
+                        $query->orWhere($k, 'like', '%' . $v . '%');
+                    }
+                }
+            }
+        })
+            ->get();
+
+        $targets = config('map.target');
+
+        $user = Auth::user();
+		$units = [];
+
+        return view('units.student-view', compact('user', 'units', 'targets'));
+    }
+	
+	public function studentScore()
+    {
+        //
+		$targets = config('map.target');
+        return view('units.student-score', compact('targets'));
+    }
 
     /**
      * Display a listing of the resource.

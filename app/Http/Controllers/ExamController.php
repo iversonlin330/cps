@@ -169,6 +169,16 @@ class ExamController extends Controller
         //
         return view('exams.my');
     }
+	
+	public function studentView()
+    {
+        //
+		$targets = config('map.target');
+
+        $exams = Exam::all();
+		
+        return view('exams.student-view', compact('exams', 'targets'));
+    }
 
     /**
      * Display a listing of the resource.
