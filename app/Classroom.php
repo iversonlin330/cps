@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Classroom extends Model
 {
     //
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
+
+    public function fullName()
+    {
+        return $this->grade . '年' . $this->class . '班';
+    }
 
     public function students()
     {
@@ -16,6 +21,6 @@ class Classroom extends Model
 
     public function teacher()
     {
-        return $this->belongsTo('\App\User', 'id', 'user_id');
+        return $this->belongsTo('\App\User', 'teacher_id', 'id');
     }
 }

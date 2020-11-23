@@ -8,44 +8,51 @@
             <div class="row" style="">
                 <div class="col-12">
                     <div>1. 輸入班級名稱</div>
-					<div class="form-group row">
-						<div class="col-1">
-							<select name="city_id" class="form-control">
-								<option>一</option>
-							</select>
-						</div>
-						<label class="col-form-label">年</label>
-						<div class="col-1">
-							<input class="form-control" type="number" name="gender" required>
-						</div>
-						<label class="col-form-label">班</label>
-					</div>
-					 <div>* 若文字編班，則按順序填數字，如：甲、乙、丙，請填寫1、2、3。</div>
+                    <div class="form-group row">
+                        <div class="col-1">
+                            <select name="grade" class="form-control">
+                                <option>一</option>
+                                <option>二</option>
+                                <option>三</option>
+                                <option>四</option>
+                                <option>五</option>
+                                <option>六</option>
+                            </select>
+                        </div>
+                        <label class="col-form-label">年</label>
+                        <div class="col-1">
+                            <input class="form-control" type="number" name="class" required>
+                        </div>
+                        <label class="col-form-label">班</label>
+                    </div>
+                    <div>* 若文字編班，則按順序填數字，如：甲、乙、丙，請填寫1、2、3。</div>
                     <div>2. 選擇該班級學生</div>
                 </div>
             </div>
             <div class="row" style="padding-top:24px">
                 <div class="col-1">
-				</div>
-				<div class="col-5">
+                </div>
+                <div class="col-5">
                     <div class="d-flex justify-content-center">
                         <div class="login-title " style="width:100%;">
                             <p class="-Login text-center">學生資料</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center bg-white table-scroll">
-                        <table class="table table-striped">
+                        <table id="table_pool" class="table table-striped">
                             <thead>
                             <tr>
                                 <th scope="col">學生編號</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @for($i=0;$i<=500;$i++)
+                            @foreach($students as $student)
                                 <tr>
-                                    <td>10901{{ $i }}</td>
+                                    <td>{{ $student->account }}<input type="text" name="student_id[]"
+                                                                      value="{{ $student->id }}" hidden>
+                                    </td>
                                 </tr>
-                            @endfor
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -67,11 +74,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @for($i=0;$i<=500;$i++)
-                                <tr>
-                                    <td>10901{{ $i }}</td>
-                                </tr>
-                            @endfor
                             </tbody>
                         </table>
                     </div>
@@ -89,9 +91,13 @@
 @section('script')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-		$( "table" ).sortable({
-		items: 'tbody > tr',
-		  connectWith: "table"
-		});
+        $("table").sortable({
+            items: 'tbody > tr',
+            connectWith: "table"
+        });
+
+        $('form').submit(function () {
+            $("#table_pool input").remove();
+        });
     </script>
 @endsection

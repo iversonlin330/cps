@@ -29,6 +29,6 @@ class CreateUserExamTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_unit');
+        Schema::dropIfExists('user_exam');
     }
 }

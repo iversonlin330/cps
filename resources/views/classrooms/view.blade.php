@@ -52,16 +52,18 @@
                 </tr>
                 @foreach($classrooms as $classroom)
                     <tr>
-                        <td>{{ $classroom->name }}</td>
-                        <td>{{ $classroom->name }}</td>
-                        <td>{{ $user->account }}</td>
-                        <td>{{ $user->password }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $classroom->fullName }}</td>
+                        <td>{{ $classroom->students->count() }}</td>
                         <td>
-                            <a href="{{ url('contacts/'.$user->id.'/edit') }}" class="btn btn-warning btn-sm">編輯</a>
+                            <a href="{{ url('classrooms/create') }}" class="btn btn-secondary btn-sm">編輯</a>
+                        </td>
+                        <td>
+                            <a href="{{ url('users/contact-students-edit') }}" class="btn btn-secondary btn-sm">編輯</a>
+                        </td>
+                        <td>{{ $classroom->teacher }}</td>
+                        <td>
                             <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="窗口"
-                                    data-url="{{ url('contacts/'.$user->id) }}">刪除
+                                    data-target="#deleteModal" data-keyword="班級" data-url="{{ url('classrooms/1') }}">刪除
                             </button>
                         </td>
                     </tr>
