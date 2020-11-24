@@ -2,32 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    
-	public function contactEdit(){
-		$user = Auth::user();
-		
-		return view("users.contact-edit",compact('user'));
-	}
-	
-	public function contactTeachersEdit(){
-		$users = Auth::user();
-		
-		return view("users.contact-teachers-edit",compact('users'));
-	}
-	
-	public function contactStudentsEdit(){
-		$users = Auth::user();
-		
-		return view("users.contact-students-edit",compact('users'));
-	}
-	
-	/**
+
+    public function contactEdit()
+    {
+        $user = Auth::user();
+
+        return view("users.contact-edit", compact('user'));
+    }
+
+    public function contactTeachersEdit()
+    {
+        $user = Auth::user();
+
+        $users = User::teacher()->where('school_id', $user->school_id)->get();
+
+        $classrooms = Classroom::now()->where('school_id', $user->school_id)->get();
+
+        return view("users.contact-teachers-edit", compact('users', 'classrooms'));
+    }
+
+    public function contactStudentsEdit($classroom_id)
+    {
+        $users = Auth::user();
+
+        $students = User::where('classroom_id', $classroom_id)->get();
+
+        return view("users.contact-students-edit", compact('users', 'students'));
+    }
+
+    public function postContactStudentsEdit(Request $request)
+    {
+        $data = $request->all();
+
+        foreach ($data as $k => $v) {
+            User::where('id', $k)->update(['seat_number' => $v]);
+        }
+
+        return redirect('classrooms');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -54,14 +75,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         //
         $data = $request->all();
-		$model = new User;
+        $model = new User;
         $model->fill($data);
         $model->save();
         return back();
@@ -70,7 +91,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -81,7 +102,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,26 +113,26 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
-		$data = $request->except('_method','_token');
-		
-		$model = User::find($id);
+        $data = $request->except('_method', '_token');
+
+        $model = User::find($id);
         $model->fill($data);
         $model->save();
-		
+
         return redirect('main');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -16,20 +16,25 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('account')->unique();
+            $table->string('password');
+            $table->integer('role');//訪客-1 窗口-2 學生-3 老師-4 管理員-9
             $table->string('name')->nullable();
             $table->integer('gender')->nullable();
-            $table->string('teacherid')->nullable();
+
+            //教師用
+            $table->string('teacherid')->nullable();//教師編號
             $table->integer('school_id')->nullable();
             $table->string('email')->nullable();
+            $table->integer('is_verify')->nullable();
+            $table->text('tutor_classroom_id')->nullable();
+            $table->text('subject_classroom_id')->nullable();
             //$table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->integer('classroom_id')->nullable();
-            $table->integer('role');//訪客-1 窗口-2 學生-3 老師-4 管理員-9
 
+            //學生用
             $table->integer('cycle_id')->nullable();
             $table->integer('seat_number')->nullable();
+            $table->integer('classroom_id')->nullable();//學生班級
             $table->integer('is_local')->nullable();
-            $table->integer('is_verify')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

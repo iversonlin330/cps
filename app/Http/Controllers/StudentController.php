@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
 use App\Cycle;
 use App\Http\Traits\MyTraits;
 use App\Teacher;
@@ -25,8 +26,8 @@ class StudentController extends Controller
             return $cycle->name . $new_school_id . "001";
         }
     }
-	
-	public function apply()
+
+    public function apply()
     {
         //
         return view('students.apply');
@@ -93,7 +94,7 @@ class StudentController extends Controller
             ->get();
         $citys = $this->getSchool();
 
-        $cycles = Cycle::orderBy('id','desc')->get();
+        $cycles = Cycle::orderBy('id', 'desc')->get();
 
         return view('students.view', compact('users', 'citys', 'cycles', 'data'));
     }
@@ -107,7 +108,15 @@ class StudentController extends Controller
     {
         //
         $citys = $this->getSchool();
-        return view('students.create', compact('citys'));
+
+        $classroom_map = Classroom::now()->get()->groupBY('school_id');
+
+        /*
+        foreach ($classroom_map as $k =>$v){
+            $classroom_map[$k];
+        }
+*/
+        return view('students.create', compact('citys', 'classroom_map'));
     }
 
     /**

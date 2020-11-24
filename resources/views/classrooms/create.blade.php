@@ -3,7 +3,10 @@
 @section('title2', '資料設定 / 班級資料設定 / 新增班級')
 @section('content')
     <div class="row-fluid main-padding">
-        <form action="{{ url('classrooms') }}" method="post">
+        <form action="{{ isset($classroom)? url('classrooms/'.$classroom->id) : url('classrooms') }}" method="post">
+            @if(isset($classroom))
+                @method('PUT')
+            @endif
             @csrf
             <div class="row" style="">
                 <div class="col-12">
@@ -74,6 +77,15 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @if(isset($selected))
+                                @foreach($selected as $student)
+                                    <tr>
+                                        <td>{{ $student->account }}<input type="text" name="student_id[]"
+                                                                          value="{{ $student->id }}" hidden>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -99,5 +111,11 @@
         $('form').submit(function () {
             $("#table_pool input").remove();
         });
+
+            @if(isset($classroom))
+        let classroom = @json($classroom);
+        $("[name='class']").val(classroom['class']);
+        $("[name='grade']").val(classroom['grade']);
+        @endif
     </script>
 @endsection

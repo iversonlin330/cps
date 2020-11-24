@@ -21,6 +21,15 @@ class DatabaseSeeder extends Seeder
             //'email' => 'twpirls2021@gmail.com',
             'password' => '9',
         ]);
+
+        DB::table('users')->insert([
+            'account' => 'cpsguest',
+            'name' => "訪客",
+            'role' => 1,
+            //'email' => 'twpirls2021@gmail.com',
+            'password' => 'cpsguest',
+        ]);
+
 		/*
         DB::table('users')->insert([
             'account' => '4',

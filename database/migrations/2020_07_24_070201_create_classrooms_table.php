@@ -17,7 +17,7 @@ class CreateClassroomsTable extends Migration
             $table->id();
 			$table->string('grade');
 			$table->string('class');
-            $table->integer('user_id');
+            $table->integer('school_id');
             $table->integer('cycle_id');
             $table->timestamps();
         });

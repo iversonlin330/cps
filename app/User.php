@@ -35,9 +35,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-//    protected $casts = [
-//        'email_verified_at' => 'datetime',
-//    ];
+    protected $casts = [
+        'tutor_classroom_id' => 'array',
+        'subject_classroom_id' => 'array',
+    ];
 
     //訪客-1 窗口-2 學生-3 老師-4 管理員-9
     public function scopeGuest($query){
@@ -58,6 +59,11 @@ class User extends Authenticatable
 
     public function scopeAdmin($query){
         return $query->where('role', 9);
+    }
+
+    public function scopeNow($query){
+        $cycle = Cycle::latest()->first();
+        return $query->where('cycle_id', $cycle->id);
     }
 
     public function classrooms()

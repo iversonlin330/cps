@@ -9,6 +9,12 @@ class Classroom extends Model
     //
     protected $guarded = ['id'];
 
+    public function scopeNow($query)
+    {
+        $cycle = Cycle::latest()->first();
+        return $query->where('cycle_id', $cycle->id);
+    }
+
     public function fullName()
     {
         return $this->grade . '年' . $this->class . '班';

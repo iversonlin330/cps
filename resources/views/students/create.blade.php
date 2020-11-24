@@ -35,7 +35,6 @@
                                 <label for="inputEmail3" class="col-3 col-form-label">班級</label>
                                 <div class="col-9">
                                     <select name="classroom_id" class="form-control">
-                                        <option value="1">一年戊班</option>
                                     </select>
                                 </div>
                             </div>
@@ -121,6 +120,21 @@
             $("[name='school_id']").append(html);
         });
         $("[name='city_id']").trigger('change');
+
+        var classroom_map = @json($classroom_map);
+
+        $("[name='school_id']").change(function () {
+            var school_val = $(this).val();
+            $("[name='classroom_id']").empty();
+            var html = '';
+            for (x in classroom_map[school_val]) {
+                let fullName = classroom_map[school_val][x]['grade'] + "年" + classroom_map[school_val][x]['class'] + "班";
+                html = html + "<option value='" + classroom_map[school_val][x]['id'] + "'>" + fullName + "</option>";
+            }
+            $("[name='classroom_id']").append(html);
+        });
+        $("[name='school_id']").trigger('change');
+
 
             @if(isset($user))
         let user = @json($user);

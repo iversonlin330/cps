@@ -95,9 +95,10 @@ class ClassroomController extends Controller
         $user = Auth::user();
         $school_id = $user->school_id;
         $students = $this->getStudentNowNoClass($school_id);
+
         $selected = User::Student()->where('classroom_id', $classroom->id)->get();
 
-        return view('classrooms.create', compact('classrooms', 'students', 'selected'));
+        return view('classrooms.create', compact('classroom', 'students', 'selected'));
     }
 
     /**
@@ -110,6 +111,18 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
         //
+        $data = $request->except(['_token', 'city_id']);
+        $classroom->fill([
+            'grade' => $data['grade'],
+            'class' => $data['class'],
+        ]);
+        $classroom->save();
+
+        $classroom_id = $classroom->id;
+
+        User::whereIn('id', $data['student_id'])->update(['classroom_id' => $classroom_id]);
+
+        return redirect('classrooms');
     }
 
     /**
@@ -121,5 +134,7 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom)
     {
         //
+        $classroom->delete();
+        return back();
     }
 }
