@@ -8,12 +8,14 @@
                 <form class="form-inline float-right">
                     <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
-                    <button class="btn btn-warning my-2 my-sm-0" type="submit">儲存</button>
+                    <a class="btn btn-warning my-2 my-sm-0" onclick="update()">儲存</a>
                 </form>
             </div>
         </div>
     </div>
 
+	<form action="{{ url('/users/contact-students-edit') }}" method="post">
+	@csrf
     <div class="row main-padding">
         <div class="col-12">
             <table class="table table-striped bg-white">
@@ -31,9 +33,9 @@
                 <tbody>
                 @foreach($students as $student)
                     <tr>
-                        <td>三年甲班</td>
-                        <td>{{ $student->seat_number }}</td>
-                        <td>{{ $student->name }}</td>
+                        <td>{{ $classroom->fullName() }}</td>
+                        <td><input type="number" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['seat_number']" value="{{ $student->seat_number }}"></td>
+                        <td><input type="text" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['name']" value="{{ $student->name }}"></td>
                         <td>
                             <select class="form-control-sm">
                                 <option>男</option>
@@ -54,6 +56,7 @@
             </table>
         </div>
     </div>
+	</form>
 
     <!-- Button trigger modal -->
 

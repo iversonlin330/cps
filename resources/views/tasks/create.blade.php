@@ -39,7 +39,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-5 mt-2 font-weight-bold" style="font-size:22px;">題目敘述
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3 ml-auto">
                                                     <select name="is_item[{{$q_id}}]" class="form-control is_item_select"
                                                             data-qid="{{ $q_id }}" onchange="item_change(this)"
                                                             required>
@@ -47,13 +47,15 @@
                                                         <option value="0">無選項欄位</option>
                                                     </select>
                                                 </div>
+												@if($sub == 0)
                                                 <div class="col-4">
-                                                    <select name="target[{{$q_id}}]" class="form-control" required>
+                                                    <select name="target[{{$index}}]" class="form-control" required>
                                                         @foreach($targets as $k=>$v)
                                                             <option value="{{ $k }}">{{ $v }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
+												@endif
                                             </div>
                                             <textarea class="form-control mb-2" placeholder="敘述一"
                                                       name="desc1[{{$q_id}}]" required></textarea>
@@ -101,8 +103,8 @@
                                                                     class="form-control form-control-sm">
                                                                 <!--option disabled selected hidden>配分
                                                                 </option-->
-                                                                @for($j=1; $j<=$scoreNum; $j++)
-                                                                    <option value="{{ $j }}" {{ ($j==1)? 'selected' : '' }}>{{ $j }}</option>
+                                                                @for($j=0; $j<=$scoreNum; $j++)
+                                                                    <option value="{{ $j }}" {{ ($j==0)? 'selected' : '' }}>{{ $j }}</option>
                                                                 @endfor
                                                             </select>
                                                         </div>

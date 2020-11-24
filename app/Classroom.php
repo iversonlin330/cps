@@ -22,7 +22,7 @@ class Classroom extends Model
 
     public function students()
     {
-        return $this->hasMany('\App\User', 'classroom_id');
+        return $this->hasMany('\App\User', 'classroom_id')->where('role',3);
     }
 
     public function teacher()

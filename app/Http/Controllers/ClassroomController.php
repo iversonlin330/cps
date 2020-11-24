@@ -96,7 +96,7 @@ class ClassroomController extends Controller
         $school_id = $user->school_id;
         $students = $this->getStudentNowNoClass($school_id);
 
-        $selected = User::Student()->where('classroom_id', $classroom->id)->get();
+        $selected = User::student()->where('classroom_id', $classroom->id)->get();
 
         return view('classrooms.create', compact('classroom', 'students', 'selected'));
     }

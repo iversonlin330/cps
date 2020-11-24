@@ -32,16 +32,18 @@ class UserController extends Controller
     {
         $users = Auth::user();
 
-        $students = User::where('classroom_id', $classroom_id)->get();
+        $students = User::student()->where('classroom_id', $classroom_id)->get();
+		
+		$classroom = Classroom::find($classroom_id);
 
-        return view("users.contact-students-edit", compact('users', 'students'));
+        return view("users.contact-students-edit", compact('users', 'students','classroom'));
     }
 
     public function postContactStudentsEdit(Request $request)
     {
         $data = $request->all();
 
-        foreach ($data as $k => $v) {
+        foreach ($data['student_array'] as $k => $v) {
             User::where('id', $k)->update(['seat_number' => $v]);
         }
 

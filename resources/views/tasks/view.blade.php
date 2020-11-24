@@ -171,13 +171,13 @@
 
             $("form").attr('action', url);
             $("form").find("[name='name']").val(name);
-
+			
             if (count.length > 2) {
-                str_array = count.split(",");
+                str_array = count.split(",").map(Number);;
             } else {
                 str_array = [count];
             }
-
+			
             refresh();
             $('#createModal').modal('show');
         }
