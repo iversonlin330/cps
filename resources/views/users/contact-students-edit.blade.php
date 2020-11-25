@@ -37,17 +37,17 @@
                         <td><input type="number" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['seat_number']" value="{{ $student->seat_number }}"></td>
                         <td><input type="text" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['name']" value="{{ $student->name }}"></td>
                         <td>
-                            <select class="form-control-sm">
-                                <option>男</option>
-                                <option>女</option>
+                            <select name="student_array[{{ $student->id }}]['gender']" class="form-control-sm">
+                                <option value="1" {{ ($student->gender==1)? 'selected' : '' }}>男</option>
+                                <option value="2" {{ ($student->gender==2)? 'selected' : '' }}>女</option>
                             </select>
                         </td>
                         <td>{{ $student->account }}</td>
-                        <td>{{ $student->password }}</td>
+                        <td><input type="text" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['password']" value="{{ $student->password }}"></td>
                         <td>
-                            <select class="form-control-sm">
-                                <option>是</option>
-                                <option>否</option>
+                            <select name="student_array[{{ $student->id }}]['is_local']" class="form-control-sm">
+                                <option value="1" {{ ($student->is_local==1)? 'selected' : '' }}>是</option>
+                                <option value="0" {{ ($student->is_local==0)? 'selected' : '' }}>否</option>
                             </select>
                         </td>
                     </tr>

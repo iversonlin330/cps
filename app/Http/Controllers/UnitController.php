@@ -44,7 +44,7 @@ class UnitController extends Controller
     {
         //
         $data = $request->all();
-        if(!array_key_exists('answer',$data)){
+        if (!array_key_exists('answer', $data)) {
             return "無作答紀錄";
         }
         $user = Auth::user();
@@ -82,12 +82,18 @@ class UnitController extends Controller
 
         $tasks = $unit->tasks;
         foreach ($tasks as $task) {
+            /*
             $is_item_array = $task->content['is_item'];
             foreach ($is_item_array as $index => $is_item) {
                 if ($is_item == 1) {
                     $target = $task->content['target'][$index];
                     $count[$target] = $count[$target] + 1;
                 }
+            }
+            */
+            $count_list = array_count_values($task->content['target']);
+            foreach ($count_list as $k => $v) {
+                $count[$k] = $count[$k] + $v;
             }
         }
 
@@ -116,12 +122,29 @@ class UnitController extends Controller
         $tasks = $unit->tasks;
 
         foreach ($tasks as $task) {
+            /*
             $questions = $task->content['is_item'];
             foreach ($questions as $index => $is_item) {
                 if ($is_item == 1) {
                     $target = $task->content['target'][$index];
                     $total[$target] = $total[$target] + max($task->content['score'][$index]);
                 }
+            }
+            */
+            $q_id = 0;
+            foreach ($task->content['count'] as $index => $q_count) {
+                $target = $task->content['target'][$index];
+                $max_temp = 0;
+                for ($sub = 0; $sub < $q_count; $sub++) {
+                    if ($task->content['is_item'][$q_id] == 1) {
+                        $max_temp = max($task->content['score'][$q_id]);
+                        if (max($task->content['score'][$q_id]) > $max_temp) {
+                            $max_temp = max($task->content['score'][$q_id]);
+                        }
+                    }
+                    $q_id++;
+                }
+                $total[$target] = $max_temp;
             }
         }
 
@@ -159,8 +182,8 @@ class UnitController extends Controller
         //
         return view('units.result');
     }
-	
-	public function studentView(Request $request)
+
+    public function studentView(Request $request)
     {
         //
         $data = $request->all();
@@ -179,15 +202,15 @@ class UnitController extends Controller
         $targets = config('map.target');
 
         $user = Auth::user();
-		$units = [];
+        $units = [];
 
         return view('units.student-view', compact('user', 'units', 'targets'));
     }
-	
-	public function studentScore()
+
+    public function studentScore()
     {
         //
-		$targets = config('map.target');
+        $targets = config('map.target');
         return view('units.student-score', compact('targets'));
     }
 

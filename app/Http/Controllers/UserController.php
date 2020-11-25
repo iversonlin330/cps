@@ -28,12 +28,23 @@ class UserController extends Controller
         return view("users.contact-teachers-edit", compact('users', 'classrooms'));
     }
 
+    public function postContactTeachersEdit(Request $request)
+    {
+        $data = $request->all();
+
+        foreach ($data['teacher_array'] as $k => $v) {
+            User::where('id', $k)->update($v);
+        }
+
+        return back();
+    }
+
     public function contactStudentsEdit($classroom_id)
     {
         $users = Auth::user();
 
         $students = User::student()->where('classroom_id', $classroom_id)->get();
-		
+
 		$classroom = Classroom::find($classroom_id);
 
         return view("users.contact-students-edit", compact('users', 'students','classroom'));
@@ -44,10 +55,10 @@ class UserController extends Controller
         $data = $request->all();
 
         foreach ($data['student_array'] as $k => $v) {
-            User::where('id', $k)->update(['seat_number' => $v]);
+            User::where('id', $k)->update($v);
         }
 
-        return redirect('classrooms');
+        return back();
     }
 
     /**

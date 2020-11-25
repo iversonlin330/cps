@@ -34,7 +34,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->gender }}</td>
                         <td>
-                            <select name="classroom_id[]" class="form-control-sm">
+                            <select name="teacher_array[{{ $user->id  }}]['tutor_classroom_id']" class="form-control-sm">
                                 @foreach($classrooms as $classroom)
                                     <option
                                         value="{{ $classroom->id }}" {{ ($classroom->id == $user->tutor_classroom_id)? 'selected' : '' }}>{{ $classroom->fullName }}</option>

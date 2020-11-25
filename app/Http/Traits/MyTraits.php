@@ -67,11 +67,21 @@ trait MyTraits
     public function calScore($answer, $count)
     {
         $result = $this->getTargetInitial();
+        /*
         foreach ($answer as $task_id => $question) {
             $task = Task::find($task_id);
             foreach ($question as $q_id => $score) {
                 $target_id = $task->content['target'][$q_id];
                 $result[$target_id] = $result[$target_id] + $score;
+            }
+        }
+        */
+
+        foreach ($answer as $task_id => $question) {
+            $task = Task::find($task_id);
+            foreach ($question as $index => $score_array) {
+                $target_id = $task->content['target'][$index];
+                $result[$target_id] = $result[$target_id] + array_sum($score_array);;
             }
         }
 
