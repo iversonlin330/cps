@@ -170,24 +170,9 @@
             }
         }
 
-        $("#myTab a:eq(0)").click();
-            @if(isset($task->content['question']))
-        let content = [].concat(@json($task->content));
-        for (let x in content) {
-            content[x].forEach(function (value, i) {
-                if (Array.isArray(value)) {
-                    for (let y in value) {
-                        $("[name='" + x + "[" + i + "][" + y + "]']").val(value[y]);
-                    }
-                } else {
-                    $("[name='" + x + "[" + i + "]']").val(value);
-                }
-            });
-        }
-        $(".is_item_select").trigger('change');
-        @endif
 /*
         $(".item_area select").change(function () {
+			console.log($(this));
             let index = $(this).parent('.item_area').data('index');
             let p_sub = $(this).parent('.item_area').data('sub');
             let qid = $(this).data('qid');
@@ -208,6 +193,24 @@
             }
             return html;
         }
- */
+*/
+		$("#myTab a:eq(0)").click();
+            @if(isset($task->content['question']))
+        let content = @json($task->content);
+        for (let x in content) {
+            content[x].forEach(function (value, i) {
+                if (Array.isArray(value)) {
+                    for (let y in value) {
+                        $("[name='" + x + "[" + i + "][" + y + "]']").val(value[y]);
+						$("[name='" + x + "[" + i + "][" + y + "]']").trigger('change');
+                    }
+                } else {
+                    $("[name='" + x + "[" + i + "]']").val(value);
+					$("[name='" + x + "[" + i + "]']").trigger('change');
+                }
+            });
+        }
+        $(".is_item_select").trigger('change');
+        @endif
     </script>
 @endsection
