@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         //
         $data = $request->all();
-        if(!array_key_exists('answer',$data)){
+        if (!array_key_exists('answer', $data)) {
             return "無作答紀錄";
         }
         //dd($data);
@@ -48,11 +48,11 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         //算題數
-		$count_list = array_count_values($task->content['target']);
+        $count_list = array_count_values($task->content['target']);
         foreach ($count_list as $k => $v) {
             $count[$k] = $v;
         }
-		/*
+        /*
         $is_item_array = $task->content['is_item'];
         foreach ($is_item_array as $index => $is_item) {
             if ($is_item == 1) {
@@ -60,32 +60,32 @@ class TaskController extends Controller
                 $count[$target] = $count[$target] + 1;
             }
         }
-		*/
-		
+        */
+
         //算分數
-		//dd($data['answer']);
+        //dd($data['answer']);
         foreach ($data['answer'] as $task_id => $question) {
             foreach ($question as $index => $score_array) {
                 $target_id = $task->content['target'][$index];
                 $result[$target_id] = $result[$target_id] + array_sum($score_array);;
             }
         }
-		
-		/*
-		$q_id = 0;
-		foreach($task->content['count'] as $index => $q_count){
-			for( $sub = 0; $sub < $q_count; $sub++){
-				if($task->content['is_item'][$q_id] == 1){
-					$target = $task->content['target'][$index];
-					$max_temp = max($task->content['score'][$q_id]);
-					if($max_temp > $total[$target]){
-						$total[$target] = $max_temp;
-					} 
-				}
-			$q_id++;	
-			}
-		}
-		*/
+
+        /*
+        $q_id = 0;
+        foreach($task->content['count'] as $index => $q_count){
+            for( $sub = 0; $sub < $q_count; $sub++){
+                if($task->content['is_item'][$q_id] == 1){
+                    $target = $task->content['target'][$index];
+                    $max_temp = max($task->content['score'][$q_id]);
+                    if($max_temp > $total[$target]){
+                        $total[$target] = $max_temp;
+                    }
+                }
+            $q_id++;
+            }
+        }
+        */
 
         foreach ($result as $k => $v) {
             if ($count[$k] != 0) {
@@ -95,20 +95,20 @@ class TaskController extends Controller
         }
 
         //算滿分
-		$q_id = 0;
-		foreach($task->content['count'] as $index => $q_count){
-			for( $sub = 0; $sub < $q_count; $sub++){
-				if($task->content['is_item'][$q_id] == 1){
-					$target = $task->content['target'][$index];
-					$max_temp = max($task->content['score'][$q_id]);
-					if($max_temp > $total[$target]){
-						$total[$target] = $max_temp;
-					} 
-				}
-			$q_id++;	
-			}
-		}
-		/*
+        $q_id = 0;
+        foreach ($task->content['count'] as $index => $q_count) {
+            for ($sub = 0; $sub < $q_count; $sub++) {
+                if ($task->content['is_item'][$q_id] == 1) {
+                    $target = $task->content['target'][$index];
+                    $max_temp = max($task->content['score'][$q_id]);
+                    if ($max_temp > $total[$target]) {
+                        $total[$target] = $max_temp;
+                    }
+                }
+                $q_id++;
+            }
+        }
+        /*
         $questions = $task->content['is_item'];
         foreach ($questions as $index => $is_item) {
             if ($is_item == 1) {
@@ -116,7 +116,7 @@ class TaskController extends Controller
                 $total[$target] = $total[$target] + max($task->content['score'][$index]);
             }
         }
-		*/
+        */
         foreach ($total as $k => $v) {
             if ($count[$k] != 0) {
                 $total[$k] = round($v / $count[$k], 1);
@@ -167,7 +167,7 @@ class TaskController extends Controller
                 $q_id++;
             }
         }
-		
+
         return view('tasks.create', compact('targets', 'scoreNum', 'task', 'map'));
     }
 

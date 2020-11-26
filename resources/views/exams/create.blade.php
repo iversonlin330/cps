@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center bg-white table-scroll">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="open_table">
                             <thead>
                             <tr>
                                 <th scope="col">預覽</th>
@@ -32,7 +32,9 @@
                             <tbody>
                             @foreach($myUnits as $unit)
                                 <tr onclick="add({{ $unit->id }});">
-                                    <td><a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a></td>
+                                    <td>
+                                        <a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a>
+                                        <input type="text" name="unit_id[]" value="{{ $unit->id }}" hidden></td>
                                     <td>{{ $unit->name }}</td>
                                 </tr>
                             @endforeach
@@ -50,7 +52,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center bg-white table-scroll">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="my_table">
                             <thead>
                             <tr>
                                 <th scope="col">預覽</th>
@@ -60,7 +62,10 @@
                             <tbody>
                             @foreach($openUnits as $unit)
                                 <tr>
-                                    <td><a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a></td>
+                                    <td>
+                                        <a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a>
+                                        <input type="text" name="unit_id[]" value="{{ $unit->id }}" hidden></td>
+                                    </td>
                                     <td>{{ $unit->name }}</td>
                                 </tr>
                             @endforeach
@@ -86,12 +91,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @for($i=0;$i<=500;$i++)
-                                <tr>
-                                    <td>單元名稱ＯＯＯＯＯ</td>
-                                    <td>X</td>
-                                </tr>
-                            @endfor
                             </tbody>
                         </table>
                     </div>
@@ -109,6 +108,17 @@
 @section('script')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        $("table").sortable({
+            items: 'tbody > tr',
+            connectWith: "table"
+        });
+
+        $('form').submit(function () {
+            $("#my_table input").remove();
+            $("#open_table input").remove();
+        });
+
+        /*
         let select_units = [];
 
         function refresh() {
@@ -140,5 +150,6 @@
             }
             refresh();
         }
+         */
     </script>
 @endsection

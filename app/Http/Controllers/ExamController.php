@@ -58,7 +58,7 @@ class ExamController extends Controller
                 foreach ($is_item_array as $index => $is_item) {
                     if ($is_item == 1) {
                         $target = $task->content['target'][$index];
-                        $count[$target] = $count[$target] +1;
+                        $count[$target] = $count[$target] + 1;
                     }
                 }
             }
@@ -169,14 +169,14 @@ class ExamController extends Controller
         //
         return view('exams.my');
     }
-	
-	public function studentView()
+
+    public function studentView()
     {
         //
-		$targets = config('map.target');
+        $targets = config('map.target');
 
         $exams = Exam::all();
-		
+
         return view('exams.student-view', compact('exams', 'targets'));
     }
 
@@ -206,7 +206,7 @@ class ExamController extends Controller
         $user = Auth::user();
         $myUnits = Unit::where('user_id', $user->id)->get();
 
-        $openUnits = Unit::where('is_open', 1)->get();
+        $openUnits = Unit::where('is_open', 1)->where('user_id', "!=", $user->id)->get();
 
         return view('exams.create', compact('myUnits', 'openUnits'));
     }
@@ -221,7 +221,7 @@ class ExamController extends Controller
     {
         //
         $data = $request->except('_token');
-
+        dd($data);
         $user = Auth::user();
 
         $model = new Exam;
@@ -231,6 +231,11 @@ class ExamController extends Controller
         ]);
         $model->save();
 
+        foreach ($data['unit_id'] as $index => $value){
+
+        }
+
+        dd($data);
         //$model->units()->attach($data['unit_id']);
 
         return view('exams.create-order');
