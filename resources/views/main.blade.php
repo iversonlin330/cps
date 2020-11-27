@@ -139,7 +139,7 @@
 					</div>
 					<div class="d-inline-flex">個人資料設定</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('classrooms/teacher-view') }}'">
 					<div class="main-block-sub-icon bg-grey text-white d-inline-flex">
 						<i class="fal fa-users fa-lg icon"></i>
 					</div>

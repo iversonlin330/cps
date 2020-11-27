@@ -36,11 +36,11 @@
                 @foreach($exams as $exam)
                     <tr>
                         <td>{{ $exam->name }}</td>
-                        <td>單元Ａ/單元B/單元C</td>
-                        <td>22</td>
-                        <td>30</td>
+                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                        <td>{{ $exam->avg_score() }}</td>
+                        <td>{{ $exam->total_score() }}</td>
                         <td><a href="#" data-toggle="modal" data-target="#viewModal">檢視</a></td>
-                        <td><a href="{{ url('exams/start') }}" class="btn btn-warning btn-sm">作答</a></td>
+                        <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
                                     data-target="#exampleModal">指派考券

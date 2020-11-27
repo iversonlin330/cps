@@ -19,7 +19,7 @@ class User extends Authenticatable
 //        'name', 'email', 'password',
 //    ];
 
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -41,29 +41,43 @@ class User extends Authenticatable
     ];
 
     //訪客-1 窗口-2 學生-3 老師-4 管理員-9
-    public function scopeGuest($query){
+    public function scopeGuest($query)
+    {
         return $query->where('role', 1);
     }
 
-    public function scopeContact($query){
+    public function scopeContact($query)
+    {
         return $query->where('role', 2);
     }
 
-    public function scopeStudent($query){
+    public function scopeStudent($query)
+    {
         return $query->where('role', 3);
     }
 
-    public function scopeTeacher($query){
+    public function scopeTeacher($query)
+    {
         return $query->where('role', 4);
     }
 
-    public function scopeAdmin($query){
+    public function scopeAdmin($query)
+    {
         return $query->where('role', 9);
     }
 
-    public function scopeNow($query){
+    public function scopeNow($query)
+    {
         $cycle = Cycle::latest()->first();
         return $query->where('cycle_id', $cycle->id);
+    }
+
+    public function subject_classroom()
+    {
+        if(!$this->subject_classroom_id){
+            $this->subject_classroom_id = [];
+        }
+        return Classroom::whereIn('id', $this->subject_classroom_id)->get();
     }
 
     public function classrooms()

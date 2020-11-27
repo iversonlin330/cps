@@ -97,16 +97,18 @@ class TaskController extends Controller
         //算滿分
         $q_id = 0;
         foreach ($task->content['count'] as $index => $q_count) {
+            $target = $task->content['target'][$index];
+            $max_temp = 0;
             for ($sub = 0; $sub < $q_count; $sub++) {
                 if ($task->content['is_item'][$q_id] == 1) {
-                    $target = $task->content['target'][$index];
                     $max_temp = max($task->content['score'][$q_id]);
-                    if ($max_temp > $total[$target]) {
-                        $total[$target] = $max_temp;
+                    if (max($task->content['score'][$q_id]) > $max_temp) {
+                        $max_temp = max($task->content['score'][$q_id]);
                     }
                 }
                 $q_id++;
             }
+            $total[$target] = $total[$target] + $max_temp;
         }
         /*
         $questions = $task->content['is_item'];

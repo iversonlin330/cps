@@ -52,6 +52,8 @@ Route::get('/users/contact-teachers-edit', 'UserController@contactTeachersEdit')
 Route::get('/users/contact-students-edit/{classroom_id}', 'UserController@contactStudentsEdit');
 Route::post('/users/contact-students-edit', 'UserController@postContactStudentsEdit');
 
+Route::get("/classrooms/teacher-view", "ClassroomController@teacherView");
+
 
 Route::resource("users", "UserController");
 Route::resource("cycles", "CycleController");

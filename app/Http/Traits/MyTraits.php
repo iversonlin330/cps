@@ -76,12 +76,15 @@ trait MyTraits
             }
         }
         */
-
         foreach ($answer as $task_id => $question) {
             $task = Task::find($task_id);
             foreach ($question as $index => $score_array) {
                 $target_id = $task->content['target'][$index];
-                $result[$target_id] = $result[$target_id] + array_sum($score_array);;
+                if (is_array($score_array)) {
+                    $result[$target_id] = $result[$target_id] + array_sum($score_array);
+                } else {
+                    $result[$target_id] = $result[$target_id] + $score_array;
+                }
             }
         }
 

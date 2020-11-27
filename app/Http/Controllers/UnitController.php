@@ -144,7 +144,7 @@ class UnitController extends Controller
                     }
                     $q_id++;
                 }
-                $total[$target] = $max_temp;
+                $total[$target] = $total[$target] + $max_temp;
             }
         }
 

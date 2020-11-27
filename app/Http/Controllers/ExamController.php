@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exam;
 use App\Http\Traits\MyTraits;
 use App\Unit;
+use App\UserExam;
 use App\UserUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,14 @@ class ExamController extends Controller
     public function start($id)
     {
         $exam = Exam::find($id);
-        return view('exams.start', compact('exam'));
+
+        $task_length = 0;
+
+        foreach ($exam->units() as $unit) {
+            $task_length = $task_length + count($unit->tasks);
+        }
+
+        return view('exams.start', compact('exam', 'task_length'));
     }
 
     public function postStart(Request $request, $id)
@@ -54,23 +62,10 @@ class ExamController extends Controller
         foreach ($units as $unit) {
             $tasks = $unit->tasks;
             foreach ($tasks as $task) {
-                $is_item_array = $task->content['is_item'];
-                foreach ($is_item_array as $index => $is_item) {
-                    if ($is_item == 1) {
-                        $target = $task->content['target'][$index];
-                        $count[$target] = $count[$target] + 1;
-                    }
+                $count_list = array_count_values($task->content['target']);
+                foreach ($count_list as $k => $v) {
+                    $count[$k] = $count[$k] + $v;
                 }
-            }
-        }
-        $unit = Unit::find($id);
-
-
-        $tasks = $unit->tasks;
-        foreach ($tasks as $task) {
-            $count_list = array_count_values($task->content['target']);
-            foreach ($count_list as $k => $v) {
-                $count[$k] = $count[$k] + $v;
             }
         }
 
@@ -96,14 +91,23 @@ class ExamController extends Controller
 
         //算滿分
 
-        $tasks = $unit->tasks;
-
-        foreach ($tasks as $task) {
-            $questions = $task->content['is_item'];
-            foreach ($questions as $index => $is_item) {
-                if ($is_item == 1) {
+        foreach ($units as $unit) {
+            $tasks = $unit->tasks;
+            foreach ($tasks as $task) {
+                $q_id = 0;
+                foreach ($task->content['count'] as $index => $q_count) {
                     $target = $task->content['target'][$index];
-                    $total[$target] = $total[$target] + max($task->content['score'][$index]);
+                    $max_temp = 0;
+                    for ($sub = 0; $sub < $q_count; $sub++) {
+                        if ($task->content['is_item'][$q_id] == 1) {
+                            $max_temp = max($task->content['score'][$q_id]);
+                            if (max($task->content['score'][$q_id]) > $max_temp) {
+                                $max_temp = max($task->content['score'][$q_id]);
+                            }
+                        }
+                        $q_id++;
+                    }
+                    $total[$target] = $total[$target] + $max_temp;
                 }
             }
         }
@@ -117,7 +121,7 @@ class ExamController extends Controller
         //算平均
         $students = $this->getStudentNow();
 
-        $user_scores = UserUnit::where('unit_id', $id)
+        $user_scores = UserExam::where('exam_id', $id)
             ->whereIn('user_id', $students->pluck('id')->toArray())
             ->get();
         if ($user_scores->count() > 0) {
@@ -221,24 +225,17 @@ class ExamController extends Controller
     {
         //
         $data = $request->except('_token');
-        dd($data);
         $user = Auth::user();
 
         $model = new Exam;
         $model->fill([
             'name' => $data['name'],
+            'unit_id' => $data['unit_id'],
             'user_id' => $user->id
         ]);
         $model->save();
 
-        foreach ($data['unit_id'] as $index => $value){
-
-        }
-
-        dd($data);
-        //$model->units()->attach($data['unit_id']);
-
-        return view('exams.create-order');
+        return redirect('exams');
     }
 
     /**

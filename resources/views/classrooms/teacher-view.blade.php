@@ -41,7 +41,7 @@
                         </button>
                     </td>
                 </tr>
-                @foreach($classrooms as $classroom)
+                @foreach($classroom_selects as $classroom)
                     <tr>
                         <td>{{ $classroom->name }}</td>
                         <td>{{ $classroom->name }}</td>
@@ -75,7 +75,9 @@
                 </div>
                 <div class="modal-body">
                     <select class="form-control">
-                        <option>選擇班級</option>
+                        @foreach($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}">{{ $classroom->fullName() }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="modal-footer">

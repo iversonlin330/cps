@@ -13,6 +13,17 @@ class ClassroomController extends Controller
 {
     use MyTraits;
 
+    public function teacherView()
+    {
+        $user = Auth::user();
+        $classroom_selects = $user->subject_classroom();
+        $classrooms = Classroom::where('school_id', $user->school_id)
+            ->whereNotIn('id', $user->subject_classroom_id)
+            ->get();
+
+        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user'));
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -25,7 +25,7 @@
                     @for($i = 0; $i < $q_count; $i++)
                         <div id="q_{{ $task_index }}_{{ $q_id }}" class="row question"
                              style="padding-top:24px;display: none;">
-                            <div class="col-6 pr-0">
+                            <div class="col-6 pr-0" style="background-color: #fff5dd;">
                                 <div class="pl-4 exam-content bg-brown">
                                     <div class="row">
                                         <div class="col-12 mt-4 exam-content-title">題目</div>
