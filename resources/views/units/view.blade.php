@@ -41,9 +41,9 @@
                 @foreach($units as $unit)
                     <tr>
                         <td>{{ $unit->name }}</td>
-                        <td>{{ $unit->average_score() }}</td>
-                        <td>{{ $unit->max_score() }}</td>
-                        <td><a href="#" data-toggle="modal" data-target="#exampleModal">檢視</a></td>
+                        <td>{{ array_sum($unit->avg_score()) }}</td>
+                        <td>{{ array_sum($unit->total_score()) }}</td>
+                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal" data-max="{{ json_encode($unit->total_score()) }}" data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
                         <td>
                             <select name="is_open[{{$unit->id}}]" class="form-control-sm">
                                 <option value="1" {{ ($unit->is_open == 1)? 'selected' : '' }}>公開</option>
@@ -77,7 +77,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="target_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -99,8 +99,8 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td>3</td>
-                                <td>5</td>
+                                <td id="avg_{{$k}}">3</td>
+                                <td id="total_{{$k}}">5</td>
                             </tr>
                         @endforeach
                         </tbody>

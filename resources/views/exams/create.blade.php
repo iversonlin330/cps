@@ -91,6 +91,16 @@
                             </tr>
                             </thead>
                             <tbody>
+							@if(isset($selected))
+                                @foreach($selected as $unit)
+                                    <tr onclick="add({{ $unit->id }});">
+                                    <td>
+                                        <a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a>
+                                        <input type="text" name="unit_id[]" value="{{ $unit->id }}" hidden></td>
+                                    <td>{{ $unit->name }}</td>
+                                </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -117,6 +127,11 @@
             $("#my_table input").remove();
             $("#open_table input").remove();
         });
+		
+		@if(isset($exam))
+        let exam = @json($exam);
+        $("[name='name']").val(exam['name']);
+        @endif
 
         /*
         let select_units = [];

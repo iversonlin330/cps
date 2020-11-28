@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'tutor_classroom_id' => 'array',
+        //'tutor_classroom_id' => 'array',
         'subject_classroom_id' => 'array',
     ];
 

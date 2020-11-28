@@ -49,6 +49,7 @@ Route::post('/students/create-multi', 'StudentController@postCreateMulti');
 
 Route::get('/users/contact-edit', 'UserController@contactEdit');
 Route::get('/users/contact-teachers-edit', 'UserController@contactTeachersEdit');
+Route::post('/users/contact-teachers-edit', 'UserController@postContactTeachersEdit');
 Route::get('/users/contact-students-edit/{classroom_id}', 'UserController@contactStudentsEdit');
 Route::post('/users/contact-students-edit', 'UserController@postContactStudentsEdit');
 

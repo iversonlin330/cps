@@ -61,7 +61,7 @@
                                                     @if($task['content']['question'][$q_id][$j])
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio"
-                                                                   name="answer[{{$task->id}}][{{$q_id}}]"
+                                                                   name="answer[{{$task->id}}][{{$index}}][{{$q_id}}]"
                                                                    value="{{ $task['content']['score'][$q_id][$j] }}"
                                                                    data-goto="{{ $task['content']['goto'][$q_id][$j] }}"
                                                                    data-task="{{ $task_index }}" onclick="goto(this)">

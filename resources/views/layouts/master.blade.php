@@ -317,6 +317,19 @@
             $('#deleteModal form').attr('action', url);
             $('#deleteModal .keyword').text(keyword);
         });
+		
+		$(document).on('click', '.target', function () {
+            let total_score = $(this).data('total');
+			let average_score = $(this).data('avg');
+			
+			for(x in total_score){
+				$("#total_"+x).text(total_score[x]);
+			}
+			
+			for(x in average_score){
+				$("#avg_"+x).text(average_score[x]);
+			}
+        });
 
     </script>
     @yield('script')

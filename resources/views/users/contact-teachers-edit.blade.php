@@ -8,7 +8,7 @@
                 <form class="form-inline float-right">
                     <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
-                    <button class="btn btn-warning my-2 my-sm-0" type="submit">儲存</button>
+                    <a class="btn btn-warning my-2 my-sm-0" onclick="form_submit()">儲存</a>
                 </form>
             </div>
         </div>
@@ -16,6 +16,8 @@
 
     <div class="row main-padding">
         <div class="col-12">
+		<form id="user_form" action="{{ url('/users/contact-teachers-edit') }}" method="post">
+		@csrf
             <table class="table table-striped bg-white">
                 <thead>
                 <tr>
@@ -34,10 +36,11 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->gender }}</td>
                         <td>
-                            <select name="teacher_array[{{ $user->id  }}]['tutor_classroom_id']" class="form-control-sm">
-                                @foreach($classrooms as $classroom)
+                            <select name="teacher_array[{{ $user->id  }}][tutor_classroom_id]" class="form-control-sm">
+                                <option value="">無</option>
+								@foreach($classrooms as $classroom)
                                     <option
-                                        value="{{ $classroom->id }}" {{ ($classroom->id == $user->tutor_classroom_id)? 'selected' : '' }}>{{ $classroom->fullName }}</option>
+                                        value="{{ $classroom->id }}" {{ ($classroom->id == $user->tutor_classroom_id)? 'selected' : '' }}>{{ $classroom->fullName() }}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -47,25 +50,9 @@
                         <td>{{ $user->teacherid }}</td>
                     </tr>
                 @endforeach
-
-                @for($i=0;$i<=5;$i++)
-                    <tr>
-                        <td>黃小玲</td>
-                        <td>女</td>
-                        <td>
-                            <select class="form-control-sm">
-                                <option>一年丁班</option>
-                                <option>一年甲班</option>
-                            </select>
-                        </td>
-                        <td>OOOOOOOO</td>
-                        <td>XXXXXXXX</td>
-                        <td>12345@mail.com</td>
-                        <td>XXXXXXXX</td>
-                    </tr>
-                @endfor
                 </tbody>
             </table>
+			</form>
         </div>
     </div>
 
@@ -109,4 +96,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+	function form_submit(){
+		$("#user_form").submit();
+	}
+	</script>
 @endsection

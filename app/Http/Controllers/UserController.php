@@ -31,7 +31,7 @@ class UserController extends Controller
     public function postContactTeachersEdit(Request $request)
     {
         $data = $request->all();
-
+		
         foreach ($data['teacher_array'] as $k => $v) {
             User::where('id', $k)->update($v);
         }

@@ -52,6 +52,7 @@ class TaskController extends Controller
         foreach ($count_list as $k => $v) {
             $count[$k] = $v;
         }
+		//dd($count_list);
         /*
         $is_item_array = $task->content['is_item'];
         foreach ($is_item_array as $index => $is_item) {
@@ -70,7 +71,7 @@ class TaskController extends Controller
                 $result[$target_id] = $result[$target_id] + array_sum($score_array);;
             }
         }
-
+		
         /*
         $q_id = 0;
         foreach($task->content['count'] as $index => $q_count){
@@ -98,11 +99,10 @@ class TaskController extends Controller
         $q_id = 0;
         foreach ($task->content['count'] as $index => $q_count) {
             $target = $task->content['target'][$index];
-            $max_temp = 0;
+			$max_temp = 0;
             for ($sub = 0; $sub < $q_count; $sub++) {
                 if ($task->content['is_item'][$q_id] == 1) {
-                    $max_temp = max($task->content['score'][$q_id]);
-                    if (max($task->content['score'][$q_id]) > $max_temp) {
+                    if ((int) max($task->content['score'][$q_id]) > (int) $max_temp) {
                         $max_temp = max($task->content['score'][$q_id]);
                     }
                 }

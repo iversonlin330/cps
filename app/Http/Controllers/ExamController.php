@@ -100,7 +100,7 @@ class ExamController extends Controller
                     $max_temp = 0;
                     for ($sub = 0; $sub < $q_count; $sub++) {
                         if ($task->content['is_item'][$q_id] == 1) {
-                            $max_temp = max($task->content['score'][$q_id]);
+                            //$max_temp = max($task->content['score'][$q_id]);
                             if (max($task->content['score'][$q_id]) > $max_temp) {
                                 $max_temp = max($task->content['score'][$q_id]);
                             }
@@ -258,6 +258,19 @@ class ExamController extends Controller
     public function edit(Exam $exam)
     {
         //
+		$user = Auth::user();
+        $myUnits = Unit::where('user_id', $user->id)
+			->whereNotIn('id',$exam->unit_id)
+			->get();
+
+        $openUnits = Unit::where('is_open', 1)
+			->where('user_id', "!=", $user->id)
+			->whereNotIn('id',$exam->unit_id)
+			->get();
+		
+		$selected = Unit::whereIn('id',$exam->unit_id)->get();
+
+        return view('exams.create', compact('exam','myUnits', 'openUnits','selected'));
     }
 
     /**

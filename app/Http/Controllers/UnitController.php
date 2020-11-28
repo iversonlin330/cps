@@ -137,7 +137,7 @@ class UnitController extends Controller
                 $max_temp = 0;
                 for ($sub = 0; $sub < $q_count; $sub++) {
                     if ($task->content['is_item'][$q_id] == 1) {
-                        $max_temp = max($task->content['score'][$q_id]);
+                        //$max_temp = max($task->content['score'][$q_id]);
                         if (max($task->content['score'][$q_id]) > $max_temp) {
                             $max_temp = max($task->content['score'][$q_id]);
                         }
