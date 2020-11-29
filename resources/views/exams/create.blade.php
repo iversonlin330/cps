@@ -31,7 +31,7 @@
                             </thead>
                             <tbody>
                             @foreach($myUnits as $unit)
-                                <tr onclick="add({{ $unit->id }});">
+                                <tr>
                                     <td>
                                         <a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a>
                                         <input type="text" name="unit_id[]" value="{{ $unit->id }}" hidden></td>
@@ -120,7 +120,8 @@
     <script>
         $("table").sortable({
             items: 'tbody > tr',
-            connectWith: "table"
+            connectWith: "table",
+			receive: function(e, ui){ 	$(this).find("tbody").append(ui.item);    }
         });
 
         $('form').submit(function () {
