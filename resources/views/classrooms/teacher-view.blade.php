@@ -30,7 +30,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <!--tr>
                     <td>五年丁班</td>
                     <td>29</td>
                     <td><a href="{{ url('exams/start') }}">檢視</a></td>
@@ -40,21 +40,18 @@
                                 data-target="#deleteModal" data-keyword="班級" data-url="{{ url('classrooms/1') }}">刪除
                         </button>
                     </td>
-                </tr>
+                </tr-->
                 @foreach($classroom_selects as $classroom)
                     <tr>
-                        <td>{{ $classroom->name }}</td>
-                        <td>{{ $classroom->name }}</td>
-                        <td>{{ $user->account }}</td>
-                        <td>{{ $user->password }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $classroom->fullName() }}</td>
+                        <td>{{ count($classroom->students) }}</td>
+                        <td><a href="{{ url('exams/start') }}">檢視</a></td>
+                        <td><a href="{{ url('exams/start') }}">檢視</a></td>
                         <td>
-                            <a href="{{ url('contacts/'.$user->id.'/edit') }}" class="btn btn-warning btn-sm">編輯</a>
-                            <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="窗口"
-                                    data-url="{{ url('contacts/'.$user->id) }}">刪除
-                            </button>
-                        </td>
+						<button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
+                                data-target="#deleteModal" data-keyword="班級" data-url="{{ url('classrooms/1') }}">刪除
+                        </button>
+						</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -66,25 +63,29 @@
     <!-- Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+			<div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">欲新增班級</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+				<form action="{{ url('users/add-class') }}" method="post">
+			@csrf
                 <div class="modal-body">
-                    <select class="form-control">
+                    <select name="subject_classroom_id" class="form-control">
                         @foreach($classrooms as $classroom)
                             <option value="{{ $classroom->id }}">{{ $classroom->fullName() }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">確認</button>
+                    <button type="submit" class="btn btn-secondary">確認</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
                 </div>
+				</form>
             </div>
+			
         </div>
     </div>
 @endsection

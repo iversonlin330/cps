@@ -60,6 +60,24 @@ class UserController extends Controller
 
         return back();
     }
+	
+	public function postAddClass(Request $request)
+    {
+        $user = Auth::user();
+		$data = $request->all();
+		
+		$array = $user->subject_classroom_id;
+		
+		if(!$array){
+			$array = [];
+		}
+		
+		array_push($array,$data['subject_classroom_id']);
+		
+		$user->fill(['subject_classroom_id' => $array])->save();
+		
+        return back();
+    }
 
     /**
      * Display a listing of the resource.
