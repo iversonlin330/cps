@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-center">
                         <div class="login-title " style="width:310px; background-color: #f5c323;">
-                            <p class="-Login text-center">已選取考券</p>
+                            <p class="-Login text-center">已選取考卷</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center bg-white table-scroll m-auto" style="width:310px;">

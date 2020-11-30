@@ -1,9 +1,12 @@
 @extends('layouts.master')
-@section('title1', '新增考卷')
-@section('title2', '主頁 / 我的考卷 / 新增考卷')
+@section('title1', isset($exam)? '編輯考卷' : '新增考卷')
+@section('title2', '主頁 / 我的考卷 / '. (isset($exam)? '編輯考卷' : '新增考卷'))
 @section('content')
     <div class="row-fluid main-padding">
-        <form action="{{ url('exams') }}" method="post">
+        <form action="{{ isset($exam)? url('exams/'.$exam->id) : url('exams') }}" method="post">
+            @if(isset($exam))
+                @method('PUT')
+            @endif
             @csrf
             <div class="row" style="padding-top:24px">
                 <div class="col-12">
@@ -79,15 +82,15 @@
                 <div class="col-4">
                     <div class="d-flex justify-content-center">
                         <div class="login-title " style="width:390px; background-color: #f5c323;">
-                            <p class="-Login text-center">已選取考券</p>
+                            <p class="-Login text-center">已選取考卷</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center bg-white table-scroll">
                         <table id="select_table" class="table table-striped">
                             <thead>
                             <tr>
+                                <th scope="col">預覽</th>
                                 <th scope="col">單元名稱</th>
-                                <th scope="col"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -110,7 +113,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="下一步">
+                <input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="儲存">
             </div>
         </form>
     </div>
@@ -128,7 +131,7 @@
             $("#my_table input").remove();
             $("#open_table input").remove();
         });
-		
+
 		@if(isset($exam))
         let exam = @json($exam);
         $("[name='name']").val(exam['name']);

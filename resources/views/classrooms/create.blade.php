@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title1', '新增班級')
-@section('title2', '資料設定 / 班級資料設定 / 新增班級')
+@section('title1', isset($classroom)? '編輯班級' : '新增班級')
+@section('title2', '資料設定 / 班級資料設定 / '.(isset($classroom)? '編輯班級' : '新增班級'))
 @section('content')
     <div class="row-fluid main-padding">
         <form action="{{ isset($classroom)? url('classrooms/'.$classroom->id) : url('classrooms') }}" method="post">
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="新增">
+                <input type="submit" class="btn btn-r" style="width: 83px;margin-top:20px;" value="儲存">
             </div>
         </form>
     </div>

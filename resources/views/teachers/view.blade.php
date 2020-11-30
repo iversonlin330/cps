@@ -47,7 +47,7 @@
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->school->fullName() }}</td>
-                        <td>{{ $user->gender }}</td>
+                        <td>{{ config('map.gender')[$user->gender] }}</td>
                         <td>{{ $user->account }}</td>
                         <td>{{ $user->password }}</td>
                         <td>{{ $user->email }}</td>

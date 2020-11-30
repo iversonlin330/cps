@@ -174,10 +174,10 @@
                            aria-expanded="false"> 選單列 </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             @if(Auth::user()->role == 9)
-                                <li><a class="dropdown-item dropdown-toggle" href="#"> 考券專區 </a>
+                                <li><a class="dropdown-item dropdown-toggle" href="#"> 考卷專區 </a>
                                     <ul class="submenu submenu-left dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ url('exams') }}">我的考券</a></li>
-                                        <li><a class="dropdown-item" href="{{ url('exams') }}">所有考券</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('exams') }}">我的考卷</a></li>
+                                        <li><a class="dropdown-item" href="{{ url('exams') }}">所有考卷</a></li>
                                     </ul>
                                 </li>
 
@@ -205,14 +205,14 @@
                                     </ul>
                                 </li>
                             @elseif(Auth::user()->role == 4)
-                                <li><a class="dropdown-item" href="{{ url('exams') }}">我的考券</a>
+                                <li><a class="dropdown-item" href="{{ url('exams') }}">我的考卷</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">我的單元</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">所有單元</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">班級學習成績</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">個人資料設定</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">班級資料設定</a>
                             @elseif(Auth::user()->role == 3)
-                                <li><a class="dropdown-item" href="{{ url('logout') }}">班級考券</a>
+                                <li><a class="dropdown-item" href="{{ url('logout') }}">班級考卷</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">個人學習專區</a>
                                 <li><a class="dropdown-item" href="{{ url('exams/score') }}">班級學習成績</a>
                                 <li><a class="dropdown-item" href="{{ url('logout') }}">個人學習成績</a>
@@ -317,15 +317,15 @@
             $('#deleteModal form').attr('action', url);
             $('#deleteModal .keyword').text(keyword);
         });
-		
+
 		$(document).on('click', '.target', function () {
             let total_score = $(this).data('total');
 			let average_score = $(this).data('avg');
-			
+
 			for(x in total_score){
 				$("#total_"+x).text(total_score[x]);
 			}
-			
+
 			for(x in average_score){
 				$("#avg_"+x).text(average_score[x]);
 			}

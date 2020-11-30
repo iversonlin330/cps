@@ -10,19 +10,19 @@
 			@if(Auth::user()->role == 9)
             <div class="row main-block">
 				<div class="col-12">
-					<div>考券專區</div>
+					<div>考卷專區</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
 					<div class="main-block-sub-icon bg-brown text-white d-inline-flex">
 						<i class="fal fa-database fa-lg icon"></i>
 					</div>
-					<div class="d-inline-flex">我的考券</div>
+					<div class="d-inline-flex">我的考卷</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
 					<div class="main-block-sub-icon bg-brown text-white d-inline-flex">
 						<i class="fal fa-database fa-lg icon"></i>
 					</div>
-					<div class="d-inline-flex">所有考券</div>
+					<div class="d-inline-flex">所有考卷</div>
 				</div>
             </div>
 			<div class="row main-block">
@@ -103,7 +103,7 @@
 					<div class="main-block-sub-icon bg-brown text-white d-inline-flex">
 						<i class="fal fa-database fa-lg icon"></i>
 					</div>
-					<div class="d-inline-flex">我的考券</div>
+					<div class="d-inline-flex">我的考卷</div>
 				</div>
 				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units') }}'">
 					<div class="main-block-sub-icon bg-squash text-white d-inline-flex">

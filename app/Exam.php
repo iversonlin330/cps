@@ -18,11 +18,12 @@ class Exam extends Model
 
     public function units()
     {
-        return Unit::whereIn('id',$this->unit_id)->get();
+        $ids_ordered = implode(',', $this->unit_id);
+        return Unit::whereIn('id',$this->unit_id)->orderByRaw("FIELD(id, $ids_ordered)")->get();
 
         return $this->belongsToMany('App\Unit')->orderBy('order', 'desc');
     }
-	
+
 	public function score_count(){
 		$count = $this->getTargetInitial();
 		$units = $this->units();
@@ -43,7 +44,7 @@ class Exam extends Model
         $total = $this->getTargetInitial();
 		$count = $this->score_count();
 		$units = $this->units();
-		
+
 		foreach ($units as $unit) {
             $tasks = $unit->tasks;
             foreach ($tasks as $task) {
@@ -70,7 +71,7 @@ class Exam extends Model
                 $total[$k] = round($v / $count[$k], 1);
             }
         }
-		
+
 		return $total;
     }
 
@@ -78,7 +79,7 @@ class Exam extends Model
     {
         $students = $this->getStudentNow();
 		$avg = $this->getTargetInitial();
-		
+
         $user_scores = UserExam::where('exam_id', $this->id)
             ->whereIn('user_id', $students->pluck('id')->toArray())
             ->get();
@@ -94,7 +95,7 @@ class Exam extends Model
                 }
             }
         }
-		
+
 		return $avg;
     }
 }

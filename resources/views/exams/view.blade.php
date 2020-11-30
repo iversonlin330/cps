@@ -5,7 +5,7 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-left">
-                <a type="button" class="btn btn-warning" href="{{ url('exams/create') }}">新增考券</a>
+                <a type="button" class="btn btn-warning" href="{{ url('exams/create') }}">新增考卷</a>
             </div>
             <div class="float-right">
                 <form class="form-inline float-right">
@@ -43,7 +43,7 @@
                         <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a></td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                    data-target="#exampleModal">指派考券
+                                    data-target="#exampleModal">指派考卷
                             </button>
                         </td>
                         <td>
@@ -52,7 +52,7 @@
                         </td>
                         <td>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="考券" data-url="{{ url('exams/'.$exam->id) }}">刪除
+                                    data-target="#deleteModal" data-keyword="考卷" data-url="{{ url('exams/'.$exam->id) }}">刪除
                             </button>
                         </td>
                     </tr>
@@ -70,7 +70,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">指派考券</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">指派考卷</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

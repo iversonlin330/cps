@@ -267,7 +267,7 @@ class ExamController extends Controller
 			->where('user_id', "!=", $user->id)
 			->whereNotIn('id',$exam->unit_id)
 			->get();
-		
+
 		$selected = Unit::whereIn('id',$exam->unit_id)->get();
 
         return view('exams.create', compact('exam','myUnits', 'openUnits','selected'));
@@ -282,7 +282,16 @@ class ExamController extends Controller
      */
     public function update(Request $request, Exam $exam)
     {
-        //
+        $data = $request->except('_token');
+        $user = Auth::user();
+
+        $exam->fill([
+            'name' => $data['name'],
+            'unit_id' => $data['unit_id']
+        ]);
+        $exam->save();
+
+        return redirect('exams');
     }
 
     /**
@@ -294,5 +303,7 @@ class ExamController extends Controller
     public function destroy(Exam $exam)
     {
         //
+        $classroom->delete();
+        return back();
     }
 }
