@@ -84,12 +84,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @for($i=0;$i<=305;$i++)
+                        @foreach($classrooms as $classroom)
                             <tr>
-                                <td>一年甲班</td>
-                                <td><input type="checkbox"></td>
+                                <td>{{ $classroom->fullName() }}</td>
+                                <td><input type="checkbox" value="{{ $classroom->id }}"></td>
                             </tr>
-                        @endfor
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

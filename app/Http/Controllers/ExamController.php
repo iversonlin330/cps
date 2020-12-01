@@ -192,16 +192,19 @@ class ExamController extends Controller
     public function index()
     {
         //
+		$user = Auth::user();
         $targets = config('map.target');
 
         $exams = Exam::all();
+		
+		$classrooms = $user->teacher_classroom();
 
-        return view('exams.view', compact('exams', 'targets'));
+        return view('exams.view', compact('exams', 'targets','classrooms'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
+     *,''
      * @return \Illuminate\Http\Response
      */
     public function create()

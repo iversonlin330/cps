@@ -45,8 +45,8 @@
                     <tr>
                         <td>{{ $classroom->fullName() }}</td>
                         <td>{{ count($classroom->students) }}</td>
-                        <td><a href="{{ url('exams/start') }}">檢視</a></td>
-                        <td><a href="{{ url('exams/start') }}">檢視</a></td>
+                        <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
+                        <td><a href="#" data-toggle="modal" data-target="#examModal">檢視</a></td>
                         <td>
 						<button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
                                 data-target="#deleteModal" data-keyword="班級" data-url="{{ url('classrooms/1') }}">刪除
@@ -82,6 +82,37 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary">確認</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                </div>
+				</form>
+            </div>
+			
+        </div>
+    </div>
+	<!-- Modal -->
+    <div class="modal fade" id="examModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">已指派考卷</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+				<form action="{{ url('users/add-class') }}" method="post">
+			@csrf
+                <div class="modal-body">
+                    班級：五年丁班<br>
+					・考卷名稱<br>
+・考卷名稱考卷名稱考卷名稱<br>
+・考卷名稱考卷名稱<br>
+					<!--select name="subject_classroom_id" class="form-control">
+                        @foreach($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}">{{ $classroom->fullName() }}</option>
+                        @endforeach
+                    </select-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-r" data-dismiss="modal">關閉</button>
                 </div>
 				</form>
             </div>

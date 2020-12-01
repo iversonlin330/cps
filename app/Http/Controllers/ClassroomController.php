@@ -23,6 +23,13 @@ class ClassroomController extends Controller
 
         return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user'));
     }
+	
+	public function teacherDetailView($classroom_id)
+    {
+        $classroom = Classroom::find($classroom_id);
+
+        return view('classrooms.teacher-detail-view', compact('classroom'));
+    }
 
     /**
      * Display a listing of the resource.

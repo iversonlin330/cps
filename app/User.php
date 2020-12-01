@@ -79,6 +79,15 @@ class User extends Authenticatable
         }
         return Classroom::whereIn('id', $this->subject_classroom_id)->get();
     }
+	
+	public function teacher_classroom()
+    {
+        if(!$this->subject_classroom_id){
+            $this->subject_classroom_id = [];
+        }
+        return Classroom::whereIn('id', $this->subject_classroom_id)
+			->orWhere('id',$this->tutor_classroom_id)->get();
+    }
 
     public function classrooms()
     {
