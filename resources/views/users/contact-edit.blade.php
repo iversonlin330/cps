@@ -17,28 +17,27 @@
                                 @method('PUT')
                             @endif
                             @csrf
-
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">修改密碼</label>
                                 <div class="col-9">
                                     <input name="password" type="password" class="form-control" id="inputEmail3">
                                 </div>
                             </div>
-							
-							<div class="form-group row">
+                            <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">確認密碼</label>
                                 <div class="col-9">
-                                    <input type="password" class="form-control" id="inputEmail3" value="{{ $user->password}}">
+                                    <input type="password" class="form-control" id="inputEmail3"
+                                           value="{{ $user->password}}">
                                 </div>
                             </div>
-@if($user->role == 2)
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-3 col-form-label">電子信箱</label>
-                                <div class="col-9">
-                                    <input name="email" type="email" class="form-control" value="{{ $user->email}}">
+                            @if($user->role == 2)
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-3 col-form-label">電子信箱</label>
+                                    <div class="col-9">
+                                        <input name="email" type="email" class="form-control" value="{{ $user->email}}">
+                                    </div>
                                 </div>
-                            </div>
-						@endif
+                            @endif
                             <div class="d-flex justify-content-center">
                                 <input type="submit" class="btn btn-r" style="width: 83px;" value="儲存">
                             </div>
@@ -51,8 +50,8 @@
 @endsection
 @section('script')
     <script>
-        
-            @if(isset($user))
+
+        @if(isset($user))
         let user = @json($user);
         for (const [key, value] of Object.entries(user)) {
             $("[name='" + key + "']").val(value);

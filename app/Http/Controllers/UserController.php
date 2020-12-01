@@ -3,18 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Http\Traits\MyTraits;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    use MyTraits;
 
     public function contactEdit()
     {
         $user = Auth::user();
 
         return view("users.contact-edit", compact('user'));
+    }
+
+    public function teacherEdit()
+    {
+        $user = Auth::user();
+        $citys = $this->getSchool();
+
+        return view("users.teacher-edit", compact('user', 'citys'));
     }
 
     public function contactTeachersEdit()
@@ -31,7 +41,7 @@ class UserController extends Controller
     public function postContactTeachersEdit(Request $request)
     {
         $data = $request->all();
-		
+
         foreach ($data['teacher_array'] as $k => $v) {
             User::where('id', $k)->update($v);
         }
@@ -45,9 +55,9 @@ class UserController extends Controller
 
         $students = User::student()->where('classroom_id', $classroom_id)->get();
 
-		$classroom = Classroom::find($classroom_id);
+        $classroom = Classroom::find($classroom_id);
 
-        return view("users.contact-students-edit", compact('users', 'students','classroom'));
+        return view("users.contact-students-edit", compact('users', 'students', 'classroom'));
     }
 
     public function postContactStudentsEdit(Request $request)
@@ -60,22 +70,22 @@ class UserController extends Controller
 
         return back();
     }
-	
-	public function postAddClass(Request $request)
+
+    public function postAddClass(Request $request)
     {
         $user = Auth::user();
-		$data = $request->all();
-		
-		$array = $user->subject_classroom_id;
-		
-		if(!$array){
-			$array = [];
-		}
-		
-		array_push($array,$data['subject_classroom_id']);
-		
-		$user->fill(['subject_classroom_id' => $array])->save();
-		
+        $data = $request->all();
+
+        $array = $user->subject_classroom_id;
+
+        if (!$array) {
+            $array = [];
+        }
+
+        array_push($array, $data['subject_classroom_id']);
+
+        $user->fill(['subject_classroom_id' => $array])->save();
+
         return back();
     }
 
