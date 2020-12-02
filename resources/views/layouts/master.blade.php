@@ -321,6 +321,7 @@
 		$(document).on('click', '.target', function () {
             let total_score = $(this).data('total');
 			let average_score = $(this).data('avg');
+            let my_score = $(this).data('my');
 
 			for(x in total_score){
 				$("#total_"+x).text(total_score[x]);
@@ -329,6 +330,10 @@
 			for(x in average_score){
 				$("#avg_"+x).text(average_score[x]);
 			}
+
+            for(x in my_score){
+                $("#my_"+x).text(my_score[x]);
+            }
         });
 
     </script>

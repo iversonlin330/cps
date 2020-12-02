@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\MyTraits;
-use App\UserExam;
+use Illuminate\Support\Facades\Auth;
 
 class Exam extends Model
 {
@@ -79,6 +79,7 @@ class Exam extends Model
     {
         $students = $this->getStudentNow();
 		$avg = $this->getTargetInitial();
+        $count = $this->score_count();
 
         $user_scores = UserExam::where('exam_id', $this->id)
             ->whereIn('user_id', $students->pluck('id')->toArray())
@@ -91,11 +92,42 @@ class Exam extends Model
             foreach ($avg as $k => $v) {
                 if ($count[$k] != 0) {
                     $avg[$k] = round($v / $students->count(), 1);
-                    $avg_score = $avg_score + $avg[$k];
+                    //$avg_score = $avg_score + $avg[$k];
                 }
             }
         }
 
 		return $avg;
+    }
+
+    public function my_score()
+    {
+        $user = Auth::user();
+        //$students = $this->getStudentNow();
+        $avg = $this->getTargetInitial();
+        $count = $this->score_count();
+
+        $user_scores = UserExam::where('exam_id', $this->id)
+            ->where('user_id', $user->id)
+            ->get();
+        if ($user_scores->count() > 0) {
+            foreach ($user_scores as $user_score) {
+                $avg = $this->calScore($user_score->score, $count);
+            }
+
+            foreach ($avg as $k => $v) {
+                if ($count[$k] != 0) {
+                    $avg[$k] = round($v / 1, 1);
+                    //$avg_score = $avg_score + $avg[$k];
+                }
+            }
+        }
+
+        return $avg;
+    }
+
+    public function classrooms()
+    {
+        return $this->belongsToMany('\App\Classroom');
     }
 }

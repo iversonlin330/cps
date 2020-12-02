@@ -20,7 +20,7 @@
                 <tr>
                     <th scope="col">考卷名稱</th>
                     <th scope="col">組合單元</th>
-					<th scope="col">我的分數</th>
+                    <th scope="col">我的分數</th>
                     <th scope="col">班平均分</th>
                     <th scope="col">滿分</th>
                     <th scope="col">各項指標</th>
@@ -31,28 +31,18 @@
                 @foreach($exams as $exam)
                     <tr>
                         <td>{{ $exam->name }}</td>
-                        <td>單元Ａ/單元B/單元C</td>
-                        <td>22</td>
-                        <td>30</td>
-                        <td><a href="#" data-toggle="modal" data-target="#viewModal">檢視</a></td>
-                        <td><a href="{{ url('exams/start') }}" class="btn btn-warning btn-sm">作答</a></td>
-                        <td>
-                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                    data-target="#exampleModal">指派考卷
-                            </button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                            <button type="button" class="btn btn-secondary btn-sm">編輯</button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="考卷" data-url="{{ url('exams/'.$exam->id) }}">刪除
-                            </button>
-                        </td>
+                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                        <td>{{ array_sum($exam->my_score()) }}</td>
+                        <td>{{ array_sum($exam->avg_score()) }}</td>
+                        <td>{{ array_sum($exam->total_score()) }}</td>
+                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                               data-my="{{ json_encode($exam->my_score()) }}"
+                               data-total="{{ json_encode($exam->total_score()) }}"
+                               data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                        <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a></td>
                     </tr>
                 @endforeach
-				<tr>
+                <!--tr>
                         <td>考卷名稱ＯＯＯＯＯ</td>
                         <td>單元Ａ/單元B/單元C</td>
                         <td>18</td>
@@ -60,7 +50,7 @@
 						<td>12</td>
                         <td><a href="#" data-toggle="modal" data-target="#viewModal">檢視</a></td>
                         <td><a href="{{ url('exams/start') }}" class="btn btn-warning btn-sm">作答</a></td>
-                    </tr>
+                    </tr-->
                 </tbody>
             </table>
         </div>
@@ -106,7 +96,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="target_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -129,9 +119,9 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
+                                <td id="my_{{$k}}">0</td>
+                                <td id="avg_{{$k}}">0</td>
+                                <td id="total_{{$k}}">0</td>
                             </tr>
                         @endforeach
                         </tbody>

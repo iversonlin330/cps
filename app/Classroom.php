@@ -29,4 +29,9 @@ class Classroom extends Model
     {
         return $this->belongsTo('\App\User', 'teacher_id', 'id');
     }
+
+    public function exams()
+    {
+        return $this->belongsToMany('\App\Exam');
+    }
 }

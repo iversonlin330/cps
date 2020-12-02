@@ -30,6 +30,7 @@ Route::post('/exams/start/{id}', 'ExamController@postStart');
 Route::get('/exams/result', 'ExamController@result');
 Route::post('/exams/order', 'ExamController@order');
 Route::get('/exams/student-view', 'ExamController@studentView');
+Route::post('/exams/assign/{exam_id}', 'ExamController@postAssign');
 
 Route::get('/units/start/{id}', 'UnitController@start');
 Route::post('/units/start/{id}', 'UnitController@postStart');

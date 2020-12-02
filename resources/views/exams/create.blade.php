@@ -82,7 +82,7 @@
                 <div class="col-4">
                     <div class="d-flex justify-content-center">
                         <div class="login-title " style="width:390px; background-color: #f5c323;">
-                            <p class="-Login text-center">已選取考卷</p>
+                            <p class="-Login text-center">已選取單元</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center bg-white table-scroll">

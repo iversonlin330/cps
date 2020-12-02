@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ClassroomExam;
 use App\Exam;
 use App\Http\Traits\MyTraits;
 use App\Unit;
@@ -9,10 +10,30 @@ use App\UserExam;
 use App\UserUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Psy\CodeCleaner\AssignThisVariablePass;
 
 class ExamController extends Controller
 {
     use MyTraits;
+
+    public function postAssign(Request $request, $exam_id)
+    {
+        //
+        $data = $request->except('_token');
+        $user = Auth::user();
+
+        foreach ($data['classroom_id'] as $classroom_id) {
+            $model = new ClassroomExam;
+            $model->fill([
+                'classroom_id' => $classroom_id,
+                'exam_id' => $exam_id,
+                'user_id' => $user->id
+            ]);
+            $model->save();
+        }
+
+        return back();
+    }
 
     public function order()
     {
@@ -138,7 +159,7 @@ class ExamController extends Controller
         }
 
 
-        return view('units.result', compact('unit', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score'));
+        return view('exams.result', compact('exam', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score'));
     }
 
     public function result()
@@ -177,9 +198,10 @@ class ExamController extends Controller
     public function studentView()
     {
         //
+        $user = Auth::user();
         $targets = config('map.target');
 
-        $exams = Exam::all();
+        $exams = $user->classroom->exams;
 
         return view('exams.student-view', compact('exams', 'targets'));
     }
@@ -192,14 +214,14 @@ class ExamController extends Controller
     public function index()
     {
         //
-		$user = Auth::user();
+        $user = Auth::user();
         $targets = config('map.target');
 
         $exams = Exam::all();
-		
-		$classrooms = $user->teacher_classroom();
 
-        return view('exams.view', compact('exams', 'targets','classrooms'));
+        $classrooms = $user->teacher_classroom();
+
+        return view('exams.view', compact('exams', 'targets', 'classrooms'));
     }
 
     /**
@@ -261,19 +283,19 @@ class ExamController extends Controller
     public function edit(Exam $exam)
     {
         //
-		$user = Auth::user();
+        $user = Auth::user();
         $myUnits = Unit::where('user_id', $user->id)
-			->whereNotIn('id',$exam->unit_id)
-			->get();
+            ->whereNotIn('id', $exam->unit_id)
+            ->get();
 
         $openUnits = Unit::where('is_open', 1)
-			->where('user_id', "!=", $user->id)
-			->whereNotIn('id',$exam->unit_id)
-			->get();
+            ->where('user_id', "!=", $user->id)
+            ->whereNotIn('id', $exam->unit_id)
+            ->get();
 
-		$selected = Unit::whereIn('id',$exam->unit_id)->get();
+        $selected = Unit::whereIn('id', $exam->unit_id)->get();
 
-        return view('exams.create', compact('exam','myUnits', 'openUnits','selected'));
+        return view('exams.create', compact('exam', 'myUnits', 'openUnits', 'selected'));
     }
 
     /**
@@ -306,7 +328,7 @@ class ExamController extends Controller
     public function destroy(Exam $exam)
     {
         //
-        $classroom->delete();
+        $exam->delete();
         return back();
     }
 }
