@@ -18,7 +18,7 @@
             <a id="submit_btn" class="btn btn-warning">儲存</a>
         </div>
         <div class="col-12">
-            <form id="main_form" action="{{ url('tasks/'.$task->id) }}" method="post">
+            <form id="main_form" action="{{ url('tasks/'.$task->id) }}" method="post" enctype="multipart/form-data">
                 @method("put")
                 @csrf
                 <div class="tab-content" style="max-height: 90vh;overflow-y: auto;">
@@ -72,7 +72,7 @@
                                                       name="desc5[{{$q_id}}]"></textarea>
                                             <div class="form-group">
                                                 <label>圖片</label>
-                                                <input name="pic[{{$q_id}}]" type="text" class="form-control"
+                                                <input name="pic[{{$q_id}}]" type="file" class="form-control"
                                                        placeholder="輸入圖片網址...">
                                             </div>
                                             <div id="is_item_{{ $q_id }}">

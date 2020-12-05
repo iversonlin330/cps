@@ -188,6 +188,19 @@ class ExamController extends Controller
         $targets = config('map.target');
         return view('exams.score-detail', compact('targets'));
     }
+	
+	public function studentScore()
+    {
+        //
+		$user = Auth::user();
+        $targets = config('map.target');
+
+		$exam_id_array = UserExam::where('user_id',$user->id)->get()->pluck('exam_id')->toArray();
+
+		$exams = $user->classroom->exams->whereIn('id',$exam_id_array)->all();
+		
+        return view('exams.student-score', compact('targets','exams'));
+    }
 
     public function my()
     {
@@ -201,8 +214,10 @@ class ExamController extends Controller
         $user = Auth::user();
         $targets = config('map.target');
 
-        $exams = $user->classroom->exams;
+		$exam_id_array = UserExam::where('user_id',$user->id)->get()->pluck('exam_id')->toArray();
 
+		$exams = $user->classroom->exams->whereNotIn('id',$exam_id_array)->all();
+		
         return view('exams.student-view', compact('exams', 'targets'));
     }
 

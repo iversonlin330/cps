@@ -184,7 +184,7 @@ class TaskController extends Controller
     {
         //
         $data = $request->except('_token');
-
+dd($data);
         if (array_key_exists('update_order', $data)) {
             foreach ($data['update_order'] as $index => $template_id) {
                 Task::find($template_id)->update(['order' => $index + 1]);
@@ -264,7 +264,15 @@ class TaskController extends Controller
     {
         //
         $data = $request->except(['_token', '_method']);
-        $count = explode(',', $data['count']);;
+		
+		//dd($data);
+		foreach($data['pic'] as $k => $v){
+			if($v){
+				$path = $v->store('images');
+				$data['pic'][$k] = $path;
+			}
+		}
+		$count = explode(',', $data['count']);;
         $data['count'] = $count;
 
         $result = [];

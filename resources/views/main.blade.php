@@ -192,7 +192,7 @@
 				<div class="col-12">
 					<div>作答記錄及成績</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/score') }}'">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/student-score') }}'">
 					<div class="main-block-sub-icon bg-blue text-white d-inline-flex">
 						<i class="fal fa-clipboard-check fa-lg icon"></i>
 					</div>

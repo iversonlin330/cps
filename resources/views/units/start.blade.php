@@ -80,8 +80,10 @@
                             </div>
                             <div class="col-6 pl-0">
                                 <div class="d-flex justify-content-center exam-img bg-white p-4">
+                                    @if(array_key_exists($q_id,$task['content']['pic']))
                                     <img class="m-auto"
-                                         src="{{ $task['content']['pic'][$q_id] }}" alt="">
+                                         src="{{ asset('storage/'.$task['content']['pic'][$q_id]) }}" alt="">
+										 @endif
                                 </div>
                             </div>
                         </div>
