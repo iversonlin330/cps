@@ -72,8 +72,19 @@
                                                       name="desc5[{{$q_id}}]"></textarea>
                                             <div class="form-group">
                                                 <label>圖片</label>
-                                                <input name="pic[{{$q_id}}]" type="file" class="form-control"
-                                                       placeholder="輸入圖片網址...">
+												<div class="row">
+												<div class="col-4">
+                                                <input name="pic[{{$q_id}}]" type="file" class="form-control-file"
+                                                       placeholder="輸入圖片網址..." accept="image/*">
+													   </div>
+													  <div class="col-8">
+<label class="form-check-label">（非必填）檔案大小限制為2MB，圖片格式僅可使用JPG檔、PNG檔</label>
+													  </div>
+													   </div>
+												<!--div class="custom-file mb-3">
+    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+  </div-->
                                             </div>
                                             <div id="is_item_{{ $q_id }}">
                                                 <div class="mb-2 font-weight-bold" style="font-size:22px;">選項內容

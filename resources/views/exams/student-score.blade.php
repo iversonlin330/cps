@@ -58,7 +58,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="target_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,9 +81,9 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
+                                <td id="my_{{$k}}">0</td>
+                                <td id="avg_{{$k}}">0</td>
+                                <td id="total_{{$k}}">0</td>
                             </tr>
                         @endforeach
                         </tbody>
