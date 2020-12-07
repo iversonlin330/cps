@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\ClassroomExam;
+use App\Cycle;
 use App\Exam;
 use App\Http\Traits\MyTraits;
 use App\Unit;
+use App\User;
 use App\UserExam;
 use App\UserUnit;
 use Illuminate\Http\Request;
@@ -175,11 +177,30 @@ class ExamController extends Controller
         return view('exams.result');
     }
 
-    public function score()
+    public function score(Request $request)
     {
         //
+        $data = $request->all();
+        $user = Auth::user();
         $targets = config('map.target');
-        return view('exams.score', compact('targets'));
+
+        //$exam_id_array = UserExam::where('user_id', $user->id)->get()->pluck('exam_id')->toArray();
+
+        //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
+
+        $exams = Exam::all();
+
+        if (!$data) {
+            $data['cycle_id'] = Cycle::latest()->first()->id;
+        }
+
+        unset($data['city_id']);
+
+        $citys = $this->getSchool();
+
+        $cycles = Cycle::orderBy('id', 'desc')->get();
+
+        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data'));
     }
 
     public function scoreDetail()
@@ -188,18 +209,18 @@ class ExamController extends Controller
         $targets = config('map.target');
         return view('exams.score-detail', compact('targets'));
     }
-	
-	public function studentScore()
+
+    public function studentScore()
     {
         //
-		$user = Auth::user();
+        $user = Auth::user();
         $targets = config('map.target');
 
-		$exam_id_array = UserExam::where('user_id',$user->id)->get()->pluck('exam_id')->toArray();
+        $exam_id_array = UserExam::where('user_id', $user->id)->get()->pluck('exam_id')->toArray();
 
-		$exams = $user->classroom->exams->whereIn('id',$exam_id_array)->all();
-		
-        return view('exams.student-score', compact('targets','exams'));
+        $exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
+
+        return view('exams.student-score', compact('targets', 'exams'));
     }
 
     public function my()
@@ -214,10 +235,10 @@ class ExamController extends Controller
         $user = Auth::user();
         $targets = config('map.target');
 
-		$exam_id_array = UserExam::where('user_id',$user->id)->get()->pluck('exam_id')->toArray();
+        $exam_id_array = UserExam::where('user_id', $user->id)->get()->pluck('exam_id')->toArray();
 
-		$exams = $user->classroom->exams->whereNotIn('id',$exam_id_array)->all();
-		
+        $exams = $user->classroom->exams->whereNotIn('id', $exam_id_array)->all();
+
         return view('exams.student-view', compact('exams', 'targets'));
     }
 

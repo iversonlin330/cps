@@ -6,14 +6,19 @@
         <div class="col-12">
             <div class="float-right">
                 <form class="form-inline float-right">
-                    <select class="form-control mr-sm-2">
-                        <option>109/01/01~10912/31</option>
+                    <select name="cycle_id" class="form-control mr-sm-2">
+                        @foreach($cycles as $cycle)
+                            <option value="{{ $cycle->id }}">{{ $cycle->getRange() }}</option>
+                    @endforeach
+                    <!--option>109/01/01~109/12/31</option-->
                     </select>
-                    <select class="form-control mr-sm-2">
-                        <option>縣市</option>
+                    <select name="city_id" class="form-control mr-sm-2">
+                        @foreach($citys as $city => $school)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
                     </select>
-                    <select class="form-control mr-sm-2">
-                        <option>學校</option>
+                    <select name="school_id" class="form-control mr-sm-2">
+                        <option value="">學校</option>
                     </select>
                     <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
@@ -39,7 +44,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+                @for($i=0;$i<0;$i++)
                     <tr>
                         <td>考卷名稱ＯＯＯＯＯ</td>
                         <td>單元Ａ/單元B/單元C</td>
@@ -54,6 +59,26 @@
                         </td>
                     </tr>
                 @endfor
+                @foreach($exams as $exam)
+                    @foreach($exam->classrooms->where('cycle_id',$data['cycle_id']) as $classroom)
+                        <tr>
+                            <td>{{ $exam->name }}</td>
+                            <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                            <td>{{ $classroom->school->fullName() }}</td>
+                            <td>{{ $classroom->fullName() }}</td>
+                            <td>{{ array_sum($exam->my_score()) }}</td>
+                            <td>{{ array_sum($exam->avg_score()) }}</td>
+                            <td>{{ array_sum($exam->total_score()) }}</td>
+                            <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                                   data-my="{{ json_encode($exam->my_score()) }}"
+                                   data-total="{{ json_encode($exam->total_score()) }}"
+                                   data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm">匯出</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -63,7 +88,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="target_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -86,9 +111,9 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
+                                <td id="my_{{$k}}">3</td>
+                                <td id="avg_{{$k}}">4</td>
+                                <td id="total_{{$k}}">5</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -100,4 +125,24 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html);
+        });
+
+        @if(array_key_exists('school_id',$data))
+        $("[name='school_id']").val({{ $data['school_id'] }});
+        $("[name='cycle_id']").val({{ $data['cycle_id'] }});
+        @endif
+        $("[name='city_id']").trigger('change');
+    </script>
 @endsection

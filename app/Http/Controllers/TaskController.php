@@ -52,7 +52,7 @@ class TaskController extends Controller
         foreach ($count_list as $k => $v) {
             $count[$k] = $v;
         }
-		//dd($count_list);
+        //dd($count_list);
         /*
         $is_item_array = $task->content['is_item'];
         foreach ($is_item_array as $index => $is_item) {
@@ -71,7 +71,7 @@ class TaskController extends Controller
                 $result[$target_id] = $result[$target_id] + array_sum($score_array);;
             }
         }
-		
+
         /*
         $q_id = 0;
         foreach($task->content['count'] as $index => $q_count){
@@ -99,10 +99,10 @@ class TaskController extends Controller
         $q_id = 0;
         foreach ($task->content['count'] as $index => $q_count) {
             $target = $task->content['target'][$index];
-			$max_temp = 0;
+            $max_temp = 0;
             for ($sub = 0; $sub < $q_count; $sub++) {
                 if ($task->content['is_item'][$q_id] == 1) {
-                    if ((int) max($task->content['score'][$q_id]) > (int) $max_temp) {
+                    if ((int)max($task->content['score'][$q_id]) > (int)$max_temp) {
                         $max_temp = max($task->content['score'][$q_id]);
                     }
                 }
@@ -184,7 +184,7 @@ class TaskController extends Controller
     {
         //
         $data = $request->except('_token');
-dd($data);
+
         if (array_key_exists('update_order', $data)) {
             foreach ($data['update_order'] as $index => $template_id) {
                 Task::find($template_id)->update(['order' => $index + 1]);
@@ -264,15 +264,17 @@ dd($data);
     {
         //
         $data = $request->except(['_token', '_method']);
-		
-		//dd($data);
-		foreach($data['pic'] as $k => $v){
-			if($v){
-				$path = $v->store('images');
-				$data['pic'][$k] = $path;
-			}
-		}
-		$count = explode(',', $data['count']);;
+
+        //dd($data);
+        if (array_key_exists('pic', $data)) {
+            foreach ($data['pic'] as $k => $v) {
+                if ($v) {
+                    $path = $v->store('images');
+                    $data['pic'][$k] = $path;
+                }
+            }
+        }
+        $count = explode(',', $data['count']);;
         $data['count'] = $count;
 
         $result = [];

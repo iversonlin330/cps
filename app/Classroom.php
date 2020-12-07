@@ -34,4 +34,9 @@ class Classroom extends Model
     {
         return $this->belongsToMany('\App\Exam');
     }
+
+    public function school()
+    {
+        return $this->hasOne('\App\School', 'id', 'school_id');
+    }
 }
