@@ -16,13 +16,14 @@
             </div>
         </div>
         <form id="task_form" action="{{ url('tasks/start/'.$task->id) }}" method="post">
-		@csrf
-                @php
-                    $q_id = 0;
-					$task_index = 0;
-                @endphp
-                @foreach($task['content']['count'] as $index => $q_count)
-                    @for($i = 0; $i < $q_count; $i++)
+            @csrf
+            @php
+                $q_id = 0;
+                $task_index = 0;
+            @endphp
+            @foreach($task['content']['count'] as $index => $q_count)
+                @for($i = 0; $i < $q_count; $i++)
+                    <div class="col-12">
                         <div id="q_{{ $task_index }}_{{ $q_id }}" class="row question"
                              style="padding-top:24px;display: none;">
                             <div class="col-6 pr-0" style="background-color: #fff5dd;">
@@ -72,7 +73,9 @@
                                                     @endif
                                                 @endfor
                                             @else
-                                                <a class="btn btn-r" data-goto="{{ $task['content']['goto_no_item'][$q_id] }}" data-task="{{ $task_index }}" onclick="goto(this)">前往下一題</a>
+                                                <a class="btn btn-r"
+                                                   data-goto="{{ $task['content']['goto_no_item'][$q_id] }}"
+                                                   data-task="{{ $task_index }}" onclick="goto(this)">前往下一題</a>
                                             @endif
                                         </div>
                                     </div>
@@ -80,24 +83,27 @@
                             </div>
                             <div class="col-6 pl-0">
                                 <div class="d-flex justify-content-center exam-img bg-white p-4">
-								@if(array_key_exists($q_id,$task['content']['pic']))
-                                    <img class="m-auto"
-                                         src="{{ asset('storage/'.$task['content']['pic'][$q_id]) }}" alt="">
-										 @endif
+                                    @if(array_key_exists('pic',$task['content']))
+                                        @if(array_key_exists($q_id,$task['content']['pic']))
+                                            <img class="m-auto"
+                                                 src="{{ asset('storage/'.$task['content']['pic'][$q_id]) }}" alt="">
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         @php
                             $q_id++;
                         @endphp
-                    @endfor
-                @endforeach
+                    </div>
+                @endfor
+            @endforeach
         </form>
     </div>
 @endsection
 @section('script')
     <script>
-		let task_length = 1;
+        let task_length = 1;
         $(".question:first").show();
 
         function goto(obj) {
@@ -106,7 +112,7 @@
 
             if (goto == "next") {
                 task = task + 1;
-				if (task == task_length) {
+                if (task == task_length) {
                     $("#task_form").submit();
                 } else {
                     $(".question").hide();

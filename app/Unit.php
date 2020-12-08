@@ -5,18 +5,19 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\MyTraits;
 use App\UserUnit;
+use Illuminate\Support\Facades\Auth;
 
 class Unit extends Model
 {
     use MyTraits;
-	
+
 	protected $guarded = ['id'];
 
     public function tasks()
     {
         return $this->hasMany('\App\Task')->orderBy('order');
     }
-	
+
 	public function score_count(){
 		$count = $this->getTargetInitial();
 		$tasks = $this->tasks;
@@ -26,15 +27,40 @@ class Unit extends Model
                 $count[$k] = $count[$k] + $v;
             }
         }
-		
+
 		return $count;
 	}
-	
+
+    public function my_score()
+    {
+        $user = Auth::user();
+        $avg = $this->getTargetInitial();
+        $count = $this->score_count();
+
+        $user_scores = UserUnit::where('unit_id', $this->id)
+            ->where('user_id', $user->id)
+            ->get();
+        if ($user_scores->count() > 0) {
+            foreach ($user_scores as $user_score) {
+                $avg = $this->calScore($user_score->score, $count);
+            }
+
+            foreach ($avg as $k => $v) {
+                if ($count[$k] != 0) {
+                    $avg[$k] = round($v / 1, 1);
+                }
+            }
+        }
+
+        return $avg;
+    }
+
     public function avg_score()
     {
         $students = $this->getStudentNow();
 		$avg = $this->getTargetInitial();
-		
+        $count = $this->score_count();
+
 		//if(!$students){
 		//	return 0;
 		//}
@@ -49,12 +75,11 @@ class Unit extends Model
 
             foreach ($avg as $k => $v) {
                 if ($count[$k] != 0) {
-                    $avg[$k] = round($v / $students->count(), 1);
-                    $avg_score = $avg_score + $avg[$k];
+                    $avg[$k] = round($v / $user_scores->count(), 1);
                 }
             }
         }
-		
+
 		return $avg;
     }
 
@@ -86,7 +111,7 @@ class Unit extends Model
                 $total[$k] = round($v / $count[$k], 1);
             }
         }
-		
+
 		return $total;
     }
 }

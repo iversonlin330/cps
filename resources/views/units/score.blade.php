@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title1', '個人學習成績')
-@section('title2', '主頁 / 作答及成績 / 個人學習成績')
+@section('title1', '單元學習成績')
+@section('title2', '主頁 / 作答及成績 / 單元學習成績')
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
@@ -19,27 +19,22 @@
                 <thead>
                 <tr>
                     <th scope="col">單元名稱</th>
-                    <th scope="col">我的分數</th>
-                    <th scope="col">歷年平均分</th>
+                    <th scope="col">過往平均</th>
                     <th scope="col">滿分</th>
                     <th scope="col">各項指標</th>
-                    <th scope="col">作答時間</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($user_units as $user_unit)
                     <tr>
                         <td>{{ $user_unit->unit->name }}</td>
-                        <td>{{ array_sum($user_unit->unit->my_score()) }}</td>
                         <td>{{ array_sum($user_unit->unit->avg_score()) }}</td>
                         <td>{{ array_sum($user_unit->unit->total_score()) }}</td>
                         <td>
                             <a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                               data-my="{{ json_encode($user_unit->unit->my_score()) }}"
                                data-avg="{{ json_encode($user_unit->unit->avg_score()) }}"
                                data-total="{{ json_encode($user_unit->unit->total_score()) }}">檢視</a>
                         </td>
-                        <td>{{ $user_unit->created_at }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -65,8 +60,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">指標</th>
-                            <th scope="col">個人分數</th>
-                            <th scope="col">班平均</th>
+                            <th scope="col">過往平均</th>
                             <th scope="col">滿分</th>
                         </tr>
                         </thead>
@@ -74,7 +68,6 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td id="my_{{$k}}">0</td>
                                 <td id="avg_{{$k}}">0</td>
                                 <td id="total_{{$k}}">0</td>
                             </tr>

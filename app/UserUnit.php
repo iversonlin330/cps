@@ -13,4 +13,10 @@ class UserUnit extends Model
     protected $casts = [
         'score' => 'array'
     ];
+
+    public function unit()
+    {
+        return $this->hasOne('\App\Unit', 'id', 'unit_id');
+    }
+
 }

@@ -72,16 +72,17 @@
                                                       name="desc5[{{$q_id}}]"></textarea>
                                             <div class="form-group">
                                                 <label>圖片</label>
-												<div class="row">
-												<div class="col-4">
-                                                <input name="pic[{{$q_id}}]" type="file" class="form-control-file"
-                                                       placeholder="輸入圖片網址..." accept="image/*">
-													   </div>
-													  <div class="col-8">
-<label class="form-check-label">（非必填）檔案大小限制為2MB，圖片格式僅可使用JPG檔、PNG檔</label>
-													  </div>
-													   </div>
-												<!--div class="custom-file mb-3">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <input name="pic[{{$q_id}}]" type="file"
+                                                               class="form-control-file"
+                                                               placeholder="輸入圖片網址..." accept="image/*">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <label class="form-check-label">（非必填）檔案大小限制為2MB，圖片格式僅可使用JPG檔、PNG檔</label>
+                                                    </div>
+                                                </div>
+                                                <!--div class="custom-file mb-3">
     <input type="file" class="custom-file-input" id="validatedCustomFile" required>
     <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
   </div-->
@@ -95,7 +96,7 @@
                                                         <div class="col-8">
                                                     <textarea name="question[{{$q_id}}][{{$i}}]"
                                                               class="form-control"
-                                                              placeholder="選項{{config('map.chineseNum')[$i+1]}}"></textarea>
+                                                              placeholder="選項{{config('map.chineseNum')[$i+1]}}" {{ ($i==0)? 'required': '' }}></textarea>
                                                         </div>
                                                         <div class="col-2">
                                                             <select name="goto[{{$q_id}}][{{$i}}]"
@@ -181,43 +182,43 @@
             }
         }
 
-/*
-        $(".item_area select").change(function () {
-			console.log($(this));
-            let index = $(this).parent('.item_area').data('index');
-            let p_sub = $(this).parent('.item_area').data('sub');
-            let qid = $(this).data('qid');
-            let i = $(this).data('i');
-            let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
-            let score = $("[name='score[" + qid + "][" + i + "]'] option:selected").val();
+        /*
+                $(".item_area select").change(function () {
+                    console.log($(this));
+                    let index = $(this).parent('.item_area').data('index');
+                    let p_sub = $(this).parent('.item_area').data('sub');
+                    let qid = $(this).data('qid');
+                    let i = $(this).data('i');
+                    let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
+                    let score = $("[name='score[" + qid + "][" + i + "]'] option:selected").val();
 
-            $(".item_area[data-qid='" + goto + "'] select[name^='score']").each(function () {
-                $(this).empty();
-                $(this).html(create_option(score - 1));
-            });
-        });
+                    $(".item_area[data-qid='" + goto + "'] select[name^='score']").each(function () {
+                        $(this).empty();
+                        $(this).html(create_option(score - 1));
+                    });
+                });
 
-        function create_option(num) {
-            let html = "";
-            for (let i = 0; i <= num; i++) {
-                html = html + "<option>" + i + "</option>";
-            }
-            return html;
-        }
-*/
-		$("#myTab a:eq(0)").click();
-            @if(isset($task->content['question']))
+                function create_option(num) {
+                    let html = "";
+                    for (let i = 0; i <= num; i++) {
+                        html = html + "<option>" + i + "</option>";
+                    }
+                    return html;
+                }
+        */
+        $("#myTab a:eq(0)").click();
+        @if(isset($task->content['question']))
         let content = @json($task->content);
         for (let x in content) {
             content[x].forEach(function (value, i) {
                 if (Array.isArray(value)) {
                     for (let y in value) {
                         $("[name='" + x + "[" + i + "][" + y + "]']").val(value[y]);
-						$("[name='" + x + "[" + i + "][" + y + "]']").trigger('change');
+                        $("[name='" + x + "[" + i + "][" + y + "]']").trigger('change');
                     }
                 } else {
                     $("[name='" + x + "[" + i + "]']").val(value);
-					$("[name='" + x + "[" + i + "]']").trigger('change');
+                    $("[name='" + x + "[" + i + "]']").trigger('change');
                 }
             });
         }

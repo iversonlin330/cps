@@ -91,7 +91,7 @@ class Exam extends Model
 
             foreach ($avg as $k => $v) {
                 if ($count[$k] != 0) {
-                    $avg[$k] = round($v / $students->count(), 1);
+                    $avg[$k] = round($v / $user_scores->count(), 1);
                     //$avg_score = $avg_score + $avg[$k];
                 }
             }

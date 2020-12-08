@@ -39,6 +39,7 @@ Route::get('/units/result', 'UnitController@result');
 Route::get('/units/copy/{id}', 'UnitController@copy');
 Route::get('/units/student-view', 'UnitController@studentView');
 Route::get('/units/student-score', 'UnitController@studentScore');
+Route::get('/units/score', 'UnitController@score');
 
 Route::post('/tasks/{id}', 'TaskController@updateStr');
 Route::get('/tasks/start/{id}', 'TaskController@start');

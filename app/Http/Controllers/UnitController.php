@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\MyTraits;
 use App\Unit;
+use App\UserExam;
 use App\UserUnit;
 use App\Task;
 use Illuminate\Http\Request;
@@ -209,9 +210,26 @@ class UnitController extends Controller
 
     public function studentScore()
     {
-        //
+        $user = Auth::user();
         $targets = config('map.target');
-        return view('units.student-score', compact('targets'));
+
+        //$unit_id_array = UserUnit::where('user_id', $user->id)->get()->pluck('unit_id')->toArray();
+
+        //$units = Unit::whereIn('id', $unit_id_array)->get();
+
+        $user_units = UserUnit::where('user_id', $user->id)->get();
+
+        return view('units.student-score', compact('targets', 'user_units'));
+    }
+
+    public function score()
+    {
+        $user = Auth::user();
+        $targets = config('map.target');
+
+        $user_units = UserUnit::all();
+
+        return view('units.score', compact('targets', 'user_units'));
     }
 
     /**
