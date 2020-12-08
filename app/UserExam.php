@@ -13,4 +13,15 @@ class UserExam extends Model
     protected $casts = [
         'score' => 'array'
     ];
+
+    public function exam()
+    {
+        return $this->hasOne('\App\Exam', 'id', 'exam_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('\App\User', 'id', 'user_id');
+    }
+
 }

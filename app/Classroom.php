@@ -39,4 +39,9 @@ class Classroom extends Model
     {
         return $this->hasOne('\App\School', 'id', 'school_id');
     }
+
+    public function cycle()
+    {
+        return $this->hasOne('\App\Cycle', 'id', 'cycle_id');
+    }
 }

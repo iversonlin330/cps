@@ -74,7 +74,8 @@
                                    data-total="{{ json_encode($exam->total_score()) }}"
                                    data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-sm">匯出</button>
+                                <a href="{{ url('exams/score-export/'.$exam->id.'/'.$classroom->id) }}"
+                                   class="btn btn-warning btn-sm">匯出</a>
                             </td>
                         </tr>
                     @endforeach

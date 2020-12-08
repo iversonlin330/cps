@@ -1,19 +1,19 @@
 @extends('layouts.master')
-@section('title1', '所有單元')
-@section('title2', '主頁 / 單元專區 / 所有單元')
+@section('title1', '我的單元')
+@section('title2', '主頁 / 我的單元')
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-left">
                 <a href="#" data-toggle="modal" data-target="#createModal" class="btn btn-warning">新增單元</a>
-                <button type="button" class="btn btn-dark">待審核單元</button>
+                <!--button type="button" class="btn btn-dark">待審核單元</button-->
             </div>
             <div class="float-right">
                 <form action="{{ url('units') }}" class="form-inline float-right">
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
                            aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
-                    <button class="btn btn-warning my-2 my-sm-0" type="submit">儲存</button>
+                    <!--button class="btn btn-warning my-2 my-sm-0" type="submit">儲存</button-->
                 </form>
             </div>
         </div>
@@ -30,9 +30,7 @@
                     <th scope="col">各項指標</th>
                     <th scope="col">狀態</th>
                     <th scope="col">測驗</th>
-                    @if($user->role == 3)
-                        <th scope="col">審核</th>
-                    @endif
+                    <th scope="col">審核</th>
                     <th scope="col">動作</th>
                     <th scope="col">刪除單元</th>
                 </tr>
@@ -43,19 +41,37 @@
                         <td>{{ $unit->name }}</td>
                         <td>{{ array_sum($unit->avg_score()) }}</td>
                         <td>{{ array_sum($unit->total_score()) }}</td>
-                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal" data-max="{{ json_encode($unit->total_score()) }}" data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
+                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                               data-max="{{ json_encode($unit->total_score()) }}"
+                               data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
                         <td>
-                            <select name="unit_array[{{$unit->id}}][status]" class="form-control-sm">
-                                <option value="1" {{ ($unit->status == 1)? 'selected' : '' }}>公開</option>
-                                <option value="0" {{ ($unit->status == 0)? 'selected' : '' }}>不公開</option>
-                            </select>
+                            @if(0)
+                                @if($unit->status == 1)
+                                    <select name="is_open[{{$unit->id}}]" class="form-control-sm">
+                                        <option value="1" {{ ($unit->is_open == 1)? 'selected' : '' }}>公開</option>
+                                        <option value="0" {{ ($unit->is_open == 0)? 'selected' : '' }}>不公開</option>
+                                    </select>
+                                @else
+
+                                @endif
+                            @endif
+                            {{ ($unit->status == 1)? '已公開' : '未公開' }}
                         </td>
                         <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
-                        @if($user->role == 3)
-                            <td>
-                                <a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-secondary btn-sm">送出審核</a>
-                            </td>
-                        @endif
+                        <td>
+                            <form action="{{ url('units/update') }}" method="post">
+                                @csrf
+                                @if($unit->status == 0)
+                                    <button class="btn btn-secondary btn-sm">送出審核</button>
+                                    <input type="text" name="unit_array[{{$unit->id}}][status]" value="4" hidden>
+                                @elseif($unit->status == 1)
+
+                                @elseif($unit->status == 9)
+                                    <button class="btn btn-secondary btn-sm">取消審核</button>
+                                    <input type="text" name="unit_array[{{$unit->id}}][status]" value="0" hidden>
+                                @endif
+                            </form>
+                        </td>
                         <td>
                             <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
                             <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>

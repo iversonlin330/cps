@@ -29,7 +29,6 @@ class UnitController extends Controller
             $task->save();
         }
 
-        return "OK";
         return back();
     }
 
@@ -232,6 +231,67 @@ class UnitController extends Controller
         return view('units.score', compact('targets', 'user_units'));
     }
 
+    public function verify(Request $request)
+    {
+        $data = $request->all();
+        $user = Auth::user();
+        $targets = config('map.target');
+
+        $units = Unit::where(function ($query) use ($data) {
+            if ($data) {
+                foreach ($data as $k => $v) {
+                    if ($v) {
+                        $query->orWhere($k, 'like', '%' . $v . '%');
+                    }
+                }
+            }
+        })
+            ->where('status', 4)
+            ->get();
+
+        return view('units.verify', compact('user', 'units', 'targets'));
+    }
+
+    public function my(Request $request)
+    {
+        $data = $request->all();
+        $user = Auth::user();
+        $targets = config('map.target');
+
+        $units = Unit::where(function ($query) use ($data) {
+            if ($data) {
+                foreach ($data as $k => $v) {
+                    if ($v) {
+                        $query->orWhere($k, 'like', '%' . $v . '%');
+                    }
+                }
+            }
+        })
+            ->where('user_id', $user->id)
+            ->get();
+
+        if ($user->role == 9) {
+            $view = 'units.my';
+        } else {
+            $view = 'units.teacher-my';
+        }
+
+
+        return view($view, compact('user', 'units', 'targets'));
+    }
+
+    public function updateUnit(Request $request)
+    {
+        $data = $request->except('_token');
+
+        foreach ($data['unit_array'] as $k => $v) {
+            Unit::where('id', $k)->update($v);
+        }
+
+        return back();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -239,7 +299,6 @@ class UnitController extends Controller
      */
     public function index(Request $request)
     {
-        //
         $data = $request->all();
 
         $units = Unit::where(function ($query) use ($data) {

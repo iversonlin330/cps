@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
 use App\ClassroomExam;
 use App\Cycle;
 use App\Exam;
+use App\Exports\ScoreExport;
 use App\Http\Traits\MyTraits;
 use App\Unit;
 use App\User;
@@ -12,6 +14,7 @@ use App\UserExam;
 use App\UserUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Psy\CodeCleaner\AssignThisVariablePass;
 
 class ExamController extends Controller
@@ -203,6 +206,18 @@ class ExamController extends Controller
         return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data'));
     }
 
+    public function scoreExport($exam_id, $classroom_id)
+    {
+        $data['exam_id'] = $exam_id;
+        $data['classroom_id'] = $classroom_id;
+
+        $exam = Exam::find($exam_id);
+        $classroom = Classroom::find($classroom_id);
+
+        $file_name = $classroom->cycle->name . '年度' . $classroom->school->fullName() . $classroom->fullName() . $exam->name . '滿分' . array_sum($exam->total_score()) . '分成績表';
+        return Excel::download(new ScoreExport($data), $file_name . '.xlsx');
+    }
+
     public function scoreDetail()
     {
         //
@@ -225,8 +240,18 @@ class ExamController extends Controller
 
     public function my()
     {
-        //
-        return view('exams.my');
+        $user = Auth::user();
+        $targets = config('map.target');
+
+        if ($user->role == 9) {
+            $exams = Exam::all();
+            $classrooms = Classroom::all();
+        } else {
+            $exams = Exam::where('user_id', $user->id)->get();
+            $classrooms = $user->teacher_classroom();
+        }
+
+        return view('exams.view', compact('targets', 'exams', 'classrooms'));
     }
 
     public function studentView()

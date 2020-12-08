@@ -12,7 +12,7 @@
 				<div class="col-12">
 					<div>考卷專區</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/my') }}'">
 					<div class="main-block-sub-icon bg-brown text-white d-inline-flex">
 						<i class="fal fa-database fa-lg icon"></i>
 					</div>
@@ -29,19 +29,19 @@
 				<div class="col-12">
 					<div>單元專區</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units') }}'">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units/my') }}'">
 					<div class="main-block-sub-icon bg-squash text-white d-inline-flex">
 						<i class="fal fa-file-alt fa-lg icon"></i>
 					</div>
 					<div class="d-inline-flex">我的單元</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units') }}'">
 					<div class="main-block-sub-icon bg-squash text-white d-inline-flex">
 						<i class="fal fa-file-alt fa-lg icon"></i>
 					</div>
 					<div class="d-inline-flex">所有單元</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units/verify') }}'">
 					<div class="main-block-sub-icon bg-squash text-white d-inline-flex">
 						<i class="fal fa-file-alt fa-lg icon"></i>
 					</div>
@@ -99,13 +99,13 @@
 				<div class="col-12">
 					<div>我的項目</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams') }}'">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('exams/my') }}'">
 					<div class="main-block-sub-icon bg-brown text-white d-inline-flex">
 						<i class="fal fa-database fa-lg icon"></i>
 					</div>
 					<div class="d-inline-flex">我的考卷</div>
 				</div>
-				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units') }}'">
+				<div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units/my') }}'">
 					<div class="main-block-sub-icon bg-squash text-white d-inline-flex">
 						<i class="fal fa-file-alt fa-lg icon"></i>
 					</div>

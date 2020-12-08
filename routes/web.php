@@ -23,6 +23,8 @@ Route::get('/logout', 'LoginController@logout');
 
 Route::post('/newCycle', 'CycleController@newCycle');
 Route::get('/main', 'LoginController@main');
+
+Route::get('/exams/my', 'ExamController@my');
 Route::get('/exams/score', 'ExamController@score');
 Route::get('/exams/score-detail', 'ExamController@scoreDetail');
 Route::get('/exams/start/{id}', 'ExamController@start');
@@ -32,6 +34,7 @@ Route::post('/exams/order', 'ExamController@order');
 Route::get('/exams/student-view', 'ExamController@studentView');
 Route::get('/exams/student-score', 'ExamController@studentScore');
 Route::post('/exams/assign/{exam_id}', 'ExamController@postAssign');
+Route::get('/exams/score-export/{exam_id}/{classroom_id}', 'ExamController@scoreExport');
 
 Route::get('/units/start/{id}', 'UnitController@start');
 Route::post('/units/start/{id}', 'UnitController@postStart');
@@ -40,6 +43,11 @@ Route::get('/units/copy/{id}', 'UnitController@copy');
 Route::get('/units/student-view', 'UnitController@studentView');
 Route::get('/units/student-score', 'UnitController@studentScore');
 Route::get('/units/score', 'UnitController@score');
+Route::get('/units/my', 'UnitController@my');
+Route::get('/units/verify', 'UnitController@verify');
+Route::post('/units/update', 'UnitController@updateUnit');
+
+
 
 Route::post('/tasks/{id}', 'TaskController@updateStr');
 Route::get('/tasks/start/{id}', 'TaskController@start');
