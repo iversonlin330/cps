@@ -66,7 +66,7 @@
                                     <input type="text" name="unit_array[{{$unit->id}}][status]" value="4" hidden>
                                 @elseif($unit->status == 1)
 
-                                @elseif($unit->status == 9)
+                                @elseif($unit->status == 4)
                                     <button class="btn btn-secondary btn-sm">取消審核</button>
                                     <input type="text" name="unit_array[{{$unit->id}}][status]" value="0" hidden>
                                 @endif

@@ -50,7 +50,10 @@ trait MyTraits
     public function getStudentNowNoClass($school_id)
     {
         $cycle = Cycle::latest()->first();
-        return User::Student()->where('cycle_id', $cycle->id)->whereNull('classroom_id')->get();
+        return User::Student()->where('cycle_id', $cycle->id)
+            ->whereNull('classroom_id')
+            ->where('school_id', $school_id)
+            ->get();
     }
 
     public function getTargetInitial()

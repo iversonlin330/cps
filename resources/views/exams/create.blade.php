@@ -12,7 +12,7 @@
                 <div class="col-12">
                     <div>1. 輸入考卷名稱</div>
                     <div class="col-3">
-                        <input name="name" type="text" class="form-control" id="inputEmail3" placeholder="考卷名稱">
+                        <input name="name" type="text" class="form-control" id="inputEmail3" placeholder="考卷名稱" required>
                     </div>
                     <div>2. 選取欲組合單元</div>
                 </div>
@@ -33,7 +33,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($myUnits as $unit)
+                            @foreach($openUnits as $unit)
                                 <tr>
                                     <td>
                                         <a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a>
@@ -63,7 +63,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($openUnits as $unit)
+                            @foreach($myUnits as $unit)
                                 <tr>
                                     <td>
                                         <a href="{{ url('units/start/'.$unit->id) }}" target="_blank">檢視</a>

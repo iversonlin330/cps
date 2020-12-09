@@ -46,9 +46,9 @@
                             <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">預覽</a></td>
                             <td>
                                 <select name="unit_array[{{$unit->id}}][status]" class="form-control-sm">
-                                    <option value="4" {{ ($unit->status == 1)? 'selected' : '' }}>待審核</option>
+                                    <option value="4" {{ ($unit->status == 4)? 'selected' : '' }}>待審核</option>
                                     <option value="0" {{ ($unit->status == 0)? 'selected' : '' }}>不公開</option>
-                                    <option value="9" {{ ($unit->status == 9)? 'selected' : '' }}>公開</option>
+                                    <option value="1" {{ ($unit->status == 1)? 'selected' : '' }}>公開</option>
                                 </select>
                             </td>
                         </tr>

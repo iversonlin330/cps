@@ -53,7 +53,7 @@
                     <tr>
                         <td>{{ $user->cycle->name }}</td>
                         <td>{{ $user->school->fullName() }}</td>
-                        <td>{{ $user->classroom_id }}</td>
+                        <td>{{ $user->classroom->fullName() }}</td>
                         <td>{{ $user->seat_number }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ config('map.gender')[$user->gender] }}</td>

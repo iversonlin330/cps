@@ -46,6 +46,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">學生編號</th>
+                                <th scope="col">學生姓名</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -54,6 +55,7 @@
                                     <td>{{ $student->account }}<input type="text" name="student_id[]"
                                                                       value="{{ $student->id }}" hidden>
                                     </td>
+                                    <td>{{ $student->name }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -74,6 +76,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">學生編號</th>
+                                <th scope="col">學生姓名</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -83,6 +86,7 @@
                                         <td>{{ $student->account }}<input type="text" name="student_id[]"
                                                                           value="{{ $student->id }}" hidden>
                                         </td>
+                                        <td>{{ $student->name }}</td>
                                     </tr>
                                 @endforeach
                             @endif

@@ -243,11 +243,10 @@ class ExamController extends Controller
         $user = Auth::user();
         $targets = config('map.target');
 
+        $exams = Exam::where('user_id', $user->id)->get();
         if ($user->role == 9) {
-            $exams = Exam::all();
             $classrooms = Classroom::all();
         } else {
-            $exams = Exam::where('user_id', $user->id)->get();
             $classrooms = $user->teacher_classroom();
         }
 
@@ -296,7 +295,7 @@ class ExamController extends Controller
         $user = Auth::user();
         $myUnits = Unit::where('user_id', $user->id)->get();
 
-        $openUnits = Unit::where('is_open', 1)->where('user_id', "!=", $user->id)->get();
+        $openUnits = Unit::where('status', 1)->where('user_id', "!=", $user->id)->get();
 
         return view('exams.create', compact('myUnits', 'openUnits'));
     }
