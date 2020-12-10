@@ -14,49 +14,55 @@
         </div>
     </div>
 
-	<form action="{{ url('/users/contact-students-edit') }}" method="post">
-	@csrf
-    <div class="row main-padding">
-        <div class="col-12">
-            <table class="table table-striped bg-white">
-                <thead>
-                <tr>
-                    <th scope="col">班級</th>
-                    <th scope="col">座號</th>
-                    <th scope="col">姓名</th>
-                    <th scope="col">姓別</th>
-                    <th scope="col">帳號</th>
-                    <th scope="col">密碼</th>
-                    <th scope="col">原住民身分</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($students as $student)
+    <form id="user_form" action="{{ url('/users/contact-students-edit') }}" method="post">
+        @csrf
+        <div class="row main-padding">
+            <div class="col-12">
+                <table class="table table-striped bg-white">
+                    <thead>
                     <tr>
-                        <td>{{ $classroom->fullName() }}</td>
-                        <td><input type="number" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['seat_number']" value="{{ $student->seat_number }}"></td>
-                        <td><input type="text" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['name']" value="{{ $student->name }}"></td>
-                        <td>
-                            <select name="student_array[{{ $student->id }}]['gender']" class="form-control-sm">
-                                <option value="1" {{ ($student->gender==1)? 'selected' : '' }}>男</option>
-                                <option value="2" {{ ($student->gender==2)? 'selected' : '' }}>女</option>
-                            </select>
-                        </td>
-                        <td>{{ $student->account }}</td>
-                        <td><input type="text" class="form-control form-control-sm" name="student_array[{{ $student->id }}]['password']" value="{{ $student->password }}"></td>
-                        <td>
-                            <select name="student_array[{{ $student->id }}]['is_local']" class="form-control-sm">
-                                <option value="1" {{ ($student->is_local==1)? 'selected' : '' }}>是</option>
-                                <option value="0" {{ ($student->is_local==0)? 'selected' : '' }}>否</option>
-                            </select>
-                        </td>
+                        <th scope="col">班級</th>
+                        <th scope="col">座號</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">姓別</th>
+                        <th scope="col">帳號</th>
+                        <th scope="col">密碼</th>
+                        <th scope="col">原住民身分</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($students as $student)
+                        <tr>
+                            <td>{{ $classroom->fullName() }}</td>
+                            <td><input type="number" class="form-control form-control-sm"
+                                       name="student_array[{{ $student->id }}]['seat_number']"
+                                       value="{{ $student->seat_number }}"></td>
+                            <td><input type="text" class="form-control form-control-sm"
+                                       name="student_array[{{ $student->id }}]['name']" value="{{ $student->name }}">
+                            </td>
+                            <td>
+                                <select name="student_array[{{ $student->id }}]['gender']" class="form-control-sm">
+                                    <option value="1" {{ ($student->gender==1)? 'selected' : '' }}>男</option>
+                                    <option value="2" {{ ($student->gender==2)? 'selected' : '' }}>女</option>
+                                </select>
+                            </td>
+                            <td>{{ $student->account }}</td>
+                            <td><input type="text" class="form-control form-control-sm"
+                                       name="student_array[{{ $student->id }}]['password']"
+                                       value="{{ $student->password }}"></td>
+                            <td>
+                                <select name="student_array[{{ $student->id }}]['is_local']" class="form-control-sm">
+                                    <option value="1" {{ ($student->is_local==1)? 'selected' : '' }}>是</option>
+                                    <option value="0" {{ ($student->is_local==0)? 'selected' : '' }}>否</option>
+                                </select>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-	</form>
+    </form>
 
     <!-- Button trigger modal -->
 
@@ -98,4 +104,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        function update() {
+            $('#user_form').submit();
+        }
+    </script>
 @endsection

@@ -320,7 +320,11 @@ class ExamController extends Controller
         ]);
         $model->save();
 
-        return redirect('exams');
+        if ($user->role == 9) {
+            return redirect('exams/my');
+        } else {
+            return redirect('exams');
+        }
     }
 
     /**

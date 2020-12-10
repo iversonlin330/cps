@@ -28,13 +28,14 @@
                     <th scope="col">平均分</th>
                     <th scope="col">滿分</th>
                     <th scope="col">各項指標</th>
-                    <th scope="col">狀態</th>
-                    <th scope="col">測驗</th>
-                    @if($user->role == 3)
-                        <th scope="col">審核</th>
+                    @if($user->role == 9)
+                        <th scope="col">狀態</th>
                     @endif
-                    <th scope="col">動作</th>
-                    <th scope="col">刪除單元</th>
+                    <th scope="col">測驗</th>
+                    @if($user->role == 9)
+                        <th scope="col">動作</th>
+                        <th scope="col">刪除單元</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -46,30 +47,29 @@
                         <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
                                data-max="{{ json_encode($unit->total_score()) }}"
                                data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
-                        <td>
-                            <select name="unit_array[{{$unit->id}}][status]" class="form-control-sm">
-                                <option value="1" {{ ($unit->status == 1)? 'selected' : '' }}>公開</option>
-                                <option value="0" {{ ($unit->status == 0)? 'selected' : '' }}>不公開</option>
-                            </select>
-                        </td>
-                        <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
-                        @if($user->role == 3)
+                        @if($user->role == 9)
                             <td>
-                                <a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-secondary btn-sm">送出審核</a>
+                                <select name="unit_array[{{$unit->id}}][status]" class="form-control-sm">
+                                    <option value="1" {{ ($unit->status == 1)? 'selected' : '' }}>公開</option>
+                                    <option value="0" {{ ($unit->status == 0)? 'selected' : '' }}>不公開</option>
+                                </select>
                             </td>
                         @endif
-                        <td>
-                            <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
-                            <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>
-                        </td>
-                        <td>
-                            @if(!$unit->is_answer())
-                                <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                        data-target="#deleteModal" data-keyword="單元"
-                                        data-url="{{ url('units/'.$unit->id) }}">刪除
-                                </button>
-                            @endif
-                        </td>
+                        <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
+                        @if($user->role == 9)
+                            <td>
+                                <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
+                                <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>
+                            </td>
+                            <td>
+                                @if(!$unit->is_answer())
+                                    <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                            data-target="#deleteModal" data-keyword="單元"
+                                            data-url="{{ url('units/'.$unit->id) }}">刪除
+                                    </button>
+                                @endif
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>
