@@ -1,31 +1,37 @@
 @extends('layouts.master')
-@section('title1', '新增單筆學生資料')
-@section('title2', '資料設定 / 學生資料設定 / 新增學生單筆資料')
+@php
+$text = Request::is('*edit*')? '修改' : '新增';
+@endphp
+@section('title1', $text.'單筆學生資料')
+@section('title2', '資料設定 / 學生資料設定 / '.$text.'學生單筆資料')
 @section('content')
     <div class="row-fluid main-padding">
         <div class="row" style="padding-top:24px">
             <div class="col-12">
                 <div class="d-flex justify-content-center">
                     <div class="login-title " style="width:540px;">
-                        <p class="-Login text-center">新增單筆學生資料</p>
+                        <p class="-Login text-center">{{ $text }}單筆學生資料</p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div class="login-content" style="width:540px;">
-                        <form action="{{ url('students') }}" method="post">
+                        <form action="{{ isset($user)? url('students/'.$user->id) : url('students') }}" method="post">
+							@if(isset($user))
+                                @method('PUT')
+                            @endif
                             @csrf
                             <input type="text" name="role" class="form-control" value="3" hidden>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">學校</label>
                                 <div class="col-4">
-                                    <select name="city_id" class="form-control">
+                                    <select name="city_id" class="form-control" {{ ($text == '修改')? 'disabled' : '' }}>
                                         @foreach($citys as $city => $school)
                                             <option value="{{ $city }}">{{ $city }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-5">
-                                    <select name="school_id" class="form-control">
+                                    <select name="school_id" class="form-control" {{ ($text == '修改')? 'disabled' : '' }}>
                                         <option>文德國小</option>
                                     </select>
                                 </div>
@@ -53,6 +59,20 @@
                                 </div>
                             </div>
 
+							<div class="form-group row">
+                                <label for="inputEmail3" class="col-3 col-form-label">帳號</label>
+                                <div class="col-9">
+                                    <input type="text" name="account" class="form-control" id="inputEmail3" {{ ($text == '修改')? 'disabled' : '' }}>
+                                </div>
+                            </div>
+							
+							<div class="form-group row">
+                                <label for="inputEmail3" class="col-3 col-form-label">密碼</label>
+                                <div class="col-9">
+                                    <input type="password" name="password" class="form-control" id="inputEmail3">
+                                </div>
+                            </div>
+							
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">性別</label>
                                 <div class="col-9">
@@ -139,7 +159,7 @@
             @if(isset($user))
         let user = @json($user);
         for (const [key, value] of Object.entries(user)) {
-            if (key == 'gender') {
+            if (key == 'gender' || key == 'is_local') {
                 continue;
             }
             $("[name='" + key + "']").val(value);
@@ -147,6 +167,7 @@
         $("[name='city_id']").trigger('change');
         $("[name='school_id']").val(user['school_id']);
         $("[name='gender']").filter('[value=' + user.gender + ']').prop('checked', true);
+		$("[name='is_local']").filter('[value=' + user.is_local + ']').prop('checked', true);
         @endif
     </script>
 @endsection

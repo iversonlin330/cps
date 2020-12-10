@@ -197,12 +197,12 @@ class UnitController extends Controller
                 }
             }
         })
+		->where('status',1)
             ->get();
 
         $targets = config('map.target');
 
         $user = Auth::user();
-        $units = [];
 
         return view('units.student-view', compact('user', 'units', 'targets'));
     }

@@ -165,8 +165,9 @@ class StudentController extends Controller
 
         $user->school_id = $user->school->id;
         $user->city_id = $user->school->city;
+		$classroom_map = Classroom::now()->get()->groupBY('school_id');
 
-        return view('students.create', compact('user', 'citys'));
+        return view('students.create', compact('user', 'citys','classroom_map'));
     }
 
     /**
@@ -176,9 +177,14 @@ class StudentController extends Controller
      * @param \App\Teacher $teacher
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, $id)
     {
         //
+		$data = $request->except(['_token', 'city_id']);
+        $model = User::find($id);
+        $model->fill($data);
+        $model->save();
+        return redirect('students');
     }
 
     /**

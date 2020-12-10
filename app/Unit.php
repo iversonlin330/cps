@@ -13,6 +13,17 @@ class Unit extends Model
 
 	protected $guarded = ['id'];
 
+	public function is_my_answer()
+    {
+        $user = Auth::user();
+		$count = UserUnit::where('unit_id', $this->id)->where('user_id',$user->id)->count();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
     public function is_answer()
     {
         $count = UserUnit::where('unit_id', $this->id)->count();

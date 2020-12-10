@@ -52,8 +52,8 @@
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->cycle->name }}</td>
-                        <td>{{ $user->school->fullName() }}</td>
-                        <td>{{ $user->classroom->fullName() }}</td>
+                        <td>{{ ($user->school)? $user->school->fullName() : '' }}</td>
+                        <td>{{ ($user->classroom)? $user->classroom->fullName() : '' }}</td>
                         <td>{{ $user->seat_number }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ config('map.gender')[$user->gender] }}</td>
@@ -61,10 +61,10 @@
                         <td>{{ $user->password }}</td>
                         <td>{{ config('map.boolean')[$user->is_local] }}</td>
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm">編輯</button>
+                            <a href="{{ url('students/'.$user->id.'/edit') }}" class="btn btn-warning btn-sm">編輯</a>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
                                     data-target="#deleteModal" data-keyword="學生"
-                                    data-url="{{ url('users/'.$unit->id) }}">刪除
+                                    data-url="{{ url('users/'.$user->id) }}">刪除
                             </button>
                         </td>
                     </tr>
