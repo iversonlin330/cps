@@ -48,7 +48,6 @@ Route::get('/units/verify', 'UnitController@verify');
 Route::post('/units/update', 'UnitController@updateUnit');
 
 
-
 Route::post('/tasks/{id}', 'TaskController@updateStr');
 Route::get('/tasks/start/{id}', 'TaskController@start');
 Route::post('/tasks/start/{id}', 'TaskController@postStart');
@@ -66,6 +65,7 @@ Route::post('/users/contact-students-edit', 'UserController@postContactStudentsE
 Route::get('/users/teacher-edit', 'UserController@teacherEdit');
 //Route::post('/users/teacher-edit', 'UserController@postTeacherEdit');
 Route::post('/users/add-class', 'UserController@postAddClass');
+Route::post('/users/remove-class/{$classroom_id}', 'UserController@removeClass');
 
 Route::get("/classrooms/teacher-view", "ClassroomController@teacherView");
 Route::get("/classrooms/teacher-detail-view/{classroom_id}", "ClassroomController@teacherDetailView");

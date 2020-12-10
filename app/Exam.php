@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Exam extends Model
 {
-	use MyTraits;
+    use MyTraits;
 
     protected $guarded = ['id'];
 
@@ -16,17 +16,28 @@ class Exam extends Model
         'unit_id' => 'array'
     ];
 
+    public function is_answer()
+    {
+        $count = UserExam::where('exam_id', $this->id)->count();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function units()
     {
         $ids_ordered = implode(',', $this->unit_id);
-        return Unit::whereIn('id',$this->unit_id)->orderByRaw("FIELD(id, $ids_ordered)")->get();
+        return Unit::whereIn('id', $this->unit_id)->orderByRaw("FIELD(id, $ids_ordered)")->get();
 
         return $this->belongsToMany('App\Unit')->orderBy('order', 'desc');
     }
 
-	public function score_count(){
-		$count = $this->getTargetInitial();
-		$units = $this->units();
+    public function score_count()
+    {
+        $count = $this->getTargetInitial();
+        $units = $this->units();
         foreach ($units as $unit) {
             $tasks = $unit->tasks;
             foreach ($tasks as $task) {
@@ -36,16 +47,16 @@ class Exam extends Model
                 }
             }
         }
-		return $count;
-	}
+        return $count;
+    }
 
     public function total_score()
     {
         $total = $this->getTargetInitial();
-		$count = $this->score_count();
-		$units = $this->units();
+        $count = $this->score_count();
+        $units = $this->units();
 
-		foreach ($units as $unit) {
+        foreach ($units as $unit) {
             $tasks = $unit->tasks;
             foreach ($tasks as $task) {
                 $q_id = 0;
@@ -72,13 +83,13 @@ class Exam extends Model
             }
         }
 
-		return $total;
+        return $total;
     }
 
     public function avg_score()
     {
         $students = $this->getStudentNow();
-		$avg = $this->getTargetInitial();
+        $avg = $this->getTargetInitial();
         $count = $this->score_count();
 
         $user_scores = UserExam::where('exam_id', $this->id)
@@ -97,7 +108,32 @@ class Exam extends Model
             }
         }
 
-		return $avg;
+        return $avg;
+    }
+
+    public function avg_class_score($classroom_id)
+    {
+        $students = $this->getStudentNow()->where('classroom_id', $classroom_id);
+        $avg = $this->getTargetInitial();
+        $count = $this->score_count();
+
+        $user_scores = UserExam::where('exam_id', $this->id)
+            ->whereIn('user_id', $students->pluck('id')->toArray())
+            ->get();
+        if ($user_scores->count() > 0) {
+            foreach ($user_scores as $user_score) {
+                $avg = $this->calScore($user_score->score, $count);
+            }
+
+            foreach ($avg as $k => $v) {
+                if ($count[$k] != 0) {
+                    $avg[$k] = round($v / $user_scores->count(), 1);
+                    //$avg_score = $avg_score + $avg[$k];
+                }
+            }
+        }
+
+        return $avg;
     }
 
     public function my_score()

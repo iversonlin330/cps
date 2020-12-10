@@ -43,7 +43,9 @@
                         <td>{{ $unit->name }}</td>
                         <td>{{ array_sum($unit->avg_score()) }}</td>
                         <td>{{ array_sum($unit->total_score()) }}</td>
-                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal" data-max="{{ json_encode($unit->total_score()) }}" data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
+                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                               data-max="{{ json_encode($unit->total_score()) }}"
+                               data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
                         <td>
                             <select name="unit_array[{{$unit->id}}][status]" class="form-control-sm">
                                 <option value="1" {{ ($unit->status == 1)? 'selected' : '' }}>公開</option>
@@ -61,10 +63,12 @@
                             <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="單元"
-                                    data-url="{{ url('units/'.$unit->id) }}">刪除
-                            </button>
+                            @if(!$unit->is_answer())
+                                <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                        data-target="#deleteModal" data-keyword="單元"
+                                        data-url="{{ url('units/'.$unit->id) }}">刪除
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

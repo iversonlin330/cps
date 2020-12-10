@@ -62,7 +62,10 @@
                         <td>{{ config('map.boolean')[$user->is_local] }}</td>
                         <td>
                             <button type="button" class="btn btn-warning btn-sm">編輯</button>
-                            <button type="button" class="btn btn-warning btn-sm">刪除</button>
+                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                    data-target="#deleteModal" data-keyword="學生"
+                                    data-url="{{ url('users/'.$unit->id) }}">刪除
+                            </button>
                         </td>
                     </tr>
                 @endforeach

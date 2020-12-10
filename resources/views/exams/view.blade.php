@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title1', '所有考卷')
-@section('title2', '主頁 / 考卷專區 / 所有考卷')
+@section('title1', Request::is('*my*')? '我的考卷' : '所有考卷')
+@section('title2', '主頁 / 考卷專區 / '.Request::is('*my*')? '我的考卷' : '所有考卷')
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
@@ -54,10 +54,12 @@
                             <a href="{{ url('exams/'.$exam->id.'/edit') }}" class="btn btn-secondary btn-sm">編輯</a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="考卷"
-                                    data-url="{{ url('exams/'.$exam->id) }}">刪除
-                            </button>
+                            @if(!$exam->is_answer())
+                                <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                        data-target="#deleteModal" data-keyword="考卷"
+                                        data-url="{{ url('exams/'.$exam->id) }}">刪除
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

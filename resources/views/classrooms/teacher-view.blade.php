@@ -50,8 +50,9 @@
                                data-classroom-name="{{ $classroom->fullName() }}"
                                data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a></td>
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="班級" data-url="{{ url('classrooms/1') }}">刪除
+                            <button type="button" class="btn btn-warning btn-sm post" data-toggle="modal"
+                                    data-target="#postModal" data-keyword="班級"
+                                    data-url="{{ url('users/remove-class/'.$classroom->id) }}">刪除
                             </button>
                         </td>
                     </tr>

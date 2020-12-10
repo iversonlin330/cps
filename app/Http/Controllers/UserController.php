@@ -89,6 +89,25 @@ class UserController extends Controller
         return back();
     }
 
+    public function removeClass($classroom_id)
+    {
+        $user = Auth::user();
+
+        $array = $user->subject_classroom_id;
+
+        if (!$array) {
+            $array = [];
+        }
+
+        if (($key = array_search($classroom_id, $array)) !== false) {
+            unset($array[$key]);
+        }
+
+        $user->fill(['subject_classroom_id' => $array])->save();
+
+        return back();
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -266,6 +266,29 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">刪除<span class="keyword"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    該<span class="keyword"></span>刪除後，將影響學生各項成績，請問您確定要刪除？？
+                </div>
+                <div class="modal-footer">
+                    <form action="" method="POST">
+                        @csrf
+                        <input type="submit" class="btn btn-secondary" value="確認"></input>
+                    </form>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!--script src="https://code.jquery.com/jquery-1.12.4.js"></script-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
@@ -316,6 +339,13 @@
             let keyword = $(this).attr('data-keyword');
             $('#deleteModal form').attr('action', url);
             $('#deleteModal .keyword').text(keyword);
+        });
+
+        $(document).on('click', '.post', function () {
+            let url = $(this).attr('data-url');
+            let keyword = $(this).attr('data-keyword');
+            $('#postModal form').attr('action', url);
+            $('#postModal .keyword').text(keyword);
         });
 
 		$(document).on('click', '.target', function () {

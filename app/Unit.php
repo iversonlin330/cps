@@ -13,6 +13,16 @@ class Unit extends Model
 
 	protected $guarded = ['id'];
 
+    public function is_answer()
+    {
+        $count = UserUnit::where('unit_id', $this->id)->count();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function tasks()
     {
         return $this->hasMany('\App\Task')->orderBy('order');
