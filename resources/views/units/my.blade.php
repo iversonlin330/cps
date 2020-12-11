@@ -47,8 +47,8 @@
                                    data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
                             <td>
                                 <select name="unit_array[{{$unit->id}}][is_open]" class="form-control-sm">
-                                    <option value="1" {{ ($unit->is_open == 1)? 'selected' : '' }}>公開</option>
-                                    <option value="0" {{ ($unit->is_open == 0)? 'selected' : '' }}>不公開</option>
+                                    <option value="1" {{ ($unit->status == 1)? 'selected' : '' }}>公開</option>
+                                    <option value="0" {{ ($unit->status == 0)? 'selected' : '' }}>不公開</option>
                                 </select>
                             </td>
                             <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>

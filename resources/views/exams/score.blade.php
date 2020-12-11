@@ -66,11 +66,11 @@
                             <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
                             <td>{{ $classroom->school->fullName() }}</td>
                             <td>{{ $classroom->fullName() }}</td>
-                            <td>{{ array_sum($exam->avg_class_score()) }}</td>
+                            <td>{{ array_sum($exam->avg_class_score($classroom->id)) }}</td>
                             <!--td>{{ array_sum($exam->avg_score()) }}</td-->
                             <td>{{ array_sum($exam->total_score()) }}</td>
                             <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                                   data-my="{{ json_encode($exam->avg_class_score()) }}"
+                                   data-my="{{ json_encode($exam->avg_class_score($classroom->id)) }}"
                                    data-total="{{ json_encode($exam->total_score()) }}"
                                    data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
                             <td>
