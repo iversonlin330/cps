@@ -39,7 +39,7 @@
                     <th scope="col">班平均分</th>
                     <th scope="col">滿分</th>
                     <th scope="col">班各項指標</th>
-                    <th scope="col">學生分數</th>
+                    <th scope="col">學生指標</th>
                     <th scope="col">資料匯出</th>
                 </tr>
                 </thead>
@@ -73,6 +73,7 @@
                                    data-my="{{ json_encode($exam->avg_class_score($classroom->id)) }}"
                                    data-total="{{ json_encode($exam->total_score()) }}"
                                    data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                            <td>{{ array_sum($exam->total_score()) }}</td>
                             <td>
                                 <a href="{{ url('exams/score-export/'.$exam->id.'/'.$classroom->id) }}"
                                    class="btn btn-warning btn-sm">匯出</a>

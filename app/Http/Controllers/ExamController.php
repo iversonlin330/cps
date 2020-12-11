@@ -277,7 +277,11 @@ class ExamController extends Controller
         $user = Auth::user();
         $targets = config('map.target');
 
-        $exams = Exam::all();
+        if ($user->role == 9) {
+            $exams = Exam::all();
+        } else {
+            $exams = Exam::where('status', 1)->get();
+        }
 
         $classrooms = $user->teacher_classroom();
 
@@ -321,9 +325,9 @@ class ExamController extends Controller
         $model->save();
 
         if ($user->role == 9) {
-            return redirect('exams/my');
-        } else {
             return redirect('exams');
+        } else {
+            return redirect('exams/my');
         }
     }
 
@@ -380,7 +384,11 @@ class ExamController extends Controller
         ]);
         $exam->save();
 
-        return redirect('exams');
+        if ($user->role == 9) {
+            return redirect('exams');
+        } else {
+            return redirect('exams/my');
+        }
     }
 
     /**

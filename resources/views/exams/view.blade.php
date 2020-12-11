@@ -1,6 +1,9 @@
 @extends('layouts.master')
-@section('title1', Request::is('*my*')? '我的考卷' : '所有考卷')
-@section('title2', '主頁 / 考卷專區 / '.Request::is('*my*')? '我的考卷' : '所有考卷')
+@php
+    $text = Request::is('*my*')? '我的考卷' : '所有考卷';
+@endphp
+@section('title1', $text)
+@section('title2', '主頁 / 考卷專區 / '.$text)
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
