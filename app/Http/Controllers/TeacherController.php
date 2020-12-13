@@ -12,10 +12,39 @@ class TeacherController extends Controller
 {
     use MyTraits;
 
-    public function verify()
+    public function verify(Request $request)
     {
         //
-        return view('teachers.verify');
+		$citys = $this->getSchool();
+		$data = $request->all();
+
+        unset($data['city_id']);
+
+        $users = User::Teacher()
+            ->where(function ($query) use ($data) {
+                if ($data) {
+                    foreach ($data as $k => $v) {
+                        if ($v) {
+                            $query->orWhere($k, 'like', '%' . $v . '%');
+                        }
+                    }
+                }
+            })
+			->where('is_verify',0)
+            ->get();
+		
+        return view('teachers.verify', compact('citys','users'));
+    }
+	
+	public function postVerify(Request $request)
+    {
+        $data = $request->all();
+
+        foreach ($data['teacher_array'] as $k => $v) {
+            User::where('id', $k)->update($v);
+        }
+
+        return back();
     }
 
     /**

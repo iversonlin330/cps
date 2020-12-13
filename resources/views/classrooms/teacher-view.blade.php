@@ -57,6 +57,18 @@
                         </td>
                     </tr>
                 @endforeach
+				@foreach($classroom_tutors as $classroom)
+                    <tr>
+                        <td>{{ $classroom->fullName() }}</td>
+                        <td>{{ count($classroom->students) }}</td>
+                        <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
+                        <td><a class="exam" href="#" data-toggle="modal" data-target="#examModal"
+                               data-classroom-name="{{ $classroom->fullName() }}"
+                               data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a></td>
+                        <td>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

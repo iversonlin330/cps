@@ -2,23 +2,30 @@
 @section('title1', '教師資料設定')
 @section('title2', '資料設定 / 教師資料設定 / 待審核教師資料')
 @section('content')
- <div class="row-fluid main-padding">
+ <div class="row main-padding mb-2">
+        <div class="col-12">
 	<div class="float-right">
-		<form class="form-inline float-right">
-		<select class="form-control mr-sm-2">
-		<option>縣市</option>
-		</select>
-		<select class="form-control mr-sm-2">
-		<option>學校</option>
-		</select>
-			<input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">儲存</button>
-	  </form>
+		<form action="{{ url('teachers/verify') }}" class="form-inline float-right">
+                    <select name="city_id" class="form-control mr-sm-2">
+                        @foreach($citys as $city => $school)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
+                    </select>
+                    <select name="school_id" class="form-control mr-sm-2">
+                        <option value="">學校</option>
+                    </select>
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
+                    <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
+					<a class="btn btn-warning my-2 my-sm-0" onclick="update()">儲存</a>
+                </form>
 	</div>
 </div>
-
- <div class="row-fluid main-padding">
+</div>
+<form id="user_form" action="{{ url('/teachers/verify') }}" method="post">
+        @csrf
+ <div class="row main-padding">
+        <div class="col-12">
 	<table class="table table-striped">
   <thead>
     <tr>
@@ -33,26 +40,28 @@
     </tr>
   </thead>
   <tbody>
-  @for($i=0;$i<=5;$i++)
-    <tr>
-	<td>黃小玲</td>
-      <td>新北市立文德國民小學</td>
-	  <td>女</td>
-      <td>OOOOOOOOOOO</td>
-      <td>OOOOOOOOOOO</td>
-	  <td>OOOOOO@xxx.edu.tw</td>
-	  <td>A0010432900</td>
-	  <td>
-		<select>
-			<option>待審核</option>
-			<option>通過</option>
-		</select>
-	  </td>
-    </tr>
-	@endfor
+	@foreach($users as $user)
+		<tr>
+			<td>{{ $user->name }}</td>
+			<td>{{ $user->school->fullName() }}</td>
+			<td>{{ config('map.gender')[$user->gender] }}</td>
+			<td>{{ $user->account }}</td>
+			<td>{{ $user->password }}</td>
+			<td>{{ $user->email }}</td>
+			<td>{{ $user->teacherid }}</td>
+			<td>
+				<select name="teacher_array[{{$user->id}}][is_verify]" class="form-control-sm">
+                                    <option value="0" {{ ($user->is_verify == 0)? 'selected' : '' }}>待審核</option>
+                                    <option value="1" {{ ($user->is_verify == 1)? 'selected' : '' }}>通過</option>
+                                </select>
+			</td>
+		</tr>
+	@endforeach
   </tbody>
 </table>
 </div>
+</div>
+</form>
         
 	<!-- Button trigger modal -->
 
@@ -94,4 +103,23 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+    <script>
+        var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html);
+        });
+        $("[name='city_id']").trigger('change');
+		
+		function update() {
+            $('#user_form').submit();
+        }
+    </script>
 @endsection

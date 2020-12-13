@@ -191,7 +191,11 @@ class ExamController extends Controller
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
-        $exams = Exam::all();
+		if($user->role == 9){
+			$exams = Exam::all();
+		}else{
+			$exams = Exam::where('user_id',$user->id)->get();
+		}
 
         if (!$data) {
             $data['cycle_id'] = Cycle::latest()->first()->id;

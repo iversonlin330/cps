@@ -20,8 +20,10 @@ class ClassroomController extends Controller
         $classrooms = Classroom::where('school_id', $user->school_id)
             ->whereNotIn('id', $user->subject_classroom_id)
             ->get();
+			
+		$classroom_tutors = $user->tutor_classroom();
 
-        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user'));
+        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user','classroom_tutors'));
     }
 	
 	public function teacherDetailView($classroom_id)

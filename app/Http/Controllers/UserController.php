@@ -11,6 +11,24 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     use MyTraits;
+	
+	public function teacherRegister()
+    {
+        $user = Auth::user();
+        $citys = $this->getSchool();
+
+        return view("users.teacher-register", compact('citys'));
+    }
+	
+	public function postTeacherRegister(Request $request)
+    {
+        //
+        $data = $request->except(['_token', 'city_id']);
+        $model = new User;
+        $model->fill($data);
+        $model->save();
+        return redirect('/');
+    }
 
     public function contactEdit()
     {

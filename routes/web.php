@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/teacher_register', 'UserController@teacherRegister');
+Route::post('users/teacher_register', 'UserController@postTeacherRegister');
 Route::get('/login', 'LoginController@login');
 Route::post('/login', 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
@@ -71,6 +72,9 @@ Route::post('/users/remove-class/{$classroom_id}', 'UserController@removeClass')
 Route::get("/classrooms/teacher-view", "ClassroomController@teacherView");
 Route::get("/classrooms/teacher-detail-view/{classroom_id}", "ClassroomController@teacherDetailView");
 
+Route::get('/teachers/verify', 'TeacherController@verify');
+Route::post('/teachers/verify', 'TeacherController@postVerify');
+
 
 Route::resource("users", "UserController");
 Route::resource("cycles", "CycleController");
@@ -80,7 +84,6 @@ Route::resource("units", "UnitController");
 Route::resource("tasks", "TaskController");
 Route::resource("contacts", "ContactController");
 
-Route::get('/teachers/verify', 'TeacherController@verify');
 Route::resource("teachers", "TeacherController");
 Route::resource("students", "StudentController");
 
