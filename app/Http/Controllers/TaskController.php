@@ -169,8 +169,13 @@ class TaskController extends Controller
                 $q_id++;
             }
         }
+		
+		$disabled = 0;
+		if(array_key_exists('disabled',$data)){
+			$disabled = $data['disabled'];
+		}
 
-        return view('tasks.create', compact('targets', 'scoreNum', 'task', 'map'));
+        return view('tasks.create', compact('targets', 'scoreNum', 'task', 'map','disabled'));
     }
 
     /**

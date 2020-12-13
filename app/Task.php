@@ -18,6 +18,11 @@ class Task extends Model
     {
         return $query->orderBy('order', 'asc');
     }
+	
+	public function unit()
+    {
+        return $this->hasOne('\App\Unit', 'id', 'unit_id');
+    }
 
     public function maxScore()
     {

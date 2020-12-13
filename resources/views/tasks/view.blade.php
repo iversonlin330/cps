@@ -39,19 +39,27 @@
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
                         <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"
                                class="btn btn-secondary btn-sm">編輯</a-->
-                            <button class="btn btn-secondary btn-sm"
+                            @if($task->unit->is_answer() || $task->unit->status == 1)
+									<a href="{{ url('/tasks/create?disabled=1&task_id='.$task->id) }}" class="btn btn-secondary btn-sm">編輯</a>	
+							@else
+							<button class="btn btn-secondary btn-sm"
                                     data-url="{{ url('tasks/'.$task->id) }}"
                                     data-count="{{ implode(',',$task->content['count']) }}"
                                     data-name="{{ $task->name }}"
                                     data-order="{{ $task->order }}"
                                     onclick="edit_modal(this)">編輯
                             </button>
+							@endif
                         </td>
                         <td>
+						@if($task->unit->is_answer() || $task->unit->status == 1)
+										
+						@else
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
                                     data-target="#deleteModal" data-keyword="任務"
                                     data-url="{{ url('tasks/'.$task->id) }}">刪除
                             </button>
+							@endif
                         </td>
                     </tr>
                 @endforeach
