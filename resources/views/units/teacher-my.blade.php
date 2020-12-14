@@ -73,7 +73,7 @@
                             </form>
                         </td>
                         <td>
-                            <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
+                            <a href="{{ url('units/copy/'.$unit->id) }}" class="btn btn-secondary btn-sm">複製</a>
                             <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                         </td>
                         <td>

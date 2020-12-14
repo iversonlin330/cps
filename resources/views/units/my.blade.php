@@ -53,7 +53,7 @@
                             </td>
                             <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
                             <td>
-                                <a href="{{ url('units/copy') }}" class="btn btn-secondary btn-sm">複製</a>
+                                <a href="{{ url('units/copy/'.$unit->id) }}" class="btn btn-secondary btn-sm">複製</a>
                                 <a href="{{ url('tasks?unit_id='.$unit->id) }}" class="btn btn-secondary btn-sm">編輯</a>
                             </td>
                             <td>

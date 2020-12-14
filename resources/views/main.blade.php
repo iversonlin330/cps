@@ -216,6 +216,24 @@
 					<div class="d-inline-flex">密碼修改</div>
 				</div>
             </div>
+            @elseif(Auth::user()->role == 1)
+                <div class="row main-block">
+                    <div class="col-12">
+                        <div>作答專區</div>
+                    </div>
+                    <div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units/student-view') }}'">
+                        <div class="main-block-sub-icon bg-brown text-white d-inline-flex">
+                            <i class="fal fa-database fa-lg icon"></i>
+                        </div>
+                        <div class="d-inline-flex">公開單元</div>
+                    </div>
+                    <div class="col-4 main-block-sub d-flex align-items-center" onclick="location.href='{{url('units/student-score') }}'">
+                        <div class="main-block-sub-icon bg-squash text-white d-inline-flex">
+                            <i class="fal fa-file-alt fa-lg icon"></i>
+                        </div>
+                        <div class="d-inline-flex">作答紀錄</div>
+                    </div>
+                </div>
 			@endif
         </div>
     </div>

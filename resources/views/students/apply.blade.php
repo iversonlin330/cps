@@ -12,16 +12,12 @@
                 </div>
                 <div class="d-flex justify-content-center">
                     <div class="login-content" style="width:540px;">
-                        <form action="{{ isset($user)? url('users/'.$user->id) : url('users') }}" method="post">
-                            @if(isset($user))
-                                @method('PUT')
-                            @endif
+                        <form action="{{ url('students/apply') }}" method="post">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">資料筆數</label>
                                 <div class="col-9">
-                                    <input name="number" type="number" class="form-control" id="inputEmail3">
+                                    <input name="number" type="number" class="form-control" id="inputEmail3" required>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
@@ -36,6 +32,6 @@
 @endsection
 @section('script')
     <script>
-        
+
     </script>
 @endsection

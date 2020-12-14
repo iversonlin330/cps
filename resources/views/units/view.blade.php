@@ -60,7 +60,7 @@
                             <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">作答</a></td>
                             @if($user->role == 9)
                                 <td>
-                                    <a href="{{ url('tasks') }}" class="btn btn-secondary btn-sm">複製</a>
+                                    <a href="{{ url('units/copy/'.$unit->id) }}" class="btn btn-secondary btn-sm">複製</a>
                                     <a href="{{ url('tasks?unit_id='.$unit->id) }}"
                                        class="btn btn-secondary btn-sm">編輯</a>
                                 </td>

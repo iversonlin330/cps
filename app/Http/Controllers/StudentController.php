@@ -8,6 +8,8 @@ use App\Http\Traits\MyTraits;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -31,6 +33,24 @@ class StudentController extends Controller
     {
         //
         return view('students.apply');
+    }
+
+    public function postApply(Request $request)
+    {
+        $user = Auth::user();
+        $number = $request->get('number');
+
+        $content = "管理員您好：\n" .
+            $user->school->fullName() . "的窗口（" . $user->account . "）向您申請" . $number . "位學生，煩請協助辦理，謝謝。";
+
+        $to = explode(',', env('MAIL_TO'));
+
+        Mail::raw($content, function ($message) use ($to) {
+            //$message->from('test@gmail');
+            $message->to($to);
+        });
+
+        return back();
     }
 
     public function createMulti()
@@ -165,9 +185,9 @@ class StudentController extends Controller
 
         $user->school_id = $user->school->id;
         $user->city_id = $user->school->city;
-		$classroom_map = Classroom::now()->get()->groupBY('school_id');
+        $classroom_map = Classroom::now()->get()->groupBY('school_id');
 
-        return view('students.create', compact('user', 'citys','classroom_map'));
+        return view('students.create', compact('user', 'citys', 'classroom_map'));
     }
 
     /**
@@ -180,7 +200,7 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
-		$data = $request->except(['_token', 'city_id']);
+        $data = $request->except(['_token', 'city_id']);
         $model = User::find($id);
         $model->fill($data);
         $model->save();
