@@ -97,7 +97,10 @@ class Exam extends Model
             ->get();
         if ($user_scores->count() > 0) {
             foreach ($user_scores as $user_score) {
-                $avg = $this->calScore($user_score->score, $count);
+                $temp = $this->calScore($user_score->score, $count);
+				foreach ($avg as $k => $v) {
+					$avg[$k] = $v+$temp[$k];
+				}
             }
 
             foreach ($avg as $k => $v) {
@@ -122,7 +125,10 @@ class Exam extends Model
             ->get();
         if ($user_scores->count() > 0) {
             foreach ($user_scores as $user_score) {
-                $avg = $this->calScore($user_score->score, $count);
+                $temp = $this->calScore($user_score->score, $count);
+				foreach ($avg as $k => $v) {
+					$avg[$k] = $v+$temp[$k];
+				}
             }
 
             foreach ($avg as $k => $v) {
