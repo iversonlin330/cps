@@ -35,15 +35,6 @@
                                data-avg="{{ json_encode($exam->avg_class_score($user_exam->user->classroom->id)) }}">檢視</a></td>
                     </tr>
                 @endforeach
-                @for($i=0;$i<=0;$i++)
-                    <tr>
-                        <td>三年甲班</td>
-                        <td>22</td>
-                        <td>XXX</td>
-                        <td>50</td>
-                        <td><a href="#" data-toggle="modal" data-target="#viewModal">檢視</a></td>
-                    </tr>
-                @endfor
                 </tbody>
             </table>
         </div>
