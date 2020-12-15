@@ -49,7 +49,8 @@
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm assign" data-toggle="modal"
                                     data-target="#assignModal" data-exam-id="{{ $exam->id }}"
-                                    data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}">指派考卷
+                                    data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}"
+                                    data-value="{{ json_encode($exam->teacher_classroom()) }}">指派考卷
                             </button>
                         </td>
                         <td>
@@ -159,13 +160,25 @@
         $(document).on('click', '.assign', function () {
             let classroom = $(this).data('classroom');
             let exam_id = $(this).data('exam-id');
+            let value = $(this).data('value');
+            console.log(value);
 
             $("#assignModal form").attr('action', "{{ url('exams/assign') }}/" + exam_id);
-
-            $("input[name='classroom_id[]']").prop('checked', false);
-            for (x in classroom) {
-                $("input[value='" + classroom[x] + "']").prop('checked', true);
+            /*
+                        $("input[name='classroom_id[]']").prop('checked', false);
+                        for (let x in classroom) {
+                            $("input[value='" + classroom[x] + "']").prop('checked', true);
+                        }*/
+            $("#assignModal tbody").empty();
+            let html = '';
+            for (let x in value) {
+                html = html + "<tr>";
+                html = html + "<td>" + value[x]['name'] + "</td>";
+                html = html + "<td><input type='checkbox'' name='classroom_id[]' value=" + value[x]['classroom_id'] + " " + value[x]['status'] + "></td>";
+                html = html + "</td>";
+                html = html + "</tr>";
             }
+            $("#assignModal tbody").html(html);
         });
     </script>
 @endsection

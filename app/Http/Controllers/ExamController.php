@@ -27,6 +27,11 @@ class ExamController extends Controller
         $data = $request->except('_token');
         $user = Auth::user();
 
+        if (!array_key_exists('classroom_id', $data)) {
+            $data['classroom_id'] = [];
+        }
+
+        ClassroomExam::where('exam_id', $exam_id)->delete();
         foreach ($data['classroom_id'] as $classroom_id) {
             $model = new ClassroomExam;
             $model->fill([
@@ -194,7 +199,7 @@ class ExamController extends Controller
         if ($user->role == 9) {
             $exams = Exam::all();
         } else {
-            $exams = Exam::where('user_id', $user->id)->get();
+            $exams = Exam::where('user_id', $user->id)->orWhereIn('classroom_id', $user->tutor_classroom_id)->get();
         }
 
         if (!$data) {
@@ -300,7 +305,8 @@ class ExamController extends Controller
             $exams = Exam::where('status', 1)->get();
         }
 
-        $classrooms = $user->teacher_classroom();
+        //$classrooms = $user->teacher_classroom();
+        $classrooms = [];
 
         return view('exams.view', compact('exams', 'targets', 'classrooms'));
     }

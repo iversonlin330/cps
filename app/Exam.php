@@ -16,6 +16,11 @@ class Exam extends Model
         'unit_id' => 'array'
     ];
 
+    public function user()
+    {
+        return $this->hasOne('\App\User', 'id', 'user_id');
+    }
+
     public function is_answer()
     {
         $count = UserExam::where('exam_id', $this->id)->count();
@@ -98,9 +103,9 @@ class Exam extends Model
         if ($user_scores->count() > 0) {
             foreach ($user_scores as $user_score) {
                 $temp = $this->calScore($user_score->score, $count);
-				foreach ($avg as $k => $v) {
-					$avg[$k] = $v+$temp[$k];
-				}
+                foreach ($avg as $k => $v) {
+                    $avg[$k] = $v + $temp[$k];
+                }
             }
 
             foreach ($avg as $k => $v) {
@@ -126,9 +131,9 @@ class Exam extends Model
         if ($user_scores->count() > 0) {
             foreach ($user_scores as $user_score) {
                 $temp = $this->calScore($user_score->score, $count);
-				foreach ($avg as $k => $v) {
-					$avg[$k] = $v+$temp[$k];
-				}
+                foreach ($avg as $k => $v) {
+                    $avg[$k] = $v + $temp[$k];
+                }
             }
 
             foreach ($avg as $k => $v) {
@@ -171,5 +176,36 @@ class Exam extends Model
     public function classrooms()
     {
         return $this->belongsToMany('\App\Classroom');
+    }
+
+    public function teacher_classroom()
+    {
+        $result = [];
+        if ($this->user->role == 9) {
+            $classrooms = Classroom::now()->get();
+        } else {
+            $classrooms = $this->user->teacher_classroom();
+        }
+
+        foreach ($classrooms as $classroom) {
+            $status = 'none';
+            $classroom_exam = ClassroomExam::where('classroom_id', $classroom->id)->where('exam_id', $this->id)->first();
+            if ($classroom_exam) {
+                $status = 'checked';
+                $user_id_array = User::where('classroom_id', $classroom->id)->pluck('id')->toArray();
+                $user_exam = UserExam::whereIn('user_id', $user_id_array)->where('exam_id', $this->id)->first();
+                if ($user_exam) {
+                    $status = 'disabled';
+                }
+            }
+
+            $result[] = [
+                'classroom_id' => $classroom->id,
+                'name' => $classroom->fullName(),
+                'status' => $status,
+            ];
+        }
+
+        return $result;
     }
 }
