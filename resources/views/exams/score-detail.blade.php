@@ -12,7 +12,7 @@
 
     <div class="row main-padding">
         <div class="col-12">
-            <table class="table table-striped">
+            <table class="table table-striped bg-white">
                 <thead>
                 <tr>
                     <th scope="col">班級</th>
