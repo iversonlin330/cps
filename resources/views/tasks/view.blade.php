@@ -4,12 +4,16 @@
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
-            <div class="float-left">
-                <button class="btn btn-warning" onclick="create_modal()">新增任務</button>
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#orderModal">任務排序
-                </button>
-            </div>
-            <!--div class="float-right">
+            @if($task->unit->is_answer() || $task->unit->status == 1)
+
+            @else
+                <div class="float-left">
+                    <button class="btn btn-warning" onclick="create_modal()">新增任務</button>
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#orderModal">任務排序
+                    </button>
+                </div>
+            @endif
+        <!--div class="float-right">
                 <form class="form-inline float-right">
                     <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
@@ -40,26 +44,27 @@
                         <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"
                                class="btn btn-secondary btn-sm">編輯</a-->
                             @if($task->unit->is_answer() || $task->unit->status == 1)
-									<a href="{{ url('/tasks/create?disabled=1&task_id='.$task->id) }}" class="btn btn-secondary btn-sm">編輯</a>	
-							@else
-							<button class="btn btn-secondary btn-sm"
-                                    data-url="{{ url('tasks/'.$task->id) }}"
-                                    data-count="{{ implode(',',$task->content['count']) }}"
-                                    data-name="{{ $task->name }}"
-                                    data-order="{{ $task->order }}"
-                                    onclick="edit_modal(this)">編輯
-                            </button>
-							@endif
+                                <a href="{{ url('/tasks/create?disabled=1&task_id='.$task->id) }}"
+                                   class="btn btn-secondary btn-sm">編輯</a>
+                            @else
+                                <button class="btn btn-secondary btn-sm"
+                                        data-url="{{ url('tasks/'.$task->id) }}"
+                                        data-count="{{ implode(',',$task->content['count']) }}"
+                                        data-name="{{ $task->name }}"
+                                        data-order="{{ $task->order }}"
+                                        onclick="edit_modal(this)">編輯
+                                </button>
+                            @endif
                         </td>
                         <td>
-						@if($task->unit->is_answer() || $task->unit->status == 1)
-										
-						@else
-                            <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="任務"
-                                    data-url="{{ url('tasks/'.$task->id) }}">刪除
-                            </button>
-							@endif
+                            @if($task->unit->is_answer() || $task->unit->status == 1)
+
+                            @else
+                                <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                        data-target="#deleteModal" data-keyword="任務"
+                                        data-url="{{ url('tasks/'.$task->id) }}">刪除
+                                </button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -179,13 +184,14 @@
 
             $("form").attr('action', url);
             $("form").find("[name='name']").val(name);
-			
+
             if (count.length > 2) {
-                str_array = count.split(",").map(Number);;
+                str_array = count.split(",").map(Number);
+                ;
             } else {
                 str_array = [count];
             }
-			
+
             refresh();
             $('#createModal').modal('show');
         }

@@ -54,7 +54,9 @@
                         </td>
                         <td>
                             <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                            <a href="{{ url('exams/'.$exam->id.'/edit') }}" class="btn btn-secondary btn-sm">編輯</a>
+                            @if(!$exam->is_answer())
+                                <a href="{{ url('exams/'.$exam->id.'/edit') }}" class="btn btn-secondary btn-sm">編輯</a>
+                            @endif
                         </td>
                         <td>
                             @if(!$exam->is_answer())

@@ -197,7 +197,7 @@ class UnitController extends Controller
                 }
             }
         })
-		->where('status',1)
+            ->where('status', 1)
             ->get();
 
         $targets = config('map.target');
@@ -300,21 +300,34 @@ class UnitController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
+        $user = Auth::user();
 
-        $units = Unit::where(function ($query) use ($data) {
-            if ($data) {
-                foreach ($data as $k => $v) {
-                    if ($v) {
-                        $query->orWhere($k, 'like', '%' . $v . '%');
+        if ($user->role == 9) {
+            $units = Unit::where(function ($query) use ($data) {
+                if ($data) {
+                    foreach ($data as $k => $v) {
+                        if ($v) {
+                            $query->orWhere($k, 'like', '%' . $v . '%');
+                        }
                     }
                 }
-            }
-        })
-            ->get();
+            })
+                ->get();
+        } else {
+            $units = Unit::where(function ($query) use ($data) {
+                if ($data) {
+                    foreach ($data as $k => $v) {
+                        if ($v) {
+                            $query->orWhere($k, 'like', '%' . $v . '%');
+                        }
+                    }
+                }
+            })
+                ->where('status', 1)
+                ->get();
+        }
 
         $targets = config('map.target');
-
-        $user = Auth::user();
 
         return view('units.view', compact('user', 'units', 'targets'));
     }

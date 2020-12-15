@@ -191,11 +191,11 @@ class ExamController extends Controller
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
-		if($user->role == 9){
-			$exams = Exam::all();
-		}else{
-			$exams = Exam::where('user_id',$user->id)->get();
-		}
+        if ($user->role == 9) {
+            $exams = Exam::all();
+        } else {
+            $exams = Exam::where('user_id', $user->id)->get();
+        }
 
         if (!$data) {
             $data['cycle_id'] = Cycle::latest()->first()->id;
@@ -222,11 +222,24 @@ class ExamController extends Controller
         return Excel::download(new ScoreExport($data), $file_name . '.xlsx');
     }
 
-    public function scoreDetail()
+    public function scoreDetail($exam_id, $classroom_id)
     {
         //
         $targets = config('map.target');
-        return view('exams.score-detail', compact('targets'));
+
+        $user_ids = User::student()->where('classroom_id', $classroom_id)->get()->pluck('id')->toArray();
+
+        $exam = Exam::find($exam_id);
+        $count = $exam->score_count();
+        $user_exams = UserExam::whereIn('user_id', $user_ids)->where('exam_id', $exam_id)->get();
+        foreach ($user_exams as $user_exam) {
+            if (!$user_exam->user) {
+                continue;
+            }
+            $user_exam->score_array = $this->calScore($user_exam->score, $count);
+        }
+
+        return view('exams.score-detail', compact('targets', 'user_exams', 'exam'));
     }
 
     public function studentScore()

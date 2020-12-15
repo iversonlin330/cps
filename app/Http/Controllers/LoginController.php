@@ -10,20 +10,23 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-		$data = $request->all();
-		
-		$user = User::where('account', $data['account'])
-                ->where('password', $data['password'])
-                ->first();
-				
-		if (!$user) {
+        $data = $request->all();
+
+        $user = User::where('account', $data['account'])
+            ->where('password', $data['password'])
+            ->first();
+
+        if (!$user) {
             return back();
-        }else{
-			Auth::login($user);
-			return redirect('main');
-		}
-        
-		$data = $request->all();
+        } else {
+            if ($user->role == 4 && $user->is_verify == 0) {
+                return back();
+            }
+            Auth::login($user);
+            return redirect('main');
+        }
+
+        $data = $request->all();
         $user = User::where('account', $data['account'])->first();
 
         if (!$user) {
@@ -83,10 +86,10 @@ class LoginController extends Controller
     {
         return view("main");
     }
-	
-	public function logout()
+
+    public function logout()
     {
         Auth::logout();
-		return redirect('/');
+        return redirect('/');
     }
 }

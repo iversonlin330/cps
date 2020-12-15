@@ -23,7 +23,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                @for($i=0;$i<=5;$i++)
+                @foreach($user_exams as $user_exam)
+                    <tr>
+                        <td>{{ $user_exam->user->classroom->fullName() }}</td>
+                        <td>{{ $user_exam->user->seat_number }}</td>
+                        <td>{{ $user_exam->user->name }}</td>
+                        <td>{{ array_sum($user_exam->score_array) }}</td>
+                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                               data-my="{{ json_encode($user_exam->score_array) }}"
+                               data-total="{{ json_encode($exam->total_score()) }}"
+                               data-avg="{{ json_encode($exam->avg_class_score()) }}">檢視</a></td>
+                    </tr>
+                @endforeach
+                @for($i=0;$i<=0;$i++)
                     <tr>
                         <td>三年甲班</td>
                         <td>22</td>
@@ -41,11 +53,12 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="target_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">班各項指標分數</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">學生各項指標分數</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -64,9 +77,9 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
+                                <td id="my_{{$k}}">0</td>
+                                <td id="avg_{{$k}}">0</td>
+                                <td id="total_{{$k}}">0</td>
                             </tr>
                         @endforeach
                         </tbody>
