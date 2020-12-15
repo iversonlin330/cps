@@ -28,7 +28,7 @@ Route::get('/main', 'LoginController@main');
 
 Route::get('/exams/my', 'ExamController@my');
 Route::get('/exams/score', 'ExamController@score');
-Route::get('/exams/score-detail', 'ExamController@scoreDetail');
+Route::get('/exams/score-detail/{exam_id}/{classroom_id}', 'ExamController@scoreDetail');
 Route::get('/exams/start/{id}', 'ExamController@start');
 Route::post('/exams/start/{id}', 'ExamController@postStart');
 Route::get('/exams/result', 'ExamController@result');
@@ -68,7 +68,7 @@ Route::post('/users/contact-students-edit', 'UserController@postContactStudentsE
 Route::get('/users/teacher-edit', 'UserController@teacherEdit');
 //Route::post('/users/teacher-edit', 'UserController@postTeacherEdit');
 Route::post('/users/add-class', 'UserController@postAddClass');
-Route::post('/users/remove-class/{$classroom_id}', 'UserController@removeClass');
+Route::post('/users/remove-class/{classroom_id}', 'UserController@removeClass');
 
 Route::get("/classrooms/teacher-view", "ClassroomController@teacherView");
 Route::get("/classrooms/teacher-detail-view/{classroom_id}", "ClassroomController@teacherDetailView");

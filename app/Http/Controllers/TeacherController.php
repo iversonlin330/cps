@@ -31,11 +31,12 @@ class TeacherController extends Controller
                 }
             })
 			->where('is_verify',0)
+            ->orWhereNull('is_verify')
             ->get();
-		
+
         return view('teachers.verify', compact('citys','users'));
     }
-	
+
 	public function postVerify(Request $request)
     {
         $data = $request->all();

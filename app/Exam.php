@@ -195,7 +195,7 @@ class Exam extends Model
                 $user_id_array = User::where('classroom_id', $classroom->id)->pluck('id')->toArray();
                 $user_exam = UserExam::whereIn('user_id', $user_id_array)->where('exam_id', $this->id)->first();
                 if ($user_exam) {
-                    $status = 'disabled';
+                    $status = 'checked disabled';
                 }
             }
 

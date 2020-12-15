@@ -140,10 +140,11 @@ class TaskController extends Controller
         //
         $data = $request->all();
         $unit_id = $data['unit_id'];
+        $unit = Unit::find($unit_id);
         $tasks = Task::ordered()
             ->where("unit_id", $unit_id)
             ->get();
-        return view('tasks.view', compact('unit_id', 'tasks'));
+        return view('tasks.view', compact('unit', 'unit_id', 'tasks'));
     }
 
     /**
@@ -169,13 +170,13 @@ class TaskController extends Controller
                 $q_id++;
             }
         }
-		
-		$disabled = 0;
-		if(array_key_exists('disabled',$data)){
-			$disabled = $data['disabled'];
-		}
 
-        return view('tasks.create', compact('targets', 'scoreNum', 'task', 'map','disabled'));
+        $disabled = 0;
+        if (array_key_exists('disabled', $data)) {
+            $disabled = $data['disabled'];
+        }
+
+        return view('tasks.create', compact('targets', 'scoreNum', 'task', 'map', 'disabled'));
     }
 
     /**

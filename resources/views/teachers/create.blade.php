@@ -18,6 +18,7 @@
                             @endif
                             @csrf
                             <input name="role" type="text" value="4" hidden>
+                            <input name="is_verify" type="text" value="1" hidden>
                             <div class="form-group row">
                                 <label class="col-3 col-form-label">姓名</label>
                                 <div class="col-9">
@@ -109,7 +110,7 @@
         });
         $("[name='city_id']").trigger('change');
 
-            @if(isset($user))
+        @if(isset($user))
         var user = @json($user);
         for (const [key, value] of Object.entries(user)) {
             if (key == 'gender') {

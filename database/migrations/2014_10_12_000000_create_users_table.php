@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('teacherid')->nullable();//教師編號
             $table->integer('school_id')->nullable();
             $table->string('email')->nullable();
-            $table->integer('is_verify')->nullable();
+            $table->integer('is_verify')->nullable()->default(0);
             $table->text('tutor_classroom_id')->nullable();
             $table->text('subject_classroom_id')->nullable();
             //$table->timestamp('email_verified_at')->nullable();

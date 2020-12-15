@@ -4,7 +4,7 @@
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
-            @if($task->unit->is_answer() || $task->unit->status == 1)
+            @if($unit->is_answer() || $unit->status == 1)
 
             @else
                 <div class="float-left">
