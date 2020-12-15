@@ -31,7 +31,8 @@ class ExamController extends Controller
             $data['classroom_id'] = [];
         }
 
-        ClassroomExam::where('exam_id', $exam_id)->delete();
+        $classroom_id_array = Classroom::now()->get()->pluck('id')->toArray();
+        ClassroomExam::where('exam_id', $exam_id)->whereIn('classroom_id', $classroom_id_array)->delete();
         foreach ($data['classroom_id'] as $classroom_id) {
             $model = new ClassroomExam;
             $model->fill([
