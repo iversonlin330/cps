@@ -32,7 +32,7 @@
                         <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
                                data-my="{{ json_encode($user_exam->score_array) }}"
                                data-total="{{ json_encode($exam->total_score()) }}"
-                               data-avg="{{ json_encode($exam->avg_class_score()) }}">檢視</a></td>
+                               data-avg="{{ json_encode($exam->avg_class_score($user_exam->user->classroom->id)) }}">檢視</a></td>
                     </tr>
                 @endforeach
                 @for($i=0;$i<=0;$i++)
