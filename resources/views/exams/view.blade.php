@@ -8,7 +8,9 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-left">
+			@if($text == "我的考卷")
                 <a type="button" class="btn btn-warning" href="{{ url('exams/create') }}">新增考卷</a>
+			@endif
             </div>
             <div class="float-right">
                 <form class="form-inline float-right">

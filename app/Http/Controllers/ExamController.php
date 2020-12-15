@@ -200,7 +200,7 @@ class ExamController extends Controller
         if ($user->role == 9) {
             $exams = Exam::all();
         } else {
-            $exams = Exam::where('user_id', $user->id)->orWhereIn('classroom_id', $user->tutor_classroom_id)->get();
+            $exams = Exam::where('user_id', $user->id)->get();
         }
 
         if (!$data) {
