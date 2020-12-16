@@ -353,6 +353,7 @@ class UnitController extends Controller
         //
         $data = $request->except('_token');
         $data['user_id'] = Auth::user()->id;
+        $data['status'] = 0;
         $model = new Unit;
         $model->fill($data);
         $model->save();
