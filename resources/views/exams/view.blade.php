@@ -92,9 +92,28 @@
                 <form action="{{ url('exams/assign') }}" method="post">
                     @csrf
                     <div class="modal-body">
+					@if($user->role == 9)
+					<div class="row">
+						<div class="col-6">
+							<select name="city_id" class="form-control mr-sm-2">
+								@foreach($citys as $city => $school)
+									<option value="{{ $city }}">{{ $city }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-6">
+							<select name="school_id" class="form-control mr-sm-2">
+								<option value="">學校</option>
+							</select>
+						</div>
+					</div>
+					@endif
                         <table class="table">
                             <thead class="thead-r">
                             <tr>
+							@if($user->role == 9)
+								<th scope="col">學校</th>
+							@endif
                                 <th scope="col">班級</th>
                                 <th scope="col">選取</th>
                             </tr>
@@ -174,13 +193,45 @@
             $("#assignModal tbody").empty();
             let html = '';
             for (let x in value) {
-                html = html + "<tr>";
+                html = html + "<tr data-id='"+value[x]['school_id']+"'>";
+				@if($user->role == 9)
+				html = html + "<td>" + value[x]['school_name'] + "</td>";
+				@endif
                 html = html + "<td>" + value[x]['name'] + "</td>";
                 html = html + "<td><input type='checkbox'' name='classroom_id[]' value=" + value[x]['classroom_id'] + " " + value[x]['status'] + "></td>";
                 html = html + "</td>";
                 html = html + "</tr>";
             }
             $("#assignModal tbody").html(html);
+			@if($user->role == 9)
+			$("[name='city_id']").trigger('change');
+			$("[name='school_id']").trigger('change');
+			@endif
         });
+		
+		@if($user->role == 9)
+		var citys = @json($citys);
+        $("[name='city_id']").change(function () {
+            var city_val = $(this).val();
+            $("[name='school_id']").empty();
+            var html = '';
+            for (x in citys[city_val]) {
+                html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
+            }
+            $("[name='school_id']").append(html)
+			$("[name='school_id']").trigger('change');
+        });
+		
+		$("[name='school_id']").change(function () {
+			var school_val = $(this).val();
+			console.log(school_val);
+			$("#assignModal tbody tr").hide();
+			$("#assignModal tbody tr[data-id='"+school_val+"']").show();
+        });
+		
+		$("[name='city_id']").trigger('change');
+		$("[name='school_id']").trigger('change');
+		@endif
+		
     </script>
 @endsection

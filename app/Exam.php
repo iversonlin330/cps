@@ -206,6 +206,8 @@ class Exam extends Model
             }
 
             $result[] = [
+				'school_name' => $classroom->school->fullName(),
+				'school_id' => $classroom->school_id,
                 'classroom_id' => $classroom->id,
                 'name' => $classroom->fullName(),
                 'status' => $status,

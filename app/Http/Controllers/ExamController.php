@@ -272,8 +272,10 @@ class ExamController extends Controller
         } else {
             $classrooms = $user->teacher_classroom();
         }
+		
+		$citys = $this->getSchool();
 
-        return view('exams.view', compact('targets', 'exams', 'classrooms'));
+        return view('exams.view', compact('targets', 'exams', 'classrooms','citys','user'));
     }
 
     public function studentView()
@@ -308,8 +310,9 @@ class ExamController extends Controller
 
         //$classrooms = $user->teacher_classroom();
         $classrooms = [];
+		$citys = $this->getSchool();
 
-        return view('exams.view', compact('exams', 'targets', 'classrooms'));
+        return view('exams.view', compact('exams', 'targets', 'classrooms','citys','user'));
     }
 
     /**
