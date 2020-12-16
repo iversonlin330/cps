@@ -23,7 +23,7 @@ class Unit extends Model
             return false;
         }
     }
-	
+
     public function is_answer()
     {
         $count = UserUnit::where('unit_id', $this->id)->count();
@@ -43,6 +43,9 @@ class Unit extends Model
 		$count = $this->getTargetInitial();
 		$tasks = $this->tasks;
         foreach ($tasks as $task) {
+            if(!array_key_exists('target',$task->content)){
+                continue;
+            }
             $count_list = array_count_values($task->content['target']);
             foreach ($count_list as $k => $v) {
                 $count[$k] = $count[$k] + $v;

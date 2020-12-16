@@ -46,6 +46,9 @@ class Exam extends Model
         foreach ($units as $unit) {
             $tasks = $unit->tasks;
             foreach ($tasks as $task) {
+                if(!array_key_exists('target',$task->content)){
+                    continue;
+                }
                 $count_list = array_count_values($task->content['target']);
                 foreach ($count_list as $k => $v) {
                     $count[$k] = $count[$k] + $v;
