@@ -69,6 +69,9 @@ class Exam extends Model
             foreach ($tasks as $task) {
                 $q_id = 0;
                 foreach ($task->content['count'] as $index => $q_count) {
+                    if(!array_key_exists('target',$task->content)){
+                        continue;
+                    }
                     $target = $task->content['target'][$index];
                     $max_temp = 0;
                     for ($sub = 0; $sub < $q_count; $sub++) {
