@@ -74,13 +74,13 @@ class User extends Authenticatable
 
     public function subject_classroom()
     {
-        if(!$this->subject_classroom_id){
+        if (!$this->subject_classroom_id) {
             $this->subject_classroom_id = [];
         }
         return Classroom::now()->whereIn('id', $this->subject_classroom_id)->get();
     }
 
-	public function tutor_classroom()
+    public function tutor_classroom()
     {
         //if(!$this->tutor_classroom_id){
         //    $this->tutor_classroom_id = [];
@@ -88,13 +88,13 @@ class User extends Authenticatable
         return Classroom::now()->where('id', $this->tutor_classroom_id)->get();
     }
 
-	public function teacher_classroom()
+    public function teacher_classroom()
     {
-        //if(!$this->subject_classroom_id){
-        //    $this->subject_classroom_id = [];
-        //}
+        if (!$this->subject_classroom_id) {
+            $this->subject_classroom_id = [];
+        }
         return Classroom::now()->whereIn('id', $this->subject_classroom_id)
-			->orWhere('id',$this->tutor_classroom_id)->get();
+            ->orWhere('id', $this->tutor_classroom_id)->get();
     }
 
     public function classrooms()
