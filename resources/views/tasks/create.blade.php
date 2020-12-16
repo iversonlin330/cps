@@ -210,13 +210,13 @@
         @if(isset($task->content['question']))
         let content = @json($task->content);
         for (let x in content) {
-			if(x == "pic"){
-				continue;
-			}
+            if (x == "pic") {
+                continue;
+            }
             content[x].forEach(function (value, i) {
-				if(!value){
-					return;
-				}
+                if (!value) {
+                    return;
+                }
                 if (Array.isArray(value)) {
                     for (let y in value) {
                         $("[name='" + x + "[" + i + "][" + y + "]']").val(value[y]);
@@ -230,11 +230,13 @@
         }
         $(".is_item_select").trigger('change');
         @endif
-		@if(isset($disabled))
-		$("[name^='is_item']").prop('disabled',true);
-		$("[name^='target']").prop('disabled',true);
-		$("[name^='score']").prop('disabled',true);
-		$("[name^='goto']").prop('disabled',true);
-		@endif
+        @if(isset($disabled))
+        @if($disabled == 1)
+        $("[name^='is_item']").prop('disabled', true);
+        $("[name^='target']").prop('disabled', true);
+        $("[name^='score']").prop('disabled', true);
+        $("[name^='goto']").prop('disabled', true);
+        @endif
+        @endif
     </script>
 @endsection
