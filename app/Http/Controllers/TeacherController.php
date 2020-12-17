@@ -15,8 +15,8 @@ class TeacherController extends Controller
     public function verify(Request $request)
     {
         //
-		$citys = $this->getSchool();
-		$data = $request->all();
+        $citys = $this->getSchool();
+        $data = $request->all();
 
         unset($data['city_id']);
 
@@ -30,19 +30,23 @@ class TeacherController extends Controller
                     }
                 }
             })
-			->where('is_verify',0)
+            ->where('is_verify', 0)
             ->orWhereNull('is_verify')
             ->get();
 
-        return view('teachers.verify', compact('citys','users'));
+        return view('teachers.verify', compact('citys', 'users'));
     }
 
-	public function postVerify(Request $request)
+    public function postVerify(Request $request)
     {
         $data = $request->all();
 
         foreach ($data['teacher_array'] as $k => $v) {
-            User::where('id', $k)->update($v);
+            if ($v['is_verify'] == 9) {
+                User::where('id', $k)->delete();
+            } else {
+                User::where('id', $k)->update($v);
+            }
         }
 
         return back();

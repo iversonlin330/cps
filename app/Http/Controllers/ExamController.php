@@ -169,6 +169,9 @@ class ExamController extends Controller
             }
         }
 
+        $avg = $exam->avg_score();
+        $avg_score = array_sum($avg);
+
 
         return view('exams.result', compact('exam', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score'));
     }
@@ -197,10 +200,12 @@ class ExamController extends Controller
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
+        $classroom = [];
         if ($user->role == 9) {
             $exams = Exam::all();
         } else {
             $exams = Exam::where('user_id', $user->id)->get();
+            $classroom = $user->tutor_classroom();
         }
 
         if (!$data) {
@@ -213,7 +218,7 @@ class ExamController extends Controller
 
         $cycles = Cycle::orderBy('id', 'desc')->get();
 
-        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data'));
+        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data', 'classroom'));
     }
 
     public function scoreExport($exam_id, $classroom_id)
@@ -272,10 +277,10 @@ class ExamController extends Controller
         } else {
             $classrooms = $user->teacher_classroom();
         }
-		
-		$citys = $this->getSchool();
 
-        return view('exams.view', compact('targets', 'exams', 'classrooms','citys','user'));
+        $citys = $this->getSchool();
+
+        return view('exams.view', compact('targets', 'exams', 'classrooms', 'citys', 'user'));
     }
 
     public function studentView()
@@ -310,9 +315,9 @@ class ExamController extends Controller
 
         //$classrooms = $user->teacher_classroom();
         $classrooms = [];
-		$citys = $this->getSchool();
+        $citys = $this->getSchool();
 
-        return view('exams.view', compact('exams', 'targets', 'classrooms','citys','user'));
+        return view('exams.view', compact('exams', 'targets', 'classrooms', 'citys', 'user'));
     }
 
     /**
@@ -351,11 +356,14 @@ class ExamController extends Controller
         ]);
         $model->save();
 
+        return redirect('exams/my');
+        /*
         if ($user->role == 9) {
             return redirect('exams');
         } else {
             return redirect('exams/my');
         }
+        */
     }
 
     /**

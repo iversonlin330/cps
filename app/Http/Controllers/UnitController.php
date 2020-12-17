@@ -173,6 +173,8 @@ class UnitController extends Controller
             }
         }
 
+        $avg = $unit->avg_score();
+        $avg_score = array_sum($avg);
 
         return view('units.result', compact('unit', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score'));
     }

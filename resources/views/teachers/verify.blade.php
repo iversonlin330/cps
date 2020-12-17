@@ -51,8 +51,9 @@
                             <td>{{ $user->teacherid }}</td>
                             <td>
                                 <select name="teacher_array[{{$user->id}}][is_verify]" class="form-control-sm">
-                                    <option value="0" {{ ($user->is_verify == 0)? 'selected' : '' }}>待審核</option>
+                                    <option value="0" {{ ($user->is_verify == 0)? 'selected' : '' }}>未審核</option>
                                     <option value="1" {{ ($user->is_verify == 1)? 'selected' : '' }}>通過</option>
+                                    <option value="9" {{ ($user->is_verify == 9)? 'selected' : '' }}>不通過</option>
                                 </select>
                             </td>
                         </tr>

@@ -41,7 +41,7 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label">姓名</label>
                                 <div class="col-9">
-                                    <input name="name" type="text" class="form-control">
+                                    <input name="name" type="text" class="form-control" required>
                                 </div>
                             </div>
 
@@ -66,7 +66,7 @@
                                 <div class="col-9">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio1"
-                                               value="1">
+                                               value="1" required>
                                         <label class="form-check-label" for="inlineRadio1">男</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -80,28 +80,28 @@
                             <div class="form-group row">
                                 <label class="col-3 col-form-label">帳號</label>
                                 <div class="col-9">
-                                    <input name="account" type="text" class="form-control">
+                                    <input name="account" type="text" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-3 col-form-label">密碼</label>
                                 <div class="col-9">
-                                    <input name="password" type="password" class="form-control">
+                                    <input name="password" type="password" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-3 col-form-label">電子信箱</label>
                                 <div class="col-9">
-                                    <input name="email" type="email" class="form-control">
+                                    <input name="email" type="email" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-3 col-form-label">教師編號</label>
                                 <div class="col-9">
-                                    <input name="teacherid" type="text" class="form-control">
+                                    <input name="teacherid" type="text" class="form-control" required>
                                 </div>
                             </div>
 
@@ -143,4 +143,4 @@
 
     </body>
 </html>
-    
+

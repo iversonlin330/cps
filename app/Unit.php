@@ -11,12 +11,12 @@ class Unit extends Model
 {
     use MyTraits;
 
-	protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
-	public function is_my_answer()
+    public function is_my_answer()
     {
         $user = Auth::user();
-		$count = UserUnit::where('unit_id', $this->id)->where('user_id',$user->id)->count();
+        $count = UserUnit::where('unit_id', $this->id)->where('user_id', $user->id)->count();
         if ($count > 0) {
             return true;
         } else {
@@ -27,9 +27,16 @@ class Unit extends Model
     public function is_answer()
     {
         $count = UserUnit::where('unit_id', $this->id)->count();
+
         if ($count > 0) {
             return true;
         } else {
+            $exams = Exam::all();
+            foreach ($exams as $exam) {
+                if (array_key_exists($this->id, $exam->unit_id)) {
+                    return true;
+                }
+            }
             return false;
         }
     }
@@ -39,11 +46,12 @@ class Unit extends Model
         return $this->hasMany('\App\Task')->orderBy('order');
     }
 
-	public function score_count(){
-		$count = $this->getTargetInitial();
-		$tasks = $this->tasks;
+    public function score_count()
+    {
+        $count = $this->getTargetInitial();
+        $tasks = $this->tasks;
         foreach ($tasks as $task) {
-            if(!array_key_exists('target',$task->content)){
+            if (!array_key_exists('target', $task->content)) {
                 continue;
             }
             $count_list = array_count_values($task->content['target']);
@@ -52,8 +60,8 @@ class Unit extends Model
             }
         }
 
-		return $count;
-	}
+        return $count;
+    }
 
     public function my_score()
     {
@@ -82,12 +90,12 @@ class Unit extends Model
     public function avg_score()
     {
         $students = $this->getStudentNow();
-		$avg = $this->getTargetInitial();
+        $avg = $this->getTargetInitial();
         $count = $this->score_count();
 
-		//if(!$students){
-		//	return 0;
-		//}
+        //if(!$students){
+        //	return 0;
+        //}
 
         $user_scores = UserUnit::where('unit_id', $this->id)
             ->whereIn('user_id', $students->pluck('id')->toArray())
@@ -104,19 +112,19 @@ class Unit extends Model
             }
         }
 
-		return $avg;
+        return $avg;
     }
 
     public function total_score()
     {
         $total = $this->getTargetInitial();
-		$count = $this->score_count();
-		$tasks = $this->tasks;
+        $count = $this->score_count();
+        $tasks = $this->tasks;
 
         foreach ($tasks as $task) {
             $q_id = 0;
             foreach ($task->content['count'] as $index => $q_count) {
-                if(!array_key_exists('target',$task->content)){
+                if (!array_key_exists('target', $task->content)) {
                     continue;
                 }
                 $target = $task->content['target'][$index];
@@ -139,6 +147,6 @@ class Unit extends Model
             }
         }
 
-		return $total;
+        return $total;
     }
 }
