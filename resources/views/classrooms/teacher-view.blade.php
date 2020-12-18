@@ -8,7 +8,7 @@
                 <a class="btn btn-warning" data-toggle="modal" data-target="#addModal">新增班級</a>
             </div>
             <div class="float-right">
-                <form action="{{ url('classrooms') }}" class="form-inline float-right">
+                <form action="{{ url('classrooms/teacher-view') }}" class="form-inline float-right">
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
                            aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
@@ -42,32 +42,42 @@
                     </td>
                 </tr-->
                 @foreach($classroom_selects as $classroom)
-                    <tr>
-                        <td>{{ $classroom->fullName() }}</td>
-                        <td>{{ count($classroom->students) }}</td>
-                        <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
-                        <td><a class="exam" href="#" data-toggle="modal" data-target="#examModal"
-                               data-classroom-name="{{ $classroom->fullName() }}"
-                               data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a></td>
-                        <td>
-                            <button type="button" class="btn btn-warning btn-sm post" data-toggle="modal"
-                                    data-target="#postModal" data-keyword="班級"
-                                    data-url="{{ url('users/remove-class/'.$classroom->id) }}">刪除
-                            </button>
-                        </td>
-                    </tr>
+                    @if($data)
+                        @if(strpos($data['name'], $classroom->fullName()) !== false)
+                            <tr>
+                                <td>{{ $classroom->fullName() }}</td>
+                                <td>{{ count($classroom->students) }}</td>
+                                <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
+                                <td><a class="exam" href="#" data-toggle="modal" data-target="#examModal"
+                                       data-classroom-name="{{ $classroom->fullName() }}"
+                                       data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm post" data-toggle="modal"
+                                            data-target="#postModal" data-keyword="班級"
+                                            data-url="{{ url('users/remove-class/'.$classroom->id) }}">刪除
+                                    </button>
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
                 @endforeach
-				@foreach($classroom_tutors as $classroom)
-                    <tr>
-                        <td>{{ $classroom->fullName() }}</td>
-                        <td>{{ count($classroom->students) }}</td>
-                        <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
-                        <td><a class="exam" href="#" data-toggle="modal" data-target="#examModal"
-                               data-classroom-name="{{ $classroom->fullName() }}"
-                               data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a></td>
-                        <td>
-                        </td>
-                    </tr>
+                @foreach($classroom_tutors as $classroom)
+                    @if($data)
+                        @if(strpos($data['name'], $classroom->fullName()))
+                            <tr>
+                                <td>{{ $classroom->fullName() }}</td>
+                                <td>{{ count($classroom->students) }}</td>
+                                <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
+                                <td><a class="exam" href="#" data-toggle="modal" data-target="#examModal"
+                                       data-classroom-name="{{ $classroom->fullName() }}"
+                                       data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
                 @endforeach
                 </tbody>
             </table>

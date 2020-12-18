@@ -33,24 +33,29 @@
                 </thead>
                 <tbody>
                 @foreach($classrooms as $classroom)
-                    <tr>
-                        <td>{{ $classroom->fullName() }}</td>
-                        <td>{{ $classroom->students->count() }}</td>
-                        <td>
-                            <a href="{{ url('classrooms/' . $classroom->id . '/edit') }}"
-                               class="btn btn-secondary btn-sm">編輯</a>
-                        </td>
-                        <td>
-                            <a href="{{ url('users/contact-students-edit/'.$classroom->id) }}" class="btn btn-secondary btn-sm">編輯</a>
-                        </td>
-                        <td>{{ $classroom->teacher }}</td>
-                        <td>
-                            <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
-                                    data-target="#deleteModal" data-keyword="班級"
-                                    data-url="{{ url('classrooms/'.$classroom->id) }}">刪除
-                            </button>
-                        </td>
-                    </tr>
+                    @if($data)
+                        @if(strpos($data['name'], $classroom->fullName()))
+                            <tr>
+                                <td>{{ $classroom->fullName() }}</td>
+                                <td>{{ $classroom->students->count() }}</td>
+                                <td>
+                                    <a href="{{ url('classrooms/' . $classroom->id . '/edit') }}"
+                                       class="btn btn-secondary btn-sm">編輯</a>
+                                </td>
+                                <td>
+                                    <a href="{{ url('users/contact-students-edit/'.$classroom->id) }}"
+                                       class="btn btn-secondary btn-sm">編輯</a>
+                                </td>
+                                <td>{{ $classroom->teacher }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
+                                            data-target="#deleteModal" data-keyword="班級"
+                                            data-url="{{ url('classrooms/'.$classroom->id) }}">刪除
+                                    </button>
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
                 @endforeach
                 </tbody>
             </table>

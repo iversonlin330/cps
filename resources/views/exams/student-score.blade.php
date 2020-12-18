@@ -5,7 +5,7 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-right">
-                <form class="form-inline float-right">
+                <form action="{{ url('exams/student-score') }}" class="form-inline float-right">
                     <!--select class="form-control mr-sm-2">
                         <option>109/01/01~10912/31</option>
                     </select>
@@ -15,7 +15,8 @@
                     <select class="form-control mr-sm-2">
                         <option>學校</option>
                     </select-->
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>
@@ -37,17 +38,21 @@
                 </thead>
                 <tbody>
                 @foreach($exams as $exam)
-                    <tr>
-                        <td>{{ $exam->name }}</td>
-                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                        <td>{{ array_sum($exam->my_score()) }}</td>
-                        <td>{{ array_sum($exam->avg_score()) }}</td>
-                        <td>{{ array_sum($exam->total_score()) }}</td>
-                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                               data-my="{{ json_encode($exam->my_score()) }}"
-                               data-total="{{ json_encode($exam->total_score()) }}"
-                               data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td-->
-                    </tr>
+                    @if($data)
+                        @if(strpos($data['name'], $classroom->fullName()) !== false)
+                            <tr>
+                                <td>{{ $exam->name }}</td>
+                                <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                                <td>{{ array_sum($exam->my_score()) }}</td>
+                                <td>{{ array_sum($exam->avg_score()) }}</td>
+                                <td>{{ array_sum($exam->total_score()) }}</td>
+                                <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                                       data-my="{{ json_encode($exam->my_score()) }}"
+                                       data-total="{{ json_encode($exam->total_score()) }}"
+                                       data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                            </tr>
+                        @endif
+                    @endif
                 @endforeach
                 </tbody>
             </table>

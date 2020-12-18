@@ -13,19 +13,20 @@ class ClassroomController extends Controller
 {
     use MyTraits;
 
-    public function teacherView()
+    public function teacherView(Request $request)
     {
+        $data = $request->all();
         $user = Auth::user();
         $classroom_selects = $user->subject_classroom();
         $classrooms = Classroom::where('school_id', $user->school_id)
             ->whereNotIn('id', $user->subject_classroom_id)
             ->get();
-			
+
 		$classroom_tutors = $user->tutor_classroom();
 
-        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user','classroom_tutors'));
+        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user','classroom_tutors','data'));
     }
-	
+
 	public function teacherDetailView($classroom_id)
     {
         $classroom = Classroom::find($classroom_id);
@@ -38,14 +39,14 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = $request->all();
         $user = Auth::user();
         $cycle = Cycle::latest()->first();
         $classrooms = Classroom::where('school_id', $user->school_id)->where('cycle_id', $cycle->id)->get();
 
-        return view('classrooms.view', compact('classrooms'));
+        return view('classrooms.view', compact('classrooms','data'));
     }
 
     /**

@@ -253,9 +253,9 @@ class ExamController extends Controller
         return view('exams.score-detail', compact('targets', 'user_exams', 'exam'));
     }
 
-    public function studentScore()
+    public function studentScore(Request $request)
     {
-        //
+        $data = $request->all();
         $user = Auth::user();
         $targets = config('map.target');
 
@@ -263,11 +263,12 @@ class ExamController extends Controller
 
         $exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
-        return view('exams.student-score', compact('targets', 'exams'));
+        return view('exams.student-score', compact('targets', 'exams', 'data'));
     }
 
-    public function my()
+    public function my(Request $request)
     {
+        $data = $request->all();
         $user = Auth::user();
         $targets = config('map.target');
 
@@ -280,12 +281,12 @@ class ExamController extends Controller
 
         $citys = $this->getSchool();
 
-        return view('exams.view', compact('targets', 'exams', 'classrooms', 'citys', 'user'));
+        return view('exams.view', compact('targets', 'exams', 'classrooms', 'citys', 'user', 'data'));
     }
 
-    public function studentView()
+    public function studentView(Request $request)
     {
-        //
+        $data = $request->all();
         $user = Auth::user();
         $targets = config('map.target');
 
@@ -293,7 +294,7 @@ class ExamController extends Controller
 
         $exams = $user->classroom->exams->whereNotIn('id', $exam_id_array)->all();
 
-        return view('exams.student-view', compact('exams', 'targets'));
+        return view('exams.student-view', compact('exams', 'targets', 'data'));
     }
 
     /**
@@ -301,9 +302,10 @@ class ExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $data = $request->all();
         $user = Auth::user();
         $targets = config('map.target');
 
@@ -317,7 +319,7 @@ class ExamController extends Controller
         $classrooms = [];
         $citys = $this->getSchool();
 
-        return view('exams.view', compact('exams', 'targets', 'classrooms', 'citys', 'user'));
+        return view('exams.view', compact('exams', 'targets', 'classrooms', 'citys', 'user', 'data'));
     }
 
     /**

@@ -5,12 +5,11 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-right">
-                <form class="form-inline float-right">
+                <form action="{{ url('exams/score') }}" class="form-inline float-right">
                     <select name="cycle_id" class="form-control mr-sm-2">
                         @foreach($cycles as $cycle)
                             <option value="{{ $cycle->id }}">{{ $cycle->getRange() }}</option>
-                    @endforeach
-                    <!--option>109/01/01~109/12/31</option-->
+                        @endforeach
                     </select>
                     <select name="city_id" class="form-control mr-sm-2">
                         @foreach($citys as $city => $school)
@@ -20,7 +19,8 @@
                     <select name="school_id" class="form-control mr-sm-2">
                         <option value="">學校</option>
                     </select>
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>
@@ -61,46 +61,62 @@
                 @endfor
                 @foreach($exams as $exam)
                     @foreach($exam->classrooms->where('cycle_id',$data['cycle_id']) as $classroom)
-                        <tr>
-                            <td>{{ $exam->name }}</td>
-                            <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                            <td>{{ $classroom->school->fullName() }}</td>
-                            <td>{{ $classroom->fullName() }}</td>
-                            <td>{{ array_sum($exam->avg_class_score($classroom->id)) }}</td>
-                        <!--td>{{ array_sum($exam->avg_score()) }}</td-->
-                            <td>{{ array_sum($exam->total_score()) }}</td>
-                            <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                                   data-my="{{ json_encode($exam->avg_class_score($classroom->id)) }}"
-                                   data-total="{{ json_encode($exam->total_score()) }}"
-                                   data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
-                            <td><a href="{{ url('exams/score-detail/'.$exam->id.'/'.$classroom->id) }}">檢視</a></td>
-                            <td>
-                                <a href="{{ url('exams/score-export/'.$exam->id.'/'.$classroom->id) }}"
-                                   class="btn btn-warning btn-sm">匯出</a>
-                            </td>
-                        </tr>
+                        @if(array_key_exists('school_id',$data))
+                            @if($data['school_id'] == $classroom->school)
+                                @if(strpos($data['name'], $exam->name))
+                                    <tr>
+                                        <td>{{ $exam->name }}</td>
+                                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                                        <td>{{ $classroom->school->fullName() }}</td>
+                                        <td>{{ $classroom->fullName() }}</td>
+                                        <td>{{ array_sum($exam->avg_class_score($classroom->id)) }}</td>
+                                    <!--td>{{ array_sum($exam->avg_score()) }}</td-->
+                                        <td>{{ array_sum($exam->total_score()) }}</td>
+                                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                                               data-my="{{ json_encode($exam->avg_class_score($classroom->id)) }}"
+                                               data-total="{{ json_encode($exam->total_score()) }}"
+                                               data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                                        <td>
+                                            <a href="{{ url('exams/score-detail/'.$exam->id.'/'.$classroom->id) }}">檢視</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('exams/score-export/'.$exam->id.'/'.$classroom->id) }}"
+                                               class="btn btn-warning btn-sm">匯出</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endif
+                        @endif
                     @endforeach
                 @endforeach
                 @if($classroom)
                     @foreach($classroom->exams as $exam)
-                        <tr>
-                            <td>{{ $exam->name }}</td>
-                            <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                            <td>{{ $classroom->school->fullName() }}</td>
-                            <td>{{ $classroom->fullName() }}</td>
-                            <td>{{ array_sum($exam->avg_class_score($classroom->id)) }}</td>
-                        <!--td>{{ array_sum($exam->avg_score()) }}</td-->
-                            <td>{{ array_sum($exam->total_score()) }}</td>
-                            <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                                   data-my="{{ json_encode($exam->avg_class_score($classroom->id)) }}"
-                                   data-total="{{ json_encode($exam->total_score()) }}"
-                                   data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
-                            <td><a href="{{ url('exams/score-detail/'.$exam->id.'/'.$classroom->id) }}">檢視</a></td>
-                            <td>
-                                <a href="{{ url('exams/score-export/'.$exam->id.'/'.$classroom->id) }}"
-                                   class="btn btn-warning btn-sm">匯出</a>
-                            </td>
-                        </tr>
+                        @if(array_key_exists('school_id',$data))
+                            @if($data['school_id'] == $classroom->school)
+                                @if(strpos($data['name'], $exam->name))
+                                    <tr>
+                                        <td>{{ $exam->name }}</td>
+                                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                                        <td>{{ $classroom->school->fullName() }}</td>
+                                        <td>{{ $classroom->fullName() }}</td>
+                                        <td>{{ array_sum($exam->avg_class_score($classroom->id)) }}</td>
+                                    <!--td>{{ array_sum($exam->avg_score()) }}</td-->
+                                        <td>{{ array_sum($exam->total_score()) }}</td>
+                                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                                               data-my="{{ json_encode($exam->avg_class_score($classroom->id)) }}"
+                                               data-total="{{ json_encode($exam->total_score()) }}"
+                                               data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                                        <td>
+                                            <a href="{{ url('exams/score-detail/'.$exam->id.'/'.$classroom->id) }}">檢視</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('exams/score-export/'.$exam->id.'/'.$classroom->id) }}"
+                                               class="btn btn-warning btn-sm">匯出</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endif
+                        @endif
                     @endforeach
                 @endif
                 </tbody>

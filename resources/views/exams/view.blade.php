@@ -8,13 +8,14 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-left">
-			@if($text == "我的考卷")
-                <a type="button" class="btn btn-warning" href="{{ url('exams/create') }}">新增考卷</a>
-			@endif
+                @if($text == "我的考卷")
+                    <a type="button" class="btn btn-warning" href="{{ url('exams/create') }}">新增考卷</a>
+                @endif
             </div>
             <div class="float-right">
-                <form class="form-inline float-right">
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                <form action="{{ url()->current() }}" class="form-inline float-right">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>
@@ -39,37 +40,43 @@
                 </thead>
                 <tbody>
                 @foreach($exams as $exam)
-                    <tr>
-                        <td>{{ $exam->name }}</td>
-                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                        <td>{{ array_sum($exam->avg_score()) }}</td>
-                        <td>{{ array_sum($exam->total_score()) }}</td>
-                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                               data-total="{{ json_encode($exam->total_score()) }}"
-                               data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
-                        <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a></td>
-                        <td>
-                            <button type="button" class="btn btn-secondary btn-sm assign" data-toggle="modal"
-                                    data-target="#assignModal" data-exam-id="{{ $exam->id }}"
-                                    data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}"
-                                    data-value="{{ json_encode($exam->teacher_classroom()) }}">指派考卷
-                            </button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                            @if(!$exam->is_answer())
-                                <a href="{{ url('exams/'.$exam->id.'/edit') }}" class="btn btn-secondary btn-sm">編輯</a>
-                            @endif
-                        </td>
-                        <td>
-                            @if(!$exam->is_answer())
-                                <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                        data-target="#deleteModal" data-keyword="考卷"
-                                        data-url="{{ url('exams/'.$exam->id) }}">刪除
-                                </button>
-                            @endif
-                        </td>
-                    </tr>
+                    @if($data)
+                        @if(strpos($data['name'], $classroom->fullName()) !== false)
+                            <tr>
+                                <td>{{ $exam->name }}</td>
+                                <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                                <td>{{ array_sum($exam->avg_score()) }}</td>
+                                <td>{{ array_sum($exam->total_score()) }}</td>
+                                <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                                       data-total="{{ json_encode($exam->total_score()) }}"
+                                       data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                                <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn-sm assign" data-toggle="modal"
+                                            data-target="#assignModal" data-exam-id="{{ $exam->id }}"
+                                            data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}"
+                                            data-value="{{ json_encode($exam->teacher_classroom()) }}">指派考卷
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn-sm">複製</button>
+                                    @if(!$exam->is_answer())
+                                        <a href="{{ url('exams/'.$exam->id.'/edit') }}"
+                                           class="btn btn-secondary btn-sm">編輯</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!$exam->is_answer())
+                                        <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                                data-target="#deleteModal" data-keyword="考卷"
+                                                data-url="{{ url('exams/'.$exam->id) }}">刪除
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
                 @endforeach
                 </tbody>
             </table>
@@ -92,28 +99,28 @@
                 <form action="{{ url('exams/assign') }}" method="post">
                     @csrf
                     <div class="modal-body">
-					@if($user->role == 9)
-					<div class="row">
-						<div class="col-6">
-							<select name="city_id" class="form-control mr-sm-2">
-								@foreach($citys as $city => $school)
-									<option value="{{ $city }}">{{ $city }}</option>
-								@endforeach
-							</select>
-						</div>
-						<div class="col-6">
-							<select name="school_id" class="form-control mr-sm-2">
-								<option value="">學校</option>
-							</select>
-						</div>
-					</div>
-					@endif
+                        @if($user->role == 9)
+                            <div class="row">
+                                <div class="col-6">
+                                    <select name="city_id" class="form-control mr-sm-2">
+                                        @foreach($citys as $city => $school)
+                                            <option value="{{ $city }}">{{ $city }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select name="school_id" class="form-control mr-sm-2">
+                                        <option value="">學校</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
                         <table class="table">
                             <thead class="thead-r">
                             <tr>
-							@if($user->role == 9)
-								<th scope="col">學校</th>
-							@endif
+                                @if($user->role == 9)
+                                    <th scope="col">學校</th>
+                                @endif
                                 <th scope="col">班級</th>
                                 <th scope="col">選取</th>
                             </tr>
@@ -193,24 +200,24 @@
             $("#assignModal tbody").empty();
             let html = '';
             for (let x in value) {
-                html = html + "<tr data-id='"+value[x]['school_id']+"'>";
-				@if($user->role == 9)
-				html = html + "<td>" + value[x]['school_name'] + "</td>";
-				@endif
-                html = html + "<td>" + value[x]['name'] + "</td>";
+                html = html + "<tr data-id='" + value[x]['school_id'] + "'>";
+                @if($user->role == 9)
+                    html = html + "<td>" + value[x]['school_name'] + "</td>";
+                @endif
+                    html = html + "<td>" + value[x]['name'] + "</td>";
                 html = html + "<td><input type='checkbox'' name='classroom_id[]' value=" + value[x]['classroom_id'] + " " + value[x]['status'] + "></td>";
                 html = html + "</td>";
                 html = html + "</tr>";
             }
             $("#assignModal tbody").html(html);
-			@if($user->role == 9)
-			$("[name='city_id']").trigger('change');
-			$("[name='school_id']").trigger('change');
-			@endif
+            @if($user->role == 9)
+            $("[name='city_id']").trigger('change');
+            $("[name='school_id']").trigger('change');
+            @endif
         });
-		
-		@if($user->role == 9)
-		var citys = @json($citys);
+
+        @if($user->role == 9)
+        var citys = @json($citys);
         $("[name='city_id']").change(function () {
             var city_val = $(this).val();
             $("[name='school_id']").empty();
@@ -219,19 +226,19 @@
                 html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
             }
             $("[name='school_id']").append(html)
-			$("[name='school_id']").trigger('change');
+            $("[name='school_id']").trigger('change');
         });
-		
-		$("[name='school_id']").change(function () {
-			var school_val = $(this).val();
-			console.log(school_val);
-			$("#assignModal tbody tr").hide();
-			$("#assignModal tbody tr[data-id='"+school_val+"']").show();
+
+        $("[name='school_id']").change(function () {
+            var school_val = $(this).val();
+            console.log(school_val);
+            $("#assignModal tbody tr").hide();
+            $("#assignModal tbody tr[data-id='" + school_val + "']").show();
         });
-		
-		$("[name='city_id']").trigger('change');
-		$("[name='school_id']").trigger('change');
-		@endif
-		
+
+        $("[name='city_id']").trigger('change');
+        $("[name='school_id']").trigger('change');
+        @endif
+
     </script>
 @endsection

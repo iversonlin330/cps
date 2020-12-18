@@ -5,8 +5,9 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-right">
-                <form class="form-inline float-right">
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                <form action="{{ url('exams/student-view') }}" class="form-inline float-right">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
+                           aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>
@@ -29,28 +30,24 @@
                 </thead>
                 <tbody>
                 @foreach($exams as $exam)
-                    <tr>
-                        <td>{{ $exam->name }}</td>
-                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                        <!--td>{{ array_sum($exam->my_score()) }}</td>
+                    @if($data)
+                        @if(strpos($data['name'], $classroom->fullName()) !== false)
+                            <tr>
+                                <td>{{ $exam->name }}</td>
+                                <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                            <!--td>{{ array_sum($exam->my_score()) }}</td>
                         <td>{{ array_sum($exam->avg_score()) }}</td>
                         <td>{{ array_sum($exam->total_score()) }}</td>
                         <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
                                data-my="{{ json_encode($exam->my_score()) }}"
                                data-total="{{ json_encode($exam->total_score()) }}"
                                data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td-->
-                        <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a></td>
-                    </tr>
+                                <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a>
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
                 @endforeach
-                <!--tr>
-                        <td>考卷名稱ＯＯＯＯＯ</td>
-                        <td>單元Ａ/單元B/單元C</td>
-                        <td>18</td>
-                        <td>30</td>
-						<td>12</td>
-                        <td><a href="#" data-toggle="modal" data-target="#viewModal">檢視</a></td>
-                        <td><a href="{{ url('exams/start') }}" class="btn btn-warning btn-sm">作答</a></td>
-                    </tr-->
                 </tbody>
             </table>
         </div>
