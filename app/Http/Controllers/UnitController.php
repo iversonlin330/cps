@@ -395,6 +395,11 @@ class UnitController extends Controller
     public function update(Request $request, Unit $unit)
     {
         //
+		$task = $request->except(['_token', '_method']);
+		$unit->fill($task);
+        $unit->save();
+		
+		return redirect('tasks?unit_id='.$unit->id);
     }
 
     /**

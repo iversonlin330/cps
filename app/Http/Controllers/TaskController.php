@@ -301,7 +301,14 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+		$task_id = $task->unit_id;
         $task->delete();
+		
+		$tasks = Task::where('unit_id',$task_id)->get();
+		foreach ($tasks as $index => $task) {
+			Task::find($task->id)->update(['order' => $index + 1]);
+		}
+		
         return back();
     }
 }

@@ -61,8 +61,13 @@
                             @if($user->role == 9)
                                 <td>
                                     <a href="{{ url('units/copy/'.$unit->id) }}" class="btn btn-secondary btn-sm">複製</a>
-                                    <a href="{{ url('tasks?unit_id='.$unit->id) }}"
-                                       class="btn btn-secondary btn-sm">編輯</a>
+                                    <!--a href="{{ url('tasks?unit_id='.$unit->id) }}"
+                                       class="btn btn-secondary btn-sm">編輯</a-->
+								<a class="btn btn-secondary btn-sm"
+                                        data-url="{{ url('units/'.$unit->id) }}"
+                                        data-name="{{ $unit->name }}"
+                                        onclick="edit_modal(this)">編輯
+                                </a>
                                 </td>
                                 <td>
                                     @if(!$unit->is_answer())
@@ -148,11 +153,51 @@
             </div>
         </div>
     </div>
+	
+	<!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">修改單元</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url('units') }}" method="post">
+					@method("PUT")
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>單元名稱</label>
+                            <input name="name" type="text" class="form-control" placeholder="輸入單元名稱...">
+                            <input name="is_open" type="number" value="0" hidden>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-r" value="確認">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
         function form_submit() {
             $("#unit_form").submit();
+        }
+		
+		function edit_modal(obj) {
+            let name = $(obj).data('name');
+            let url = $(obj).data('url');
+
+            //$("[name='order']").val(order);
+            $("#editModal form").attr('action', url);
+            $("#editModal form").find("[name='name']").val(name);
+			
+            $('#editModal').modal('show');
         }
     </script>
 @endsection
