@@ -83,7 +83,7 @@ class ClassroomController extends Controller
             'class' => $data['class'],
             'cycle_id' => $cycle->id,
             'school_id' => $user->school_id,
-			'user_id' => $user->id
+			//'user_id' => $user->id
         ]);
         $model->save();
 

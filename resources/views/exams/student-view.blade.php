@@ -31,22 +31,23 @@
                 <tbody>
                 @foreach($exams as $exam)
                     @if($data)
-                        @if(strpos($data['name'], $classroom->fullName()) !== false)
-                            <tr>
-                                <td>{{ $exam->name }}</td>
-                                <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                            <!--td>{{ array_sum($exam->my_score()) }}</td>
+                        @if(strpos($data['name'], $exam->name) !== false)
+                            @continue
+                        @endif
+                    @endif
+                    <tr>
+                        <td>{{ $exam->name }}</td>
+                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                    <!--td>{{ array_sum($exam->my_score()) }}</td>
                         <td>{{ array_sum($exam->avg_score()) }}</td>
                         <td>{{ array_sum($exam->total_score()) }}</td>
                         <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
                                data-my="{{ json_encode($exam->my_score()) }}"
                                data-total="{{ json_encode($exam->total_score()) }}"
                                data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td-->
-                                <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endif
+                        <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a>
+                        </td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>

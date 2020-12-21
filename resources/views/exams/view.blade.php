@@ -41,42 +41,43 @@
                 <tbody>
                 @foreach($exams as $exam)
                     @if($data)
-                        @if(strpos($data['name'], $classroom->fullName()) !== false)
-                            <tr>
-                                <td>{{ $exam->name }}</td>
-                                <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                                <td>{{ array_sum($exam->avg_score()) }}</td>
-                                <td>{{ array_sum($exam->total_score()) }}</td>
-                                <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                                       data-total="{{ json_encode($exam->total_score()) }}"
-                                       data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
-                                <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary btn-sm assign" data-toggle="modal"
-                                            data-target="#assignModal" data-exam-id="{{ $exam->id }}"
-                                            data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}"
-                                            data-value="{{ json_encode($exam->teacher_classroom()) }}">指派考卷
-                                    </button>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary btn-sm">複製</button>
-                                    @if(!$exam->is_answer())
-                                        <a href="{{ url('exams/'.$exam->id.'/edit') }}"
-                                           class="btn btn-secondary btn-sm">編輯</a>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(!$exam->is_answer())
-                                        <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
-                                                data-target="#deleteModal" data-keyword="考卷"
-                                                data-url="{{ url('exams/'.$exam->id) }}">刪除
-                                        </button>
-                                    @endif
-                                </td>
-                            </tr>
+                        @if(strpos($data['name'], $exam->name) !== false)
+                            @continue
                         @endif
                     @endif
+                    <tr>
+                        <td>{{ $exam->name }}</td>
+                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                        <td>{{ array_sum($exam->avg_score()) }}</td>
+                        <td>{{ array_sum($exam->total_score()) }}</td>
+                        <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
+                               data-total="{{ json_encode($exam->total_score()) }}"
+                               data-avg="{{ json_encode($exam->avg_score()) }}">檢視</a></td>
+                        <td><a href="{{ url('exams/start/'.$exam->id) }}" class="btn btn-warning btn-sm">作答</a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm assign" data-toggle="modal"
+                                    data-target="#assignModal" data-exam-id="{{ $exam->id }}"
+                                    data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}"
+                                    data-value="{{ json_encode($exam->teacher_classroom()) }}">指派考卷
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm">複製</button>
+                            @if(!$exam->is_answer())
+                                <a href="{{ url('exams/'.$exam->id.'/edit') }}"
+                                   class="btn btn-secondary btn-sm">編輯</a>
+                            @endif
+                        </td>
+                        <td>
+                            @if(!$exam->is_answer())
+                                <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
+                                        data-target="#deleteModal" data-keyword="考卷"
+                                        data-url="{{ url('exams/'.$exam->id) }}">刪除
+                                </button>
+                            @endif
+                        </td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>
