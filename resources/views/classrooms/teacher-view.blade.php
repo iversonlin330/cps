@@ -161,6 +161,7 @@
             for (x in exam) {
                 html = html + "・考卷名稱" + exam[x] + "<br>";
             }
+            $("#examModal .modal-body").html(html);
         });
     </script>
 @endsection

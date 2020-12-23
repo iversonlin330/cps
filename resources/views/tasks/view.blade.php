@@ -40,7 +40,7 @@
                         <td>{{ $task->name }}</td>
                         <td><a href="{{ url('tasks/start/'.$task->id) }}">檢視</a></td>
                         <td>
-                            <button type="button" class="btn btn-secondary btn-sm">複製</button>
+                            <a href="{{ url('tasks/copy/'.$task->id) }}" class="btn btn-secondary btn-sm">複製</a>
                         <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"
                                class="btn btn-secondary btn-sm">編輯</a-->
                             @if($task->unit->is_answer() || $task->unit->status == 1)

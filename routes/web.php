@@ -29,6 +29,7 @@ Route::get('/main', 'LoginController@main');
 Route::get('/exams/my', 'ExamController@my');
 Route::get('/exams/score', 'ExamController@score');
 Route::get('/exams/score-detail/{exam_id}/{classroom_id}', 'ExamController@scoreDetail');
+Route::get('/exams/copy/{id}', 'ExamController@copy');
 Route::get('/exams/start/{id}', 'ExamController@start');
 Route::post('/exams/start/{id}', 'ExamController@postStart');
 Route::get('/exams/result', 'ExamController@result');

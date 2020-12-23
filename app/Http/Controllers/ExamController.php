@@ -8,6 +8,7 @@ use App\Cycle;
 use App\Exam;
 use App\Exports\ScoreExport;
 use App\Http\Traits\MyTraits;
+use App\Task;
 use App\Unit;
 use App\User;
 use App\UserExam;
@@ -20,6 +21,15 @@ use Psy\CodeCleaner\AssignThisVariablePass;
 class ExamController extends Controller
 {
     use MyTraits;
+
+    public function copy($id)
+    {
+        $exam = Exam::find($id)->replicate();
+        $exam->name = $exam->name . "(複製)";
+        $exam->save();
+
+        return back();
+    }
 
     public function postAssign(Request $request, $exam_id)
     {

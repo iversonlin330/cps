@@ -20,8 +20,8 @@
                 <thead>
                 <tr>
                     <th scope="col">考卷名稱</th>
-                    <th scope="col">組合單元</th>
-                    <!--th scope="col">我的分數</th>
+                    <!--th scope="col">組合單元</th>
+                    <th scope="col">我的分數</th>
                     <th scope="col">班平均分</th>
                     <th scope="col">滿分</th>
                     <th scope="col">各項指標</th-->
@@ -37,8 +37,8 @@
                     @endif
                     <tr>
                         <td>{{ $exam->name }}</td>
-                        <td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
-                    <!--td>{{ array_sum($exam->my_score()) }}</td>
+                    <!--td>{{ implode('/',$exam->units()->pluck('name')->toArray()) }}</td>
+                    <td>{{ array_sum($exam->my_score()) }}</td>
                         <td>{{ array_sum($exam->avg_score()) }}</td>
                         <td>{{ array_sum($exam->total_score()) }}</td>
                         <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"

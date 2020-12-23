@@ -63,14 +63,14 @@
                             </button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-secondary btn-sm">複製</button>
+                            <a href="{{ url('exams/copy/'.$exam->id) }}" class="btn btn-secondary btn-sm">複製</a>
                             @if(!$exam->is_answer())
                                 <a href="{{ url('exams/'.$exam->id.'/edit') }}"
                                    class="btn btn-secondary btn-sm">編輯</a>
                             @endif
                         </td>
                         <td>
-                            @if(!$exam->is_answer())
+                            @if(!$exam->is_answer() || $user->role == 9)
                                 <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
                                         data-target="#deleteModal" data-keyword="考卷"
                                         data-url="{{ url('exams/'.$exam->id) }}">刪除
@@ -160,7 +160,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">指標</th>
-                            <th scope="col">學生分數</th>
+                            <!--th scope="col">學生分數</th-->
                             <th scope="col">過往平均</th>
                             <th scope="col">滿分</th>
                         </tr>
@@ -169,7 +169,7 @@
                         @foreach($targets as $k=>$v)
                             <tr>
                                 <td>{{ $v }}</td>
-                                <td id="student_{{$k}}">0</td>
+                                <!--td id="student_{{$k}}">0</td-->
                                 <td id="avg_{{$k}}">0</td>
                                 <td id="total_{{$k}}">5</td>
                             </tr>

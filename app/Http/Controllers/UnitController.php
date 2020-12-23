@@ -22,7 +22,8 @@ class UnitController extends Controller
         $unit->status = 0;
         $unit->save();
 
-        $tasks = Task::where('unit_id', $unit->id)->get();
+        $tasks = Task::where('unit_id', $id)->get();
+
         foreach ($tasks as $task) {
             $task = Task::find($task->id)->replicate();
             $task->unit_id = $unit->id;
@@ -48,7 +49,7 @@ class UnitController extends Controller
             return "無作答紀錄";
         }
         $user = Auth::user();
-        if ($user->role == 3) {
+        if ($user->role == 3 || $user->role == 1) {
             $user_unit = new UserUnit;
             $user_unit->fill([
                 'user_id' => $user->id,
@@ -314,6 +315,7 @@ class UnitController extends Controller
                     }
                 }
             })
+                ->where('status', "!=", 4)
                 ->get();
         } else {
             $units = Unit::where(function ($query) use ($data) {
@@ -395,11 +397,11 @@ class UnitController extends Controller
     public function update(Request $request, Unit $unit)
     {
         //
-		$task = $request->except(['_token', '_method']);
-		$unit->fill($task);
+        $data = $request->except(['_token', '_method']);
+        $unit->fill($data);
         $unit->save();
-		
-		return redirect('tasks?unit_id='.$unit->id);
+
+        return redirect('tasks?unit_id=' . $unit->id);
     }
 
     /**

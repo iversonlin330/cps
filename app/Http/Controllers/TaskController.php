@@ -19,7 +19,6 @@ class TaskController extends Controller
         $task->name = $task->name . "(複製)";
         $task->save();
 
-        return "OK";
         return back();
     }
 
@@ -303,12 +302,12 @@ class TaskController extends Controller
         //
 		$task_id = $task->unit_id;
         $task->delete();
-		
+
 		$tasks = Task::where('unit_id',$task_id)->get();
 		foreach ($tasks as $index => $task) {
 			Task::find($task->id)->update(['order' => $index + 1]);
 		}
-		
+
         return back();
     }
 }

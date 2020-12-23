@@ -70,7 +70,9 @@
                                 </a>
                                 </td>
                                 <td>
-                                    @if(!$unit->is_answer())
+                                    @if($unit->is_answer() || $unit->status == 1)
+
+                                    @else
                                         <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"
                                                 data-target="#deleteModal" data-keyword="單元"
                                                 data-url="{{ url('units/'.$unit->id) }}">刪除
@@ -153,7 +155,7 @@
             </div>
         </div>
     </div>
-	
+
 	<!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -188,7 +190,7 @@
         function form_submit() {
             $("#unit_form").submit();
         }
-		
+
 		function edit_modal(obj) {
             let name = $(obj).data('name');
             let url = $(obj).data('url');
@@ -196,7 +198,7 @@
             //$("[name='order']").val(order);
             $("#editModal form").attr('action', url);
             $("#editModal form").find("[name='name']").val(name);
-			
+
             $('#editModal').modal('show');
         }
     </script>
