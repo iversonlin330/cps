@@ -15,6 +15,7 @@
                         <input name="name" type="text" class="form-control" id="inputEmail3" placeholder="考卷名稱" required>
                     </div>
                     <div>2. 選取欲組合單元</div>
+                    <div>請將想選取的單元拖移至「已選取單元」並進行排序</div>
                 </div>
             </div>
             <div class="row" style="padding-top:24px">
