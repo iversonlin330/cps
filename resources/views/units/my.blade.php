@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title1', '所有單元')
-@section('title2', '主頁 / 單元專區 / 所有單元')
+@section('title1', '我的單元')
+@section('title2', '主頁 / 單元專區 / 我的單元')
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">

@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="float-left">
                 <a href="#" data-toggle="modal" data-target="#createModal" class="btn btn-warning">新增單元</a>
-                <button type="button" class="btn btn-dark">待審核單元</button>
+                <a href="{{ url('/units/verify') }}" class="btn btn-dark">待審核單元</a>
             </div>
             <div class="float-right">
                 <form action="{{ url('units') }}" class="form-inline float-right">
