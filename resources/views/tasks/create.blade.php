@@ -167,6 +167,7 @@
         });
 
         $("#submit_btn").click(function () {
+            $('[disabled]').prop( "disabled", false );
             $('#main_form').submit();
         });
 

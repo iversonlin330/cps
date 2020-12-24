@@ -159,7 +159,7 @@
             let html = '';
             html = html + "班級：" + classroom_name + "<br>";
             for (x in exam) {
-                html = html + "・考卷名稱" + exam[x] + "<br>";
+                html = html + "・" + exam[x] + "<br>";
             }
             $("#examModal .modal-body").html(html);
         });
