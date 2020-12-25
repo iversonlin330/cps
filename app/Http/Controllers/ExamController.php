@@ -210,12 +210,12 @@ class ExamController extends Controller
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
-        $classroom = [];
+        $tutor_classroom = [];
         if ($user->role == 9) {
             $exams = Exam::all();
         } else {
             $exams = Exam::where('user_id', $user->id)->get();
-            $classroom = $user->tutor_classroom();
+            $tutor_classroom = $user->tutor_classroom();
         }
 
         if (!$data) {
@@ -228,7 +228,7 @@ class ExamController extends Controller
 
         $cycles = Cycle::orderBy('id', 'desc')->get();
 
-        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data', 'classroom'));
+        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classroom'));
     }
 
     public function scoreExport($exam_id, $classroom_id)

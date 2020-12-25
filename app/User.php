@@ -85,7 +85,7 @@ class User extends Authenticatable
         //if(!$this->tutor_classroom_id){
         //    $this->tutor_classroom_id = [];
         //}
-        return Classroom::now()->where('id', $this->tutor_classroom_id)->get();
+        return Classroom::now()->where('id', $this->tutor_classroom_id)->first();
     }
 
     public function teacher_classroom()
