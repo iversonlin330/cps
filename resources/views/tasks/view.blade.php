@@ -12,7 +12,7 @@
                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#orderModal">任務排序
                     </button>
                 </div>
-            @endif
+        @endif
         <!--div class="float-right">
                 <form class="form-inline float-right">
                     <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
@@ -38,7 +38,11 @@
                 @foreach($tasks as $task)
                     <tr>
                         <td>{{ $task->name }}</td>
-                        <td><a href="{{ url('tasks/start/'.$task->id) }}">檢視</a></td>
+                        <td>
+                            @if (array_key_exists('desc1', $task->content))
+                                <a href="{{ url('tasks/start/'.$task->id) }}">檢視</a>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ url('tasks/copy/'.$task->id) }}" class="btn btn-secondary btn-sm">複製</a>
                         <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"
