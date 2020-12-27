@@ -302,7 +302,13 @@ class ExamController extends Controller
 
         $exam_id_array = UserExam::where('user_id', $user->id)->get()->pluck('exam_id')->toArray();
 
-        $exams = $user->classroom->exams->whereNotIn('id', $exam_id_array)->all();
+        $exams = [];
+        if ($user->classroom) {
+            if ($user->classroom->exams) {
+                $exams = $user->classroom->exams->whereNotIn('id', $exam_id_array)->all();
+            }
+        }
+
 
         return view('exams.student-view', compact('exams', 'targets', 'data'));
     }
