@@ -271,7 +271,12 @@ class ExamController extends Controller
 
         $exam_id_array = UserExam::where('user_id', $user->id)->get()->pluck('exam_id')->toArray();
 
-        $exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
+        $exams = [];
+        if ($user->classroom) {
+            if ($user->classroom->exams) {
+                $exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
+            }
+        }
 
         return view('exams.student-score', compact('targets', 'exams', 'data'));
     }
