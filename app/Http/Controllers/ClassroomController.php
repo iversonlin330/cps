@@ -22,7 +22,9 @@ class ClassroomController extends Controller
             ->whereNotIn('id', $user->subject_classroom_id)
             ->get();
 
-		$classroom_tutors = $user->tutor_classroom();
+		$classroom_tutor = $user->tutor_classroom();
+        $classroom_tutors = collect();
+        $classroom_tutors->add($classroom_tutor);
 
         return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user','classroom_tutors','data'));
     }

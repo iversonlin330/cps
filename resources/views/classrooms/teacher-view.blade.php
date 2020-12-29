@@ -64,24 +64,24 @@
                     </tr>
 
                 @endforeach
-                @if($classroom_tutors)
+                @foreach($classroom_tutors as $classroom)
                     @if($data)
-                        @if(strpos($data['name'], $classroom_tutors->fullName()))
+                        @if(strpos($data['name'], $classroom->fullName()))
                             @continue
                         @endif
                     @endif
                     <tr>
-                        <td>{{ $classroom_tutors->fullName() }}</td>
-                        <td>{{ count($classroom_tutors->students) }}</td>
-                        <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom_tutors->id) }}">檢視</a></td>
+                        <td>{{ $classroom->fullName() }}</td>
+                        <td>{{ count($classroom->students) }}</td>
+                        <td><a href="{{ url('classrooms/teacher-detail-view/'.$classroom->id) }}">檢視</a></td>
                         <td><a class="exam" href="#" data-toggle="modal" data-target="#examModal"
-                               data-classroom-name="{{ $classroom_tutors->fullName() }}"
-                               data-exam="{{ json_encode($classroom_tutors->exams->pluck('name')->toArray()) }}">檢視</a>
+                               data-classroom-name="{{ $classroom->fullName() }}"
+                               data-exam="{{ json_encode($classroom->exams->pluck('name')->toArray()) }}">檢視</a>
                         </td>
                         <td>
                         </td>
                     </tr>
-                @endif
+                @endforeach
                 </tbody>
             </table>
         </div>
