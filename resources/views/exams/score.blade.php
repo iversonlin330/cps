@@ -94,7 +94,7 @@
                     @if($tutor_classroom->exams)
                         @foreach($tutor_classroom->exams as $exam)
                             @if(array_key_exists('school_id',$data))
-                                @if($data['school_id'] == $classroom->school)
+                                @if($data['school_id'] == $tutor_classroom->school)
                                     @if(strpos($data['name'], $exam->name))
                                         @continue
                                     @endif

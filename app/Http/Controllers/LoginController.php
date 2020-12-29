@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cycle;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,12 @@ class LoginController extends Controller
             if ($user->role == 4 && $user->is_verify == 0) {
                 return back();
             }
+
+            $cycle = Cycle::latest()->first();
+            if ($user->role == 3 && $user->cycle_id != $cycle->id) {
+                return back();
+            }
+
             Auth::login($user);
             return redirect('main');
         }
