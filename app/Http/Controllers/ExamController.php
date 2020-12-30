@@ -216,7 +216,6 @@ class ExamController extends Controller
         } else {
             $exams = Exam::where('user_id', $user->id)->get();
             $tutor_classroom = $user->tutor_classroom();
-            dd($tutor_classroom,$tutor_classroom->exams);
         }
 
         if (!$data) {
