@@ -127,7 +127,8 @@ class Exam extends Model
 
     public function avg_class_score($classroom_id)
     {
-        $students = $this->getStudentNow()->where('classroom_id', $classroom_id);
+        //$students = $this->getStudentNow()->where('classroom_id', $classroom_id);
+        $students = User::Student()->where('classroom_id', $classroom_id)->get();
         $avg = $this->getTargetInitial();
         $count = $this->score_count();
 
