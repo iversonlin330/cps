@@ -51,9 +51,11 @@
                             </thead>
                             <tbody>
                             @foreach($students as $student)
-                                <tr>
-                                    <td>{{ $student->account }}<input type="text" name="student_id[]"
-                                                                      value="{{ $student->id }}" hidden>
+                                <tr onclick="add(this)">
+                                    <td>{{ $student->account }}<input type="text"
+                                                                                          name="student_id[]"
+                                                                                          value="{{ $student->id }}"
+                                                                                          hidden>
                                     </td>
                                     <td>{{ $student->name }}</td>
                                 </tr>
@@ -82,7 +84,7 @@
                             <tbody>
                             @if(isset($selected))
                                 @foreach($selected as $student)
-                                    <tr>
+                                    <tr onclick="remove_selected(this)">
                                         <td>{{ $student->account }}<input type="text" name="student_id[]"
                                                                           value="{{ $student->id }}" hidden>
                                         </td>
@@ -107,16 +109,27 @@
 @section('script')
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
+        /*
         $("table").sortable({
             items: 'tbody > tr',
             connectWith: "table"
         });
+*/
+        function add(obj){
+            $(obj).clone().attr('onclick','remove_selected(this)').appendTo("#select_table tbody");
+            $(obj).remove();
+        }
+
+        function remove_selected(obj){
+            $(obj).clone().attr('onclick','add(this)').appendTo("#table_pool tbody");
+            $(obj).remove();
+        }
 
         $('form').submit(function () {
             $("#table_pool input").remove();
         });
 
-            @if(isset($classroom))
+        @if(isset($classroom))
         let classroom = @json($classroom);
         $("[name='class']").val(classroom['class']);
         $("[name='grade']").val(classroom['grade']);

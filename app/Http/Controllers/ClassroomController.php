@@ -144,6 +144,7 @@ class ClassroomController extends Controller
 
         $classroom_id = $classroom->id;
 
+        User::student()->where('classroom_id', $classroom_id)->update(['classroom_id' => NULL]);
         User::whereIn('id', $data['student_id'])->update(['classroom_id' => $classroom_id]);
 
         return redirect('classrooms');
