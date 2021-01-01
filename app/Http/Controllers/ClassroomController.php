@@ -17,14 +17,16 @@ class ClassroomController extends Controller
     {
         $data = $request->all();
         $user = Auth::user();
-        $classroom_selects = $user->subject_classroom();
-        $classrooms = Classroom::where('school_id', $user->school_id)
+        $cycle = Cycle::latest()->first();
+        $classroom_selects = $user->subject_classroom($cycle->id);
+        $classrooms = Classroom::now()
+            ->where('school_id', $user->school_id)
             ->whereNotIn('id', $user->subject_classroom_id)
             ->get();
 
-		$classroom_tutor = $user->tutor_classroom();
-        $classroom_tutors = collect();
-        $classroom_tutors->add($classroom_tutor);
+        $classroom_tutors = $user->tutor_classroom($cycle->id);
+        //$classroom_tutors = collect();
+        //$classroom_tutors->add($classroom_tutor);
 
         return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user','classroom_tutors','data'));
     }

@@ -40,7 +40,7 @@
                                 <option value="">無</option>
 								@foreach($classrooms as $classroom)
                                     <option
-                                        value="{{ $classroom->id }}" {{ ($classroom->id == $user->tutor_classroom_id)? 'selected' : '' }}>{{ $classroom->fullName() }}</option>
+                                        value="{{ $classroom->id }}" {{ (in_array($classroom->id, $user->tutor_classroom_id))? 'selected' : '' }}>{{ $classroom->fullName() }}</option>
                                 @endforeach
                             </select>
                         </td>

@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     use MyTraits;
-	
-	public function teacherRegister()
+
+    public function teacherRegister()
     {
         $user = Auth::user();
         $citys = $this->getSchool();
 
         return view("users.teacher-register", compact('citys'));
     }
-	
-	public function postTeacherRegister(Request $request)
+
+    public function postTeacherRegister(Request $request)
     {
         //
         $data = $request->except(['_token', 'city_id']);
@@ -51,6 +51,12 @@ class UserController extends Controller
 
         $users = User::teacher()->where('school_id', $user->school_id)->get();
 
+        foreach ($users as $user) {
+            if (is_null($user->tutor_classroom_id)) {
+                $user->tutor_classroom_id = [];
+            }
+        }
+
         $classrooms = Classroom::now()->where('school_id', $user->school_id)->get();
 
         return view("users.contact-teachers-edit", compact('users', 'classrooms'));
@@ -59,8 +65,32 @@ class UserController extends Controller
     public function postContactTeachersEdit(Request $request)
     {
         $data = $request->all();
+        $user = Auth::user();
+        $classroom_ids = Classroom::now()->where('school_id', $user->school_id)->get()->pluck('id')->toArray();
 
         foreach ($data['teacher_array'] as $k => $v) {
+            $tutor_classroom_id = User::find($k)->tutor_classroom_id;
+            if (is_null($tutor_classroom_id)) {
+                $tutor_classroom_id = [];
+            }
+
+            foreach ($tutor_classroom_id as $key => $val) {
+                if (in_array((int)$val, $classroom_ids)) {
+                    unset($tutor_classroom_id[$key]);
+                }
+            }
+
+            $tutor_classroom_id = array_values($tutor_classroom_id);
+
+            if (is_null($v['tutor_classroom_id'])) {
+                $v['tutor_classroom_id'] = $tutor_classroom_id;
+            } else {
+                $tutor_classroom_id[] = $v['tutor_classroom_id'];
+                $v['tutor_classroom_id'] = $tutor_classroom_id;
+            }
+
+            //$v['tutor_classroom_id'] = array_merge($tutor_classroom_id, $v['tutor_classroom_id']);
+
             User::where('id', $k)->update($v);
         }
 

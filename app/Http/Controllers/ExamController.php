@@ -206,6 +206,10 @@ class ExamController extends Controller
         $user = Auth::user();
         $targets = config('map.target');
 
+        if (!$data) {
+            $data['cycle_id'] = Cycle::latest()->first()->id;
+        }
+
         //$exam_id_array = UserExam::where('user_id', $user->id)->get()->pluck('exam_id')->toArray();
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
@@ -215,11 +219,7 @@ class ExamController extends Controller
             $exams = Exam::all();
         } else {
             $exams = Exam::where('user_id', $user->id)->get();
-            $tutor_classroom = $user->tutor_classroom();
-        }
-
-        if (!$data) {
-            $data['cycle_id'] = Cycle::latest()->first()->id;
+            $tutor_classrooms = $user->tutor_classroom($data['cycle_id']);
         }
 
         unset($data['city_id']);
@@ -228,7 +228,7 @@ class ExamController extends Controller
 
         $cycles = Cycle::orderBy('id', 'desc')->get();
 
-        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classroom'));
+        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classrooms'));
     }
 
     public function scoreExport($exam_id, $classroom_id)

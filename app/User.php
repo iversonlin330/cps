@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        //'tutor_classroom_id' => 'array',
+        'tutor_classroom_id' => 'array',
         'subject_classroom_id' => 'array',
     ];
 
@@ -72,20 +72,22 @@ class User extends Authenticatable
         return $query->where('cycle_id', $cycle->id);
     }
 
-    public function subject_classroom()
+    public function subject_classroom($cycle_id)
     {
         if (!$this->subject_classroom_id) {
             $this->subject_classroom_id = [];
         }
-        return Classroom::now()->whereIn('id', $this->subject_classroom_id)->get();
+
+        return Classroom::where('cycle_id',$cycle_id)->whereIn('id', $this->subject_classroom_id)->get();
     }
 
-    public function tutor_classroom()
+    public function tutor_classroom($cycle_id)
     {
-        //if(!$this->tutor_classroom_id){
-        //    $this->tutor_classroom_id = [];
-        //}
-        return Classroom::now()->where('id', $this->tutor_classroom_id)->first();
+        if(!$this->tutor_classroom_id){
+           $this->tutor_classroom_id = [];
+        }
+
+        return Classroom::where('cycle_id',$cycle_id)->whereIn('id', $this->tutor_classroom_id)->get();
     }
 
     public function teacher_classroom()

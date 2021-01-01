@@ -90,7 +90,7 @@
                         </tr>
                     @endforeach
                 @endforeach
-                @if($tutor_classroom)
+                @foreach($tutor_classrooms as $tutor_classroom)
                     @if($tutor_classroom->exams)
                         @foreach($tutor_classroom->exams as $exam)
                             @if(array_key_exists('school_id',$data))
@@ -122,7 +122,7 @@
                             </tr>
                         @endforeach
                     @endif
-                @endif
+                @endforeach
                 </tbody>
             </table>
         </div>
