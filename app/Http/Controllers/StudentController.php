@@ -102,9 +102,12 @@ class StudentController extends Controller
         unset($data['city_id']);
 
         $users = User::Student()
+            ->where('cycle_id',$data['cycle_id'])
             ->where(function ($query) use ($data) {
                 if ($data) {
                     foreach ($data as $k => $v) {
+                        if($k == "cycle_id")
+                            continue;
                         if ($v) {
                             $query->orWhere($k, 'like', '%' . $v . '%');
                         }

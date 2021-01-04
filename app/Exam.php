@@ -99,7 +99,8 @@ class Exam extends Model
 
     public function avg_score()
     {
-        $students = $this->getStudentNow();
+        //$students = $this->getStudentNow();
+        $students = User::Student()->get();
         $avg = $this->getTargetInitial();
         $count = $this->score_count();
 

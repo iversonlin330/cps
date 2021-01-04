@@ -214,7 +214,7 @@ class ExamController extends Controller
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
-        $tutor_classroom = [];
+        $tutor_classrooms = [];
         if ($user->role == 9) {
             $exams = Exam::all();
         } else {
