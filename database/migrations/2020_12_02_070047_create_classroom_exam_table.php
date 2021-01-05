@@ -29,6 +29,6 @@ class CreateClassroomExamTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_exam');
+        Schema::dropIfExists('classroom_exam');
     }
 }
