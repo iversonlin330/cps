@@ -59,20 +59,20 @@ $text = Request::is('*edit*')? '修改' : '新增';
                                 </div>
                             </div>
 
-							<div class="form-group row">
+							<!--div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">帳號</label>
                                 <div class="col-9">
                                     <input type="text" name="account" class="form-control" id="inputEmail3" {{ ($text == '修改')? 'disabled' : '' }}>
                                 </div>
                             </div>
-							
+
 							<div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">密碼</label>
                                 <div class="col-9">
                                     <input type="password" name="password" class="form-control" id="inputEmail3">
                                 </div>
-                            </div>
-							
+                            </div-->
+
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">性別</label>
                                 <div class="col-9">

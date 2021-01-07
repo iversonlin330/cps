@@ -41,7 +41,7 @@
                             <td>{{ array_sum($unit->avg_score()) }}</td>
                             <td>{{ array_sum($unit->total_score()) }}</td>
                             <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                                   data-max="{{ json_encode($unit->total_score()) }}"
+                                   data-total="{{ json_encode($unit->total_score()) }}"
                                    data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
                             <td><a href="{{ url('units/start/'.$unit->id) }}" class="btn btn-warning btn-sm">預覽</a></td>
                             <td>

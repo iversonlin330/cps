@@ -47,7 +47,7 @@
                             <td>{{ array_sum($unit->avg_score()) }}</td>
                             <td>{{ array_sum($unit->total_score()) }}</td>
                             <td><a href="#" class="target" data-toggle="modal" data-target="#target_modal"
-                                   data-max="{{ json_encode($unit->total_score()) }}"
+                                   data-total="{{ json_encode($unit->total_score()) }}"
                                    data-avg="{{ json_encode($unit->avg_score()) }}">檢視</a></td>
                             @if($user->role == 9)
                                 <td>
@@ -115,7 +115,7 @@
                             <tr>
                                 <td>{{ $v }}</td>
                                 <td id="avg_{{$k}}">3</td>
-                                <td id="total_{{$k}}">5</td>
+                                <td id="total_{{$k}}">0</td>
                             </tr>
                         @endforeach
                         </tbody>

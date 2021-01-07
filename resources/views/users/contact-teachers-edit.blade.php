@@ -34,7 +34,7 @@
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
-                        <td>{{ $user->gender }}</td>
+                        <td>{{ config('map.gender')[$user->gender] }}</td>
                         <td>
                             <select name="teacher_array[{{ $user->id  }}][tutor_classroom_id]" class="form-control-sm">
                                 <option value="">無</option>
