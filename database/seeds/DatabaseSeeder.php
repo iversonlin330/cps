@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
-        DB::table('users')->insert(
+        DB::table('users')->insert([
 //		[
 //            'account' => '9',
 //            'name' => "管理員",
@@ -101,8 +101,8 @@ class DatabaseSeeder extends Seeder
             'classroom_id' => 1,
             //'email' => 'twpirls2021@gmail.com',
             'password' => 'zfzGZDjFBwHj',
-        ],
-		);
+        ]
+		]);
 
         DB::table('users')->insert([
             'account' => 'cpsguest',
