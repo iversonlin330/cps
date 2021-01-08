@@ -14,14 +14,14 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserSeeder::class);
         DB::table('users')->insert([
-		[
-            'account' => '9',
-            'name' => "管理員",
-            'role' => 9,
-            'classroom_id' => 1,
-            //'email' => 'twpirls2021@gmail.com',
-            'password' => '9',
-        ],
+//		[
+//            'account' => '9',
+//            'name' => "管理員",
+//            'role' => 9,
+//            'classroom_id' => 1,
+//            //'email' => 'twpirls2021@gmail.com',
+//            'password' => '9',
+//        ],
 		[
             'account' => 'CPS1',
             'name' => "管理員",
