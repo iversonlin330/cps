@@ -41,7 +41,7 @@
                 <tbody>
                 @foreach($exams as $exam)
                     @if($data)
-                        @if(strpos($data['name'], $exam->name) === false)
+                        @if(strpos($exam->name,$data['name']) === false)
                             @continue
                         @endif
                     @endif

@@ -43,7 +43,7 @@
                 </tr-->
                 @foreach($classroom_selects as $classroom)
                     @if($data)
-                        @if(strpos($data['name'], $classroom->fullName()) === false)
+                        @if(strpos($classroom->fullName(),$data['name']) === false)
                             @continue
                         @endif
                     @endif
@@ -66,7 +66,7 @@
                 @endforeach
                 @foreach($classroom_tutors as $classroom)
                     @if($data)
-                        @if(strpos($data['name'], $classroom->fullName()))
+                        @if(strpos($classroom->fullName(),$data['name']) === false)
                             @continue
                         @endif
                     @endif

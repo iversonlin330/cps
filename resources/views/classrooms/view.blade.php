@@ -34,7 +34,7 @@
                 <tbody>
                 @foreach($classrooms as $classroom)
                     @if($data)
-                        @if(strpos($data['name'], $classroom->fullName()))
+                        @if(strpos($classroom->fullName(),$data['name']) === false)
                             @continue
                         @endif
                     @endif
