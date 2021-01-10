@@ -183,7 +183,7 @@
             }
         }
 
-        /*
+        /**/
                 $(".item_area select").change(function () {
                     console.log($(this));
                     let index = $(this).parent('.item_area').data('index');
@@ -206,7 +206,7 @@
                     }
                     return html;
                 }
-        */
+        
         $("#myTab a:eq(0)").click();
         @if(isset($task->content['question']))
         let content = @json($task->content);
