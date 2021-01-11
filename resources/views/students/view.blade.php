@@ -24,7 +24,7 @@
                     <select name="school_id" class="form-control mr-sm-2">
                         <option value="">學校</option>
                     </select>
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>

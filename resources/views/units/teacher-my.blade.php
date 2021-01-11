@@ -83,7 +83,7 @@
                             </a>
                         </td>
                         <td>
-                            @if($unit->is_answer() || $unit->status == 1)
+                            @if($unit->is_answer() || $unit->status == 1 || $unit->status == 4)
 
                             @else
                                 <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"

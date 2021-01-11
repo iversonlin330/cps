@@ -109,7 +109,7 @@ class StudentController extends Controller
                         if($k == "cycle_id")
                             continue;
                         if ($v) {
-                            $query->orWhere($k, 'like', '%' . $v . '%');
+                            $query->where($k, 'like', '%' . $v . '%');
                         }
                     }
                 }
@@ -152,10 +152,12 @@ class StudentController extends Controller
     {
         //
         $data = $request->except(['_token', 'city_id']);
+		$cycle = Cycle::latest()->first();
 
         $account = $this->getAccount($data['school_id']);
         $data['account'] = $account;
         $data['password'] = $account;
+		$temp['cycle_id'] = $cycle->id;
 
         $model = new User;
         $model->fill($data);

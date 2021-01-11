@@ -40,7 +40,7 @@ $text = Request::is('*edit*')? '修改' : '新增';
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">班級</label>
                                 <div class="col-9">
-                                    <select name="classroom_id" class="form-control">
+                                    <select name="classroom_id" class="form-control" required>
                                     </select>
                                 </div>
                             </div>

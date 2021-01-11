@@ -100,7 +100,7 @@
                 <form action="{{ url('exams/assign') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        @if($user->role == 9)
+                        @if($user->role == 9 && $text == "所有考卷")
                             <div class="row">
                                 <div class="col-6">
                                     <select name="city_id" class="form-control mr-sm-2">

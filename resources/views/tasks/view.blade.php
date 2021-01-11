@@ -4,7 +4,7 @@
 @section('content')
     <div class="row main-padding mb-2">
         <div class="col-12">
-            @if($unit->is_answer() || $unit->status == 1)
+            @if($unit->is_answer() || $unit->status == 1 || $unit->status == 4)
 
             @else
                 <div class="float-left">
@@ -44,14 +44,14 @@
                             @endif
                         </td>
                         <td>
-                            @if($unit->is_answer() || $unit->status == 1)
+                            @if($unit->is_answer() || $unit->status == 1 || $unit->status == 4)
 
                             @else
                                 <a href="{{ url('tasks/copy/'.$task->id) }}" class="btn btn-secondary btn-sm">複製</a>
                             @endif
                         <!--a href="{{ url('tasks/create?task_id='.$task->id) }}"
                                class="btn btn-secondary btn-sm">編輯</a-->
-                            @if($task->unit->is_answer() || $task->unit->status == 1)
+                            @if($task->unit->is_answer() || $task->unit->status == 1 || $task->unit->status == 4)
                                 <a href="{{ url('/tasks/create?disabled=1&task_id='.$task->id) }}"
                                    class="btn btn-secondary btn-sm">編輯</a>
                             @else
