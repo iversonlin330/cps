@@ -219,7 +219,7 @@ class UnitController extends Controller
 
         //$units = Unit::whereIn('id', $unit_id_array)->get();
 
-        $user_units = UserUnit::where('user_id', $user->id)->get();
+        $user_units = UserUnit::where('user_id', $user->id)->orderBy('created_at', 'desc')->take(500)->get();
 
         return view('units.student-score', compact('targets', 'user_units'));
     }

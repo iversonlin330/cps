@@ -167,7 +167,7 @@
         });
 
         $("#submit_btn").click(function () {
-            $('[disabled]').prop( "disabled", false );
+            $('[disabled]').prop("disabled", false);
             $('#main_form').submit();
         });
 
@@ -184,29 +184,34 @@
         }
 
         /**/
-                $(".item_area select").change(function () {
-                    console.log($(this));
-                    let index = $(this).parent('.item_area').data('index');
-                    let p_sub = $(this).parent('.item_area').data('sub');
-                    let qid = $(this).data('qid');
-                    let i = $(this).data('i');
-                    let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
-                    let score = $("[name='score[" + qid + "][" + i + "]'] option:selected").val();
+        $(".item_area select").change(function () {
+            console.log($(this));
+            let index = $(this).parent('.item_area').data('index');
+            let p_sub = $(this).parent('.item_area').data('sub');
+            let qid = $(this).data('qid');
+            let i = $(this).data('i');
+            let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
+            let score = $("[name='score[" + qid + "][" + i + "]'] option:selected").val();
 
-                    $(".item_area[data-qid='" + goto + "'] select[name^='score']").each(function () {
-                        $(this).empty();
-                        $(this).html(create_option(score - 1));
-                    });
-                });
-
-                function create_option(num) {
-                    let html = "";
-                    for (let i = 0; i <= num; i++) {
-                        html = html + "<option>" + i + "</option>";
-                    }
-                    return html;
+            $(".item_area[data-qid='" + goto + "'] select[name^='score']").each(function () {
+                $(this).empty();
+                if (score == 0) {
+                    $(this).html(create_option(0));
+                } else {
+                    $(this).html(create_option(score - 1));
                 }
-        
+
+            });
+        });
+
+        function create_option(num) {
+            let html = "";
+            for (let i = 0; i <= num; i++) {
+                html = html + "<option>" + i + "</option>";
+            }
+            return html;
+        }
+
         $("#myTab a:eq(0)").click();
         @if(isset($task->content['question']))
         let content = @json($task->content);
