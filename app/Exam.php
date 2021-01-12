@@ -46,7 +46,7 @@ class Exam extends Model
         foreach ($units as $unit) {
             $tasks = $unit->tasks;
             foreach ($tasks as $task) {
-                if(!array_key_exists('target',$task->content)){
+                if (!array_key_exists('target', $task->content)) {
                     continue;
                 }
                 $count_list = array_count_values($task->content['target']);
@@ -69,7 +69,7 @@ class Exam extends Model
             foreach ($tasks as $task) {
                 $q_id = 0;
                 foreach ($task->content['count'] as $index => $q_count) {
-                    if(!array_key_exists('target',$task->content)){
+                    if (!array_key_exists('target', $task->content)) {
                         continue;
                     }
                     $target = $task->content['target'][$index];
@@ -186,11 +186,15 @@ class Exam extends Model
         return $this->belongsToMany('\App\Classroom');
     }
 
-    public function teacher_classroom()
+    public function teacher_classroom($text)
     {
         $result = [];
         if ($this->user->role == 9) {
-            $classrooms = Classroom::now()->get();
+            if ($text == "我的考券") {
+                $classrooms = Classroom::now()->get();
+            } else {
+                $classrooms = $this->user->teacher_classroom();
+            }
         } else {
             $classrooms = $this->user->teacher_classroom();
         }
@@ -208,8 +212,8 @@ class Exam extends Model
             }
 
             $result[] = [
-				'school_name' => $classroom->school->fullName(),
-				'school_id' => $classroom->school_id,
+                'school_name' => $classroom->school->fullName(),
+                'school_id' => $classroom->school_id,
                 'classroom_id' => $classroom->id,
                 'name' => $classroom->fullName(),
                 'status' => $status,

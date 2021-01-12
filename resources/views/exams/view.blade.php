@@ -59,7 +59,7 @@
                             <button type="button" class="btn btn-secondary btn-sm assign" data-toggle="modal"
                                     data-target="#assignModal" data-exam-id="{{ $exam->id }}"
                                     data-classroom="{{ json_encode($exam->classrooms->pluck('id')->toArray()) }}"
-                                    data-value="{{ json_encode($exam->teacher_classroom()) }}">指派考卷
+                                    data-value="{{ json_encode($exam->teacher_classroom($text)) }}">指派考卷
                             </button>
                         </td>
                         <td>
@@ -100,7 +100,7 @@
                 <form action="{{ url('exams/assign') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        @if($user->role == 9 && $text == "所有考卷")
+                        @if($user->role == 9 && $text == "我的考卷")
                             <div class="row">
                                 <div class="col-6">
                                     <select name="city_id" class="form-control mr-sm-2">
@@ -119,7 +119,7 @@
                         <table class="table">
                             <thead class="thead-r">
                             <tr>
-                                @if($user->role == 9)
+                                @if($user->role == 9 && $text == "我的考卷")
                                     <th scope="col">學校</th>
                                 @endif
                                 <th scope="col">班級</th>
@@ -190,7 +190,6 @@
             let classroom = $(this).data('classroom');
             let exam_id = $(this).data('exam-id');
             let value = $(this).data('value');
-            console.log(value);
 
             $("#assignModal form").attr('action', "{{ url('exams/assign') }}/" + exam_id);
             /*
@@ -202,7 +201,7 @@
             let html = '';
             for (let x in value) {
                 html = html + "<tr data-id='" + value[x]['school_id'] + "'>";
-                @if($user->role == 9)
+                @if($user->role == 9 && $text == "我的考卷")
                     html = html + "<td>" + value[x]['school_name'] + "</td>";
                 @endif
                     html = html + "<td>" + value[x]['name'] + "</td>";
@@ -211,13 +210,13 @@
                 html = html + "</tr>";
             }
             $("#assignModal tbody").html(html);
-            @if($user->role == 9)
+            @if($user->role == 9 && $text == "我的考卷")
             $("[name='city_id']").trigger('change');
             $("[name='school_id']").trigger('change');
             @endif
         });
 
-        @if($user->role == 9)
+        @if($user->role == 9 && $text == "我的考卷")
         var citys = @json($citys);
         $("[name='city_id']").change(function () {
             var city_val = $(this).val();
