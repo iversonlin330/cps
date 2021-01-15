@@ -6,7 +6,12 @@
         <div class="row" style="padding-top:24px">
             <div class="col-12">
                 <div class="d-flex justify-content-center exam-title bg-squash">
-                    <p class="-Login text-center mt-2">作答結果<br>{{ $unit->name }}</p>
+                    <p class="-Login text-center mt-2">
+                        @if($score_id != 0)
+                            訪客編號:{{ $score_id }}<br>
+                        @endif
+                        作答結果<br>{{ $unit->name }}
+                    </p>
                 </div>
             </div>
         </div>

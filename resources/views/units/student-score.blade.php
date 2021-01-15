@@ -18,6 +18,9 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    @if($user->role == 1)
+                        <th scope="col">訪客編號</th>
+                    @endif
                     <th scope="col">單元名稱</th>
                     <th scope="col">我的分數</th>
                     <th scope="col">歷年平均分</th>
@@ -29,6 +32,9 @@
                 <tbody>
                 @foreach($user_units as $user_unit)
                     <tr>
+                        @if($user->role == 1)
+                            <td>{{ $user_unit->id }}</td>
+                        @endif
                         <td>{{ $user_unit->unit->name }}</td>
                         <td>{{ array_sum($user_unit->unit->my_score()) }}</td>
                         <td>{{ array_sum($user_unit->unit->avg_score()) }}</td>

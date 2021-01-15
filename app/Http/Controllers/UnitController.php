@@ -49,6 +49,7 @@ class UnitController extends Controller
             return "無作答紀錄";
         }
         $user = Auth::user();
+        $score_id = 0;
         if ($user->role == 3 || $user->role == 1) {
             $user_unit = new UserUnit;
             $user_unit->fill([
@@ -57,6 +58,7 @@ class UnitController extends Controller
                 'score' => $data['answer']
             ]);
             $user_unit->save();
+            $score_id = $user_unit->id;
         }
 
         //dd($data);
@@ -177,7 +179,7 @@ class UnitController extends Controller
         $avg = $unit->avg_score();
         $avg_score = array_sum($avg);
 
-        return view('units.result', compact('unit', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score'));
+        return view('units.result', compact('unit', 'targets', 'result', 'total', 'avg', 'person_score', 'avg_score', 'score_id'));
     }
 
     public function result()
@@ -221,7 +223,7 @@ class UnitController extends Controller
 
         $user_units = UserUnit::where('user_id', $user->id)->orderBy('created_at', 'desc')->take(500)->get();
 
-        return view('units.student-score', compact('targets', 'user_units'));
+        return view('units.student-score', compact('targets', 'user_units','user'));
     }
 
     public function score()
