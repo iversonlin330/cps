@@ -185,9 +185,9 @@
 
         /**/
         $(".item_area select").change(function () {
-            console.log($(this));
-            let index = $(this).parent('.item_area').data('index');
-            let p_sub = $(this).parent('.item_area').data('sub');
+            let index = $(this).closest('.item_area').data('index');
+            let p_sub = $(this).closest('.item_area').data('sub');
+			console.log(p_sub);
             let qid = $(this).data('qid');
             let i = $(this).data('i');
             let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
