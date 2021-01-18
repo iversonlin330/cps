@@ -183,11 +183,22 @@
             }
         }
 
-        /**/
+        function findMaxScore(index) {
+            let max_score = 0;
+            $(".item_area[data-index=" + index + "][data-sub=0] select[name^='score']").each(function () {
+                let option_val = $(this).find("option:selected").val();
+                if (option_val > max_score) {
+                    max_score = option_val;
+                }
+            });
+            return max_score;
+        }
+
+        /*
         $(".item_area select").change(function () {
             let index = $(this).closest('.item_area').data('index');
             let p_sub = $(this).closest('.item_area').data('sub');
-			console.log(p_sub);
+            //console.log(p_sub);
             let qid = $(this).data('qid');
             let i = $(this).data('i');
             let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
@@ -203,7 +214,7 @@
 
             });
         });
-
+*/
         function create_option(num) {
             let html = "";
             for (let i = 0; i <= num; i++) {
