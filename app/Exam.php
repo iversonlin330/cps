@@ -190,7 +190,7 @@ class Exam extends Model
     {
         $result = [];
         if ($this->user->role == 9) {
-            if ($text == "我的考券") {
+            if ($text == "我的考卷") {
                 $classrooms = Classroom::now()->get();
             } else {
                 $classrooms = $this->user->teacher_classroom();
