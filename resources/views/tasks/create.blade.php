@@ -102,6 +102,7 @@
                                                             <select name="goto[{{$q_id}}][{{$i}}]"
                                                                     class="form-control form-control-sm"
                                                                     data-qid="{{$q_id}}" data-i="{{$i}}">
+																	<option value=""></option>
                                                                 <option value="next">前往下一任務</option>
                                                                 @for( $goto = $sub+1; $goto < $q_count; $goto++)
                                                                     <option
@@ -183,7 +184,77 @@
             }
         }
 
-        function findMaxScore(index) {
+        function findMaxScore(qid) {
+            let max_score = 0;
+            $(".item_area[data-qid=" + qid + "] select[name^='score']").each(function () {
+                let option_val = $(this).find("option:selected").val();
+				let i = $(this).data('i');
+                if (option_val > max_score) {
+					let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
+					if(goto == "next"){
+						max_score = option_val;
+					}
+                }
+            });
+            return max_score;
+        }
+		
+		 $(".item_area select").change(function () {
+            let index = $(this).closest('.item_area').data('index');
+            let p_sub = $(this).closest('.item_area').data('sub');
+            //console.log(p_sub);
+            let qid = $(this).data('qid');
+            let i = $(this).data('i');
+            let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
+            let score = $("[name='score[" + qid + "][" + i + "]'] option:selected").val();
+
+			let max_score = findMaxScore(qid);
+			//console.log(max_score);
+			
+			$(".item_area select[name^='score']").each(function () {
+				let tmp_qid = $(this).data('qid');
+				if(tmp_qid > qid){
+					$(this).val(0);
+				}
+			});
+			
+			if(p_sub > 0){
+				let parent_select = $('.item_area select[name^="goto"]:has(option[value="'+qid+'"]:selected)');
+				let parent_qid = $(parent_select).data('qid');
+				let parent_i = $(parent_select).data('i');		
+				let parent_score = $("[name='score[" + parent_qid + "][" + parent_i + "]'] option:selected").val();
+				max_score = parent_score;
+			}
+			
+			
+			$(".item_area[data-qid=" + qid + "] select[name^='score']").each(function () {
+				let option_val = $(this).find("option:selected").val();
+				let i = $(this).data('i');
+				let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
+					if(goto != "next"){				
+                if (parseInt(option_val) >= parseInt(max_score)) {
+					$(this).val(0);
+                    //max_score = option_val;
+                }
+			}
+            });
+			
+			/*
+            $(".item_area[data-qid='" + goto + "'] select[name^='score']").each(function () {
+                $(this).empty();
+                if (score == 0) {
+                    $(this).html(create_option(0));
+                } else {
+                    $(this).html(create_option(score - 1));
+                }
+
+            });
+			*/
+        });
+
+        /*
+		
+		function findMaxScore(index) {
             let max_score = 0;
             $(".item_area[data-index=" + index + "][data-sub=0] select[name^='score']").each(function () {
                 let option_val = $(this).find("option:selected").val();
@@ -193,8 +264,7 @@
             });
             return max_score;
         }
-
-        /*
+		
         $(".item_area select").change(function () {
             let index = $(this).closest('.item_area').data('index');
             let p_sub = $(this).closest('.item_area').data('sub');
