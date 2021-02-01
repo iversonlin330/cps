@@ -28,10 +28,10 @@ class ClassroomController extends Controller
         //$classroom_tutors = collect();
         //$classroom_tutors->add($classroom_tutor);
 
-        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user','classroom_tutors','data'));
+        return view('classrooms.teacher-view', compact('classrooms', 'classroom_selects', 'user', 'classroom_tutors', 'data'));
     }
 
-	public function teacherDetailView($classroom_id)
+    public function teacherDetailView($classroom_id)
     {
         $classroom = Classroom::find($classroom_id);
 
@@ -50,7 +50,7 @@ class ClassroomController extends Controller
         $cycle = Cycle::latest()->first();
         $classrooms = Classroom::where('school_id', $user->school_id)->where('cycle_id', $cycle->id)->get();
 
-        return view('classrooms.view', compact('classrooms','data'));
+        return view('classrooms.view', compact('classrooms', 'data'));
     }
 
     /**
@@ -87,7 +87,7 @@ class ClassroomController extends Controller
             'class' => $data['class'],
             'cycle_id' => $cycle->id,
             'school_id' => $user->school_id,
-			//'user_id' => $user->id
+            //'user_id' => $user->id
         ]);
         $model->save();
 

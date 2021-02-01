@@ -126,6 +126,11 @@
         }
 
         $('form').submit(function () {
+            let num = $("#select_table input").length;
+            if(num <= 0){
+                alert("請選擇學生");
+                return false;
+            }
             $("#table_pool input").remove();
         });
 

@@ -13,7 +13,9 @@
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
                            aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
-                    <a class="btn btn-warning my-2 my-sm-0" onclick="form_submit()">儲存</a>
+                    @if($user->role == 9)
+                        <a class="btn btn-warning my-2 my-sm-0" onclick="form_submit()">儲存</a>
+                    @endif
                 </form>
             </div>
         </div>
@@ -61,13 +63,13 @@
                             @if($user->role == 9)
                                 <td>
                                     <a href="{{ url('units/copy/'.$unit->id) }}" class="btn btn-secondary btn-sm">複製</a>
-                                    <!--a href="{{ url('tasks?unit_id='.$unit->id) }}"
+                                <!--a href="{{ url('tasks?unit_id='.$unit->id) }}"
                                        class="btn btn-secondary btn-sm">編輯</a-->
-								<a class="btn btn-secondary btn-sm"
-                                        data-url="{{ url('units/'.$unit->id) }}"
-                                        data-name="{{ $unit->name }}"
-                                        onclick="edit_modal(this)">編輯
-                                </a>
+                                    <a class="btn btn-secondary btn-sm"
+                                       data-url="{{ url('units/'.$unit->id) }}"
+                                       data-name="{{ $unit->name }}"
+                                       onclick="edit_modal(this)">編輯
+                                    </a>
                                 </td>
                                 <td>
                                     @if($unit->is_answer() || $unit->status == 1)
@@ -156,7 +158,7 @@
         </div>
     </div>
 
-	<!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -167,7 +169,7 @@
                     </button>
                 </div>
                 <form action="{{ url('units') }}" method="post">
-					@method("PUT")
+                    @method("PUT")
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -191,7 +193,7 @@
             $("#unit_form").submit();
         }
 
-		function edit_modal(obj) {
+        function edit_modal(obj) {
             let name = $(obj).data('name');
             let url = $(obj).data('url');
 

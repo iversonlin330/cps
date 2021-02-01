@@ -43,7 +43,8 @@ class Unit extends Model
 
     public function tasks()
     {
-        return $this->hasMany('\App\Task')->orderBy('order');
+        return $this->hasMany('\App\Task')->where('status', 1)->orderBy('order');
+        //return $this->hasMany('\App\Task')->orderBy('order');
     }
 
     public function score_count()
@@ -131,15 +132,15 @@ class Unit extends Model
                 $target = $task->content['target'][$index];
                 $max_temp = 0;
                 for ($sub = 0; $sub < $q_count; $sub++) {
-					if(!array_key_exists($q_id,$task->content['is_item'])){
-						
-					}else{
-                    if ($task->content['is_item'][$q_id] == 1) {
-                        if (max($task->content['score'][$q_id]) > $max_temp) {
-                            $max_temp = max($task->content['score'][$q_id]);
+                    if (!array_key_exists($q_id, $task->content['is_item'])) {
+
+                    } else {
+                        if ($task->content['is_item'][$q_id] == 1) {
+                            if (max($task->content['score'][$q_id]) > $max_temp) {
+                                $max_temp = max($task->content['score'][$q_id]);
+                            }
                         }
                     }
-					}
                     $q_id++;
                 }
                 $total[$target] = $total[$target] + $max_temp;

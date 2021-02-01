@@ -126,6 +126,7 @@
                 </div>
                 <form action="{{ url('tasks') }}" method="post">
                     @csrf
+                    <input type="text" name="status" value="0" hidden>
                     <input type="text" name="unit_id" value="{{ $unit_id }}" hidden>
                     <input type="text" name="order" value="{{ $tasks->count()+1 }}" hidden>
                     <input type="text" name="content" value="" hidden>

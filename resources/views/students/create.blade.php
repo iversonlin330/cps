@@ -78,12 +78,12 @@ $text = Request::is('*edit*')? '修改' : '新增';
                                 <div class="col-9">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="gender"
-                                               id="inlineRadio1" value="1" required>
+                                               id="inlineRadio1" value="1">
                                         <label class="form-check-label" for="inlineRadio1">男</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="gender"
-                                               id="inlineRadio2" value="2" required>
+                                               id="inlineRadio2" value="2">
                                         <label class="form-check-label" for="inlineRadio2">女</label>
                                     </div>
                                 </div>

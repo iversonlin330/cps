@@ -66,7 +66,7 @@ class StudentController extends Controller
         $cycle = Cycle::latest()->first();
         $data = $request->except('_token');
 
-        for ($i = 0; $i <= $data['number']; $i++) {
+        for ($i = 0; $i < $data['number']; $i++) {
             $temp = [];
             $account = $this->getAccount($data['school_id']);
             $temp['cycle_id'] = $cycle->id;
