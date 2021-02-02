@@ -52,7 +52,7 @@
 								<input type="submit" class="btn btn-r" style="width: 83px;" value="登入">
 							</div>
 							<div class="d-flex justify-content-center">
-								<div>忘記密碼?</div>
+								<div data-toggle="modal" data-target="#forgetModal">忘記密碼?</div>
 							</div>
 						</form>
 					</div>
@@ -71,6 +71,24 @@
                 </div>
                 <div class="modal-body">
                     您的帳號尚未通過審核，或是帳密錯誤，請聯繫管理員或是重新輸入
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-r" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="forgetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    請聯繫該校窗口進行密碼回朔，或是寄信至管理者信箱 linyanhong@mail.ntue.edu.tw ，將會有專人為您處理
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-r" data-dismiss="modal">關閉</button>
