@@ -18,7 +18,7 @@ class LoginController extends Controller
             ->first();
 
         if (!$user) {
-            return back();
+            return back()->withErrors(['msg', 'The Message']);
         } else {
             if ($user->role == 4 && $user->is_verify == 0) {
                 return back();

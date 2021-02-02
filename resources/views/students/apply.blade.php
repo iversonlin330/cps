@@ -29,9 +29,29 @@
             </div>
         </div>
     </div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    您已成功向管理員申請學生帳號，待幾個工作天後，管理員將會為您核准處理
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-r" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
-
+	@if($errors->any())
+	$("#exampleModal").modal('show');
+@endif
     </script>
 @endsection

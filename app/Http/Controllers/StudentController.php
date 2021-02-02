@@ -50,7 +50,7 @@ class StudentController extends Controller
             $message->to($to);
         });
 
-        return back();
+        return back()->withErrors(['msg', 'The Message']);
     }
 
     public function createMulti()
