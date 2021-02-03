@@ -157,7 +157,7 @@ class StudentController extends Controller
         $account = $this->getAccount($data['school_id']);
         $data['account'] = $account;
         $data['password'] = $account;
-		$temp['cycle_id'] = $cycle->id;
+		$data['cycle_id'] = $cycle->id;
 
         $model = new User;
         $model->fill($data);

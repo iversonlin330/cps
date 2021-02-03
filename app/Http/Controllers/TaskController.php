@@ -189,7 +189,7 @@ class TaskController extends Controller
     {
         //
         $data = $request->except('_token');
-
+		
         if (array_key_exists('update_order', $data)) {
             foreach ($data['update_order'] as $index => $template_id) {
                 Task::find($template_id)->update(['order' => $index + 1]);
@@ -199,6 +199,7 @@ class TaskController extends Controller
             $content = $data['content'];
             $data['content'] = [];
             $data['content']['count'] = explode(',', $content);
+			$result['status'] = $data['status'];
             $model = new Task;
             $model->fill($data);
             $model->save();
@@ -230,6 +231,7 @@ class TaskController extends Controller
         $model = Task::find($id);
         $result['content'] = $model['content'];
         $result['content']['count'] = explode(',', $content);
+		$result['status'] = $data['status'];
         $model->fill($result);
         $model->save();
 
@@ -270,7 +272,6 @@ class TaskController extends Controller
         //
         $data = $request->except(['_token', '_method']);
 
-        //dd($data);
         if (array_key_exists('pic', $data)) {
             foreach ($data['pic'] as $k => $v) {
                 if ($v) {

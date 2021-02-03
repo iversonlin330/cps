@@ -227,7 +227,44 @@
                 let parent_max_score = findMaxScore(parent_qid);
                 max_score = parent_max_score - parent_score;
             }
-
+			
+			$(".item_area[data-qid=" + qid + "] select[name^='goto']").each(function () {
+				let other_goto = $(this).val();
+				
+				if(other_goto == ""){
+					return;
+				}
+				
+				let other_i = $(this).data('i');
+				
+				if(other_i == i){
+					return;
+				}
+				
+				let other_score = $("[name='score[" + qid + "][" + other_i + "]'] option:selected").val();
+				let temp_goto = goto; 
+				
+				if(other_goto == "next"){
+					other_goto = -1;
+				}
+				
+				if(goto == "next"){
+					temp_goto = -1;
+				}
+				
+				if(other_goto <= temp_goto){
+					if(score >= other_score){
+						$("[name='score[" + qid + "][" + i + "]']").val(0);
+					}
+				}
+				
+				if(other_goto >= temp_goto){
+					if(score <= other_score){
+						$("[name='score[" + qid + "][" + other_i + "]']").val(0);
+					}
+				}
+			});
+			
 
             $(".item_area[data-qid=" + qid + "] select[name^='score']").each(function () {
                 let option_val = $(this).find("option:selected").val();

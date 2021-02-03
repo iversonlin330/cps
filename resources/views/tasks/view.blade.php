@@ -37,10 +37,16 @@
                 <tbody>
                 @foreach($tasks as $task)
                     <tr>
-                        <td>{{ $task->name }}</td>
+                        <td>
+							{{ $task->name }}
+						</td>
                         <td>
                             @if (array_key_exists('desc1', $task->content))
-                                <a href="{{ url('tasks/start/'.$task->id) }}">檢視</a>
+								@if ($task->status == 0)
+									請進入編輯再儲存一次
+								@else
+									<a href="{{ url('tasks/start/'.$task->id) }}">檢視</a>
+								@endif
                             @endif
                         </td>
                         <td>
