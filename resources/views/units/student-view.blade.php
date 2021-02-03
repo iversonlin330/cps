@@ -9,7 +9,9 @@
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
                            aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
+                    @if($user->role == 9)
                     <button class="btn btn-warning my-2 my-sm-0" type="submit">儲存</button>
+                    @endif
                 </form>
             </div>
         </div>

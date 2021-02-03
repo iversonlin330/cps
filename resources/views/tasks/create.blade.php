@@ -233,7 +233,7 @@
                 let option_val = $(this).find("option:selected").val();
                 let i = $(this).data('i');
                 let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
-                if (goto != "next" && p_sub != 0) {
+                if (goto != "next" || p_sub != 0) {
                     if (parseInt(option_val) >= parseInt(max_score)) {
                         $(this).val(0);
                         //max_score = option_val;
