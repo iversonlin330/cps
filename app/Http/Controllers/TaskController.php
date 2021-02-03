@@ -284,6 +284,7 @@ class TaskController extends Controller
 
         $result = [];
         $result['content'] = $data;
+        $result['status'] = $data['status'];
         //$model = new Task;
         $task->fill($result);
         $task->save();
