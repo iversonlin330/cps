@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @php
-$text = Request::is('*edit*')? '修改' : '新增';
+    $text = Request::is('*edit*')? '修改' : '新增';
 @endphp
 @section('title1', $text.'單筆學生資料')
 @section('title2', '資料設定 / 學生資料設定 / '.$text.'學生單筆資料')
@@ -16,7 +16,7 @@ $text = Request::is('*edit*')? '修改' : '新增';
                 <div class="d-flex justify-content-center">
                     <div class="login-content" style="width:540px;">
                         <form action="{{ isset($user)? url('students/'.$user->id) : url('students') }}" method="post">
-							@if(isset($user))
+                            @if(isset($user))
                                 @method('PUT')
                             @endif
                             @csrf
@@ -31,7 +31,8 @@ $text = Request::is('*edit*')? '修改' : '新增';
                                     </select>
                                 </div>
                                 <div class="col-5">
-                                    <select name="school_id" class="form-control" {{ ($text == '修改')? 'disabled' : '' }}>
+                                    <select name="school_id"
+                                            class="form-control" {{ ($text == '修改')? 'disabled' : '' }}>
                                         <option>文德國小</option>
                                     </select>
                                 </div>
@@ -59,19 +60,21 @@ $text = Request::is('*edit*')? '修改' : '新增';
                                 </div>
                             </div>
 
-							<!--div class="form-group row">
+                        <!--div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">帳號</label>
                                 <div class="col-9">
                                     <input type="text" name="account" class="form-control" id="inputEmail3" {{ ($text == '修改')? 'disabled' : '' }}>
                                 </div>
-                            </div>
-
-							<div class="form-group row">
-                                <label for="inputEmail3" class="col-3 col-form-label">密碼</label>
-                                <div class="col-9">
-                                    <input type="password" name="password" class="form-control" id="inputEmail3">
-                                </div>
                             </div-->
+
+                            @if(isset($user))
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-3 col-form-label">密碼</label>
+                                    <div class="col-9">
+                                        <input type="password" name="password" class="form-control" id="inputEmail3">
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">性別</label>
@@ -156,7 +159,7 @@ $text = Request::is('*edit*')? '修改' : '新增';
         $("[name='school_id']").trigger('change');
 
 
-            @if(isset($user))
+        @if(isset($user))
         let user = @json($user);
         for (const [key, value] of Object.entries(user)) {
             if (key == 'gender' || key == 'is_local') {
@@ -167,7 +170,7 @@ $text = Request::is('*edit*')? '修改' : '新增';
         $("[name='city_id']").trigger('change');
         $("[name='school_id']").val(user['school_id']);
         $("[name='gender']").filter('[value=' + user.gender + ']').prop('checked', true);
-		$("[name='is_local']").filter('[value=' + user.is_local + ']').prop('checked', true);
+        $("[name='is_local']").filter('[value=' + user.is_local + ']').prop('checked', true);
         @endif
     </script>
 @endsection
