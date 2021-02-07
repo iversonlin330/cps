@@ -56,10 +56,10 @@
                         <td>{{ ($user->classroom)? $user->classroom->fullName() : '' }}</td>
                         <td>{{ $user->seat_number }}</td>
                         <td>{{ $user->name }}</td>
-                        <td>{{ config('map.gender')[$user->gender] }}</td>
+                        <td>{{ ($user->gender)? config('map.gender')[$user->gender] : '' }}</td>
                         <td>{{ $user->account }}</td>
                         <td>{{ $user->password }}</td>
-                        <td>{{ config('map.boolean')[$user->is_local] }}</td>
+                        <td>{{ ($user->is_local)? config('map.boolean')[$user->is_local] : '' }}</td>
                         <td>
                             <a href="{{ url('students/'.$user->id.'/edit') }}" class="btn btn-warning btn-sm">編輯</a>
                             <button type="button" class="btn btn-r btn-sm delete" data-toggle="modal"

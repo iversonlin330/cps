@@ -18,6 +18,7 @@ class CreateExamsTable extends Migration
             $table->string('name');
             $table->text('unit_id');
             $table->integer('user_id');
+			//$table->integer('status');
             $table->timestamps();
         });
     }

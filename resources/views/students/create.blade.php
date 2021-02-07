@@ -93,11 +93,11 @@ $text = Request::is('*edit*')? '修改' : '新增';
                                 <label for="inputEmail3" class="col-3 col-form-label">原住民身份</label>
                                 <div class="col-9">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_local" value="1" required>
+                                        <input class="form-check-input" type="radio" name="is_local" value="1">
                                         <label class="form-check-label">是</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_local" value="0" required>
+                                        <input class="form-check-input" type="radio" name="is_local" value="0">
                                         <label class="form-check-label">否</label>
                                     </div>
                                 </div>

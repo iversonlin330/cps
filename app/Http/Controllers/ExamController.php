@@ -330,11 +330,11 @@ class ExamController extends Controller
         $user = Auth::user();
         $targets = config('map.target');
 
-        if ($user->role == 9) {
+        //if ($user->role == 9) {
             $exams = Exam::all();
-        } else {
-            $exams = Exam::where('status', 1)->get();
-        }
+        //} else {
+        //    $exams = Exam::where('status', 1)->get();
+        //}
 
         //$classrooms = $user->teacher_classroom();
         $classrooms = [];

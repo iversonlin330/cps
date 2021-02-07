@@ -33,8 +33,11 @@ class Unit extends Model
         } else {
             $exams = Exam::all();
             foreach ($exams as $exam) {
-                if (array_key_exists($this->id, $exam->unit_id)) {
-                    return true;
+                if (in_array($this->id, $exam->unit_id)) {
+					$exam_count = UserExam::where('exam_id',$exam->id)->count();
+					if($exam_count > 0){
+						return true;
+					}
                 }
             }
             return false;

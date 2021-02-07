@@ -219,15 +219,29 @@
                 }
             });
 
+			//前一個
             if (p_sub > 0) {
-                let parent_select = $('.item_area select[name^="goto"]:has(option[value="' + qid + '"]:selected)');
+				/*
+				let parent_val = 0;
+				let parent_select;
+				$('.item_area select[name^="goto"]:has(option[value="' + qid + '"]:selected)').each(function(){
+					if(parent_val >= $(this).data('qid')){
+						parent_val = $(this).data('qid');
+						parent_select = $(this);
+					}
+				});
+				*/
+                let parent_select = $('.item_area select[name^="goto"]:has(option[value="' + qid + '"]:selected)').last();
+				//console.log(parent_select);
                 let parent_qid = $(parent_select).data('qid');
                 let parent_i = $(parent_select).data('i');
                 let parent_score = $("[name='score[" + parent_qid + "][" + parent_i + "]'] option:selected").val();
                 let parent_max_score = findMaxScore(parent_qid);
+				//console.log(parent_max_score);
                 max_score = parent_max_score - parent_score;
             }
 			
+			//同一題歸零
 			$(".item_area[data-qid=" + qid + "] select[name^='goto']").each(function () {
 				let other_goto = $(this).val();
 				
@@ -248,18 +262,31 @@
 					other_goto = -1;
 				}
 				
-				if(goto == "next"){
+				if(temp_goto == "next"){
 					temp_goto = -1;
 				}
 				
+				other_goto = parseInt(other_goto);
+				temp_goto = parseInt(temp_goto);
+				other_score = parseInt(other_score);
+				score = parseInt(score);
+				
+				//console.log("other:"+other_goto);
+				//console.log("temp:"+temp_goto);
+				
+				//console.log("other_score:"+other_score);
+				//console.log("temp_score:"+score);
+				
 				if(other_goto <= temp_goto){
 					if(score >= other_score){
+						//console.log("1");
 						$("[name='score[" + qid + "][" + i + "]']").val(0);
 					}
 				}
 				
 				if(other_goto >= temp_goto){
 					if(score <= other_score){
+						//console.log("2");
 						$("[name='score[" + qid + "][" + other_i + "]']").val(0);
 					}
 				}
@@ -272,7 +299,8 @@
                 let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
                 if (goto != "next" || p_sub != 0) {
                     if (parseInt(option_val) >= parseInt(max_score)) {
-                        $(this).val(0);
+                        //console.log("3");
+						$(this).val(0);
                         //max_score = option_val;
                     }
                 }
@@ -339,6 +367,11 @@
             if (x == "pic") {
                 continue;
             }
+			
+			if (x == "status") {
+                continue;
+            }
+			
             content[x].forEach(function (value, i) {
                 if (!value) {
                     return;
