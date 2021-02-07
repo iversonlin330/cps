@@ -291,7 +291,6 @@
 					}
 				}
 			});
-			
 
             $(".item_area[data-qid=" + qid + "] select[name^='score']").each(function () {
                 let option_val = $(this).find("option:selected").val();
