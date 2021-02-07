@@ -159,7 +159,7 @@ class TaskController extends Controller
         $task = Task::find($task_id);
 
         $targets = config('map.target');
-        $scoreNum = 20;
+        $scoreNum = 5;
 
         $map = [];
         $q_id = 0;
