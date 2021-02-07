@@ -97,7 +97,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('exams/assign') }}" method="post">
+                <form id="main_form" action="{{ url('exams/assign') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         @if($user->role == 9 && $text == "我的考卷")
@@ -137,7 +137,7 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary">確認</button>
+                        <a id="submit_btn" class="btn btn-secondary">確認</a>
                         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
                     </div>
                 </form>
@@ -240,5 +240,9 @@
         $("[name='school_id']").trigger('change');
         @endif
 
+		$("#submit_btn").click(function () {
+            $('[disabled]').prop("disabled", false);
+            $('#main_form').submit();
+        });
     </script>
 @endsection
