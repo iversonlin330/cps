@@ -41,7 +41,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">班級</label>
                                 <div class="col-9">
-                                    <select name="classroom_id" class="form-control" required>
+                                    <select name="classroom_id" class="form-control">
                                     </select>
                                 </div>
                             </div>

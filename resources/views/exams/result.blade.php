@@ -44,8 +44,18 @@
                         <a href="{{ url('exams/student-view') }}" class="btn btn-r"
                            style="width: 83px;margin-top:20px;">回列表</a>
                     @else
-                        <a href="{{ url('exams') }}" class="btn btn-r"
-                           style="width: 83px;margin-top:20px;">回列表</a>
+                        @if(Session::has('my'))
+                            @if(Session::get('my') == 1)
+                                <a href="{{ url('exams/my') }}" class="btn btn-r"
+                                   style="width: 83px;margin-top:20px;">回列表</a>
+                            @else
+                                <a href="{{ url('exams') }}" class="btn btn-r"
+                                   style="width: 83px;margin-top:20px;">回列表</a>
+                            @endif
+                        @else
+                            <a href="{{ url('exams') }}" class="btn btn-r"
+                               style="width: 83px;margin-top:20px;">回列表</a>
+                        @endif
                     @endif
                 </div>
             </div>

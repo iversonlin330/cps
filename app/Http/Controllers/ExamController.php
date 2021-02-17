@@ -16,6 +16,7 @@ use App\UserUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use MongoDB\Driver\Session;
 use Psy\CodeCleaner\AssignThisVariablePass;
 
 class ExamController extends Controller
@@ -295,6 +296,7 @@ class ExamController extends Controller
         }
 
         $citys = $this->getSchool();
+        session(['my' => 1]);
 
         return view('exams.view', compact('targets', 'exams', 'classrooms', 'citys', 'user', 'data'));
     }
@@ -339,6 +341,7 @@ class ExamController extends Controller
         //$classrooms = $user->teacher_classroom();
         $classrooms = [];
         $citys = $this->getSchool();
+        session(['my' => 0]);
 
         return view('exams.view', compact('exams', 'targets', 'classrooms', 'citys', 'user', 'data'));
     }
