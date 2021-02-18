@@ -141,6 +141,7 @@
                 html = html + "<option value='" + x + "'>" + citys[city_val][x] + "</option>";
             }
             $("[name='school_id']").append(html);
+            $("[name='school_id']").trigger('change');
         });
         $("[name='city_id']").trigger('change');
 
