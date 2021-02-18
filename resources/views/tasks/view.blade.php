@@ -143,12 +143,14 @@
                         </div>
                         <hr>
                         <div class="px-1">
+                            @if(0)
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <a id="add-task" class="btn btn-r float-right" onclick="add_parent()">新增架構
                                     </a>
                                 </div>
                             </div>
+                            @endif
                             <div id="str" class="str">
                                 <!--div class="row mb-2">
                                     <div class="col-10">
@@ -184,7 +186,7 @@
             $("form").attr('action', "{{ url('tasks') }}");
             $("form").find("[name='name']").val('');
             $("[name='order']").val({{ $tasks->count()+1 }});
-            str_array = [];
+            str_array = [1];
             refresh();
             $('#createModal').modal('show');
         }
@@ -257,11 +259,12 @@
              */
             let newNo = str_array[num] - 1;
             if (newNo == 0) {
-                str_array.splice(num, 1);
+                //str_array.splice(num, 1);
+                str_array[num] = 1;
             } else {
                 str_array[num] = newNo;
             }
-            console.log(str_array);
+            //console.log(str_array);
             refresh();
         }
 
