@@ -276,7 +276,8 @@
                     if (y == 1) {
                         html = html + "<div class=\"row mb-2\">\n" +
                             "              <div class=\"col-9\">\n" +
-                            "                  <a class=\"btn btn-block btn-dark\">" + order + "-" + x + "</a>\n" +
+                            //"                  <a class=\"btn btn-block btn-dark\">" + order + "-" + x + "</a>\n" +
+                            "                  <a class=\"btn btn-block btn-dark\">" + order + "</a>\n" +
                             "              </div>\n" +
                             "              <div class=\"col-3\">\n" +
                             "                  <button class=\"btn btn-light\" onclick=\"add_sub(" + (x - 1) + ")\">＋</button>\n" +
@@ -290,7 +291,8 @@
                     } else {
                         html = html + "<div class=\"row mb-2\">\n" +
                             "              <div class=\"offset-1 col-8\">\n" +
-                            "                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
+                            //"                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
+                            "                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "</a>\n" +
                             "              </div>\n" +
                             "          </div>";
                         console.log(order + "-" + x + "-" + (y - 1));
