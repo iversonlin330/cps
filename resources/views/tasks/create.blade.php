@@ -9,7 +9,12 @@
                 @foreach($task->content['count'] as $index => $value)
                     <li class="nav-item" role="presentation">
                         <a class="nav-link text-dark" data-toggle="tab" href="#tab_{{ $index }}" role="tab"
-                           aria-controls="tab_{{ $index }}" aria-selected="false">{{ $task->order }}-{{ $index+1 }}</a>
+                           aria-controls="tab_{{ $index }}" aria-selected="false">
+						   @if(0)
+						   {{ $task->order }}-{{ $index+1 }}
+					   @endif
+					   {{ $task->order }}
+						   </a>
                     </li>
                 @endforeach
             </ul>
@@ -34,7 +39,10 @@
                                 <div class="row" style="width:80%;">
                                     @for( $sub = 0; $sub < $q_count; $sub++)
                                         <div class="col-12 font-weight-bold mt-4" style="font-size:22px;">
+									@if(0)
                                             {{ $task->order }}-{{ $index+1 }}{{ ($sub == 0)? '' : '-' . $sub }}
+										@endif
+										{{ $task->order }}{{ ($sub == 0)? '' : '-' . $sub }}
                                         </div>
                                         <div class="col-12 bg-white p-4">
                                             <div class="row mb-2">
@@ -107,8 +115,14 @@
                                                                 <option value="next">前往下一任務</option>
                                                                 @for( $goto = $sub+1; $goto < $q_count; $goto++)
                                                                     <option
-                                                                        value="{{ $map[$index][$goto] }}">{{ $task->order }}
-                                                                        -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
+                                                                        value="{{ $map[$index][$goto] }}">
+																		@if(0)
+																		{{ $task->order }}
+                                                                        -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}
+																		@endif
+																		{{ $task->order }}
+                                                                        {{ ($goto == 0)? '' : '-' . $goto }}
+																		</option>
                                                                 @endfor
                                                                 @if($index < count($task->content['count'])-1)
                                                                     <option
@@ -137,8 +151,13 @@
                                                         class="form-control form-control-sm">
                                                     <option value="next">前往下一任務</option>
                                                     @for( $goto = $sub+1; $goto < $q_count; $goto++)
-                                                        <option value="{{ $map[$index][$goto] }}">{{ $task->order }}
-                                                            -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}</option>
+                                                        <option value="{{ $map[$index][$goto] }}">
+														@if(0)
+														{{ $task->order }}
+                                                            -{{ $index+1 }}{{ ($goto == 0)? '' : '-' . $goto }}
+															@endif
+															{{ $task->order }}{{ ($goto == 0)? '' : '-' . $goto }}
+															</option>
                                                     @endfor
                                                     @if($index < count($task->content['count'])-1)
                                                         <option

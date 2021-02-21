@@ -292,7 +292,7 @@
                         html = html + "<div class=\"row mb-2\">\n" +
                             "              <div class=\"offset-1 col-8\">\n" +
                             //"                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "-" + (y - 1) + "</a>\n" +
-                            "                  <a class=\"btn btn-block btn-light\">" + order + "-" + x + "</a>\n" +
+                            "                  <a class=\"btn btn-block btn-light\">" + order + "-" + (y-1) + "</a>\n" +
                             "              </div>\n" +
                             "          </div>";
                         console.log(order + "-" + x + "-" + (y - 1));
