@@ -417,7 +417,12 @@ class ExamController extends Controller
             ->whereNotIn('id', $exam->unit_id)
             ->get();
 
-        $openUnits = Unit::where('is_open', 1)
+        //$openUnits = Unit::where('is_open', 1)
+        //    ->where('user_id', "!=", $user->id)
+        //    ->whereNotIn('id', $exam->unit_id)
+        //    ->get();
+
+        $openUnits = Unit::where('status', 1)
             ->where('user_id', "!=", $user->id)
             ->whereNotIn('id', $exam->unit_id)
             ->get();

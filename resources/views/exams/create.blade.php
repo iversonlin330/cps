@@ -129,6 +129,10 @@
         });
 
         $('form').submit(function () {
+            if($("#select_table input").length < 1){
+                alert("請選擇單元");
+                return false;
+            }
             $("#my_table input").remove();
             $("#open_table input").remove();
         });
