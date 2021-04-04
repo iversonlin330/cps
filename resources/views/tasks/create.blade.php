@@ -259,51 +259,51 @@
 				//console.log(parent_max_score);
                 max_score = parent_max_score - parent_score;
             }
-			
+
 			//同一題歸零
 			$(".item_area[data-qid=" + qid + "] select[name^='goto']").each(function () {
 				let other_goto = $(this).val();
-				
+
 				if(other_goto == ""){
 					return;
 				}
-				
+
 				let other_i = $(this).data('i');
-				
+
 				if(other_i == i){
 					return;
 				}
-				
+
 				let other_score = $("[name='score[" + qid + "][" + other_i + "]'] option:selected").val();
-				let temp_goto = goto; 
-				
+				let temp_goto = goto;
+
 				if(other_goto == "next"){
 					other_goto = -1;
 				}
-				
+
 				if(temp_goto == "next"){
 					temp_goto = -1;
 				}
-				
+
 				other_goto = parseInt(other_goto);
 				temp_goto = parseInt(temp_goto);
 				other_score = parseInt(other_score);
 				score = parseInt(score);
-				
+
 				//console.log("other:"+other_goto);
 				//console.log("temp:"+temp_goto);
-				
+
 				//console.log("other_score:"+other_score);
 				//console.log("temp_score:"+score);
-				
-				if(other_goto <= temp_goto){
+
+				if(other_goto < temp_goto){
 					if(score >= other_score){
 						//console.log("1");
 						$("[name='score[" + qid + "][" + i + "]']").val(0);
 					}
 				}
-				
-				if(other_goto >= temp_goto){
+
+				if(other_goto > temp_goto){
 					if(score <= other_score){
 						//console.log("2");
 						$("[name='score[" + qid + "][" + other_i + "]']").val(0);
@@ -385,11 +385,11 @@
             if (x == "pic") {
                 continue;
             }
-			
+
 			if (x == "status") {
                 continue;
             }
-			
+
             content[x].forEach(function (value, i) {
                 if (!value) {
                     return;
