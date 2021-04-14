@@ -333,7 +333,7 @@ class ExamController extends Controller
         $targets = config('map.target');
 
         //if ($user->role == 9) {
-            $exams = Exam::all();
+        $exams = Exam::all();
         //} else {
         //    $exams = Exam::where('status', 1)->get();
         //}
@@ -451,7 +451,11 @@ class ExamController extends Controller
         $exam->save();
 
         if ($user->role == 9) {
-            return redirect('exams');
+            if (session('my') == 1) {
+                return redirect('exams/my');
+            } else {
+                return redirect('exams');
+            }
         } else {
             return redirect('exams/my');
         }

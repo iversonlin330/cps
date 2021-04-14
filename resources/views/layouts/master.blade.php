@@ -366,6 +366,14 @@
             }
         });
 
+		$(".btn:contains('複製')").css('background-color','#DADADA');
+        $(".btn:contains('複製')").css('color','#3F3F3F');
+        $(".btn:contains('複製')").hover(function(){
+            $(this).css("background-color", "#B4B4B4");
+        }, function(){
+            $(this).css("background-color", "#DADADA");
+        });
+
     </script>
     @yield('script')
 </div>

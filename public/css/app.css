@@ -317,7 +317,7 @@ a {
 }
 
 .exam-content {
-    //height: 504px;
+/ / height: 504 px;
     background-color: #fff5dd;
 }
 
@@ -359,4 +359,8 @@ a {
 .thead-r {
     color: #fff;
     background-color: var(--clay-brown);
+}
+
+.exam-content-text li {
+    padding-bottom: 5px;
 }
