@@ -12,7 +12,7 @@
                 <div class="col-12">
                     <div>1. 輸入考卷名稱</div>
                     <div class="col-3">
-                        <input name="name" type="text" class="form-control" id="inputEmail3" placeholder="考卷名稱" required>
+                        <input name="name" type="text" class="form-control" id="inputEmail3" placeholder="考卷名稱" maxlength="191" required>
                     </div>
                     <div>2. 選取欲組合單元</div>
                     <div>請將想選取的單元拖移至「已選取單元」並進行排序</div>

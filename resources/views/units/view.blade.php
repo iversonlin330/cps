@@ -145,7 +145,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>單元名稱</label>
-                            <input name="name" type="text" class="form-control" placeholder="輸入單元名稱...">
+                            <input name="name" type="text" class="form-control" maxlength="191" placeholder="輸入單元名稱...">
                             <input name="is_open" type="number" value="0" hidden>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>單元名稱</label>
-                            <input name="name" type="text" class="form-control" placeholder="輸入單元名稱...">
+                            <input name="name" type="text" class="form-control" maxlength="191" placeholder="輸入單元名稱...">
                             <input name="is_open" type="number" value="0" hidden>
                         </div>
                     </div>

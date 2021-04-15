@@ -139,7 +139,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>任務名稱</label>
-                            <input name="name" type="text" class="form-control" placeholder="輸入任務名稱..." required>
+                            <input name="name" type="text" class="form-control" placeholder="輸入任務名稱..." maxlength="191" required>
                         </div>
                         <hr>
                         <div class="px-1">
