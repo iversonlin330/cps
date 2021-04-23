@@ -219,6 +219,25 @@
             return max_score;
         }
 
+        function findSelectMaxScore(qid) {
+            //console.log($('.item_area select[name^="goto"]:has(option[value="' + qid + '"]:selected)'));
+            let max_score = 0;
+            $('.item_area select[name^="goto"]:has(option[value="' + qid + '"]:selected)').each(function () {
+                let parent_qid = $(this).data('qid');
+                let parent_i = $(this).data('i');
+                //let parent_score = $("[name='score[" + parent_qid + "][" + parent_i + "]'] option:selected").val();
+                let option_val = $("[name='score[" + parent_qid + "][" + parent_i + "]'] option:selected").val();
+                //let i = $(this).data('i');
+                if (option_val > max_score) {
+                    //let goto = $("[name='goto[" + qid + "][" + i + "]'] option:selected").val();
+                    //if (goto == "next") {
+                        max_score = option_val;
+                    //}
+                }
+            });
+            return max_score;
+        }
+
         $(".item_area select").change(function () {
             let index = $(this).closest('.item_area').data('index');
             let p_sub = $(this).closest('.item_area').data('sub');
@@ -251,12 +270,15 @@
 				});
 				*/
                 let parent_select = $('.item_area select[name^="goto"]:has(option[value="' + qid + '"]:selected)').last();
-				//console.log(parent_select);
+                //console.log(parent_select);
                 let parent_qid = $(parent_select).data('qid');
-                let parent_i = $(parent_select).data('i');
-                let parent_score = $("[name='score[" + parent_qid + "][" + parent_i + "]'] option:selected").val();
+                // let parent_i = $(parent_select).data('i');
+                // let parent_score = $("[name='score[" + parent_qid + "][" + parent_i + "]'] option:selected").val();
+
+                let parent_score = findSelectMaxScore(qid);
                 let parent_max_score = findMaxScore(parent_qid);
 				//console.log(parent_max_score);
+				//console.log(parent_score)
                 max_score = parent_max_score - parent_score;
             }
 
