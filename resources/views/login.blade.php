@@ -88,7 +88,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    請聯繫該校窗口進行密碼回朔，或是寄信至管理者信箱 linyanhong@mail.ntue.edu.tw ，將會有專人為您處理
+                    請聯繫該校窗口進行密碼回朔，或是寄信至管理者信箱 cpslearn21024017959@gmail.com ，將會有專人為您處理
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-r" data-dismiss="modal">關閉</button>
