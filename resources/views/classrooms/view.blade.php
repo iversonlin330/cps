@@ -49,7 +49,7 @@
                             <a href="{{ url('users/contact-students-edit/'.$classroom->id) }}"
                                class="btn btn-secondary btn-sm">編輯</a>
                         </td>
-                        <td>{{ $classroom->teacher }}</td>
+                        <td>{{ $classroom->teacher()->name }}</td>
                         <td>
                             <button type="button" class="btn btn-warning btn-sm delete" data-toggle="modal"
                                     data-target="#deleteModal" data-keyword="班級"

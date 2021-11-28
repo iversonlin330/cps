@@ -22,12 +22,18 @@ class Classroom extends Model
 
     public function students()
     {
-        return $this->hasMany('\App\User', 'classroom_id')->where('role',3);
+        return $this->hasMany('\App\User', 'classroom_id')->where('role', 3);
     }
 
     public function teacher()
     {
-        return $this->belongsTo('\App\User', 'teacher_id', 'id');
+        $users = User::whereNotNull('tutor_classroom_id')->get();
+        foreach ($users as $user) {
+            if (in_array($this->id, $user->tutor_classroom_id)) {
+                return $user;
+            }
+        }
+        //return $this->belongsTo('\App\User', 'tutor_classroom_id', 'id');
     }
 
     public function exams()
