@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get("/classrooms/teacher-view", "ClassroomController@teacherView");
     Route::get("/classrooms/teacher-detail-view/{classroom_id}", "ClassroomController@teacherDetailView");
+    Route::get('/classrooms/export/{classroom_id}', 'ClassroomController@export');
 
     Route::get('/teachers/verify', 'TeacherController@verify');
     Route::post('/teachers/verify', 'TeacherController@postVerify');

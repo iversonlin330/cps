@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Cycle;
+use App\Exports\ClassroomExport;
 use App\Http\Traits\MyTraits;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClassroomController extends Controller
 {
@@ -163,5 +165,15 @@ class ClassroomController extends Controller
         //
         $classroom->delete();
         return back();
+    }
+
+    public function export($classroom_id)
+    {
+        $data['classroom_id'] = $classroom_id;
+
+        $classroom = Classroom::find($classroom_id);
+
+        $file_name = $classroom->cycle->name . '年度' . $classroom->school->fullName() . $classroom->fullName() . '班級學生資料';
+        return Excel::download(new ClassroomExport($data), $file_name . '.xlsx');
     }
 }
