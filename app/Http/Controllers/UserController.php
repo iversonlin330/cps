@@ -16,8 +16,9 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $citys = $this->getSchool();
+        $user_accounts = User::all()->pluck('account')->toArray();
 
-        return view("users.teacher-register", compact('citys'));
+        return view("users.teacher-register", compact('citys','user_accounts'));
     }
 
     public function postTeacherRegister(Request $request)

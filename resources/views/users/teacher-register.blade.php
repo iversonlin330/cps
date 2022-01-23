@@ -139,6 +139,17 @@
         $("[name='school_id']").val(user['school_id']);
         $("[name='gender']").filter('[value=' + user.gender + ']').prop('checked', true);
         @endif
+
+        var user_accounts = @json($user_accounts);
+        $("form").submit(function (){
+            let account = $("[name='account']").val();
+           if(user_accounts.indexOf(account) < 0){
+               return true;
+           }else{
+               alert('帳號重複');
+               return false;
+           }
+        });
     </script>
 
     </body>
