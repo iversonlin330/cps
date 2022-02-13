@@ -224,15 +224,6 @@ class ExamController extends Controller
             //$data['school_id'] = $user->school->id;
         }
 
-        if (array_key_exists('name', $data)) {
-            //$exams = $exams->where('name', "like", "%" . $data['name'] . "%");
-            $name = $data['name'];
-            collect($exams)->filter(function ($item) use ($name) {
-                // replace stristr with your choice of matching function
-                return false !== stristr($item->name, $name);
-            });
-        }
-
         unset($data['city_id']);
 
         $citys = $this->getSchool();
