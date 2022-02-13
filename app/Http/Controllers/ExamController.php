@@ -224,6 +224,10 @@ class ExamController extends Controller
             //$data['school_id'] = $user->school->id;
         }
 
+        if (array_key_exists('name', $data)) {
+            $exams = $exams->where('name', "like", "%" . $data['name'] . "%");
+        }
+
         unset($data['city_id']);
 
         $citys = $this->getSchool();
