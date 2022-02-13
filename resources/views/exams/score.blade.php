@@ -62,7 +62,7 @@
                 @foreach($exams as $exam)
                     @foreach($exam->classrooms->where('cycle_id',$data['cycle_id']) as $classroom)
                         @if(array_key_exists('school_id',$data))
-                            @if($data['school_id'] == $classroom->school)
+                            @if($data['school_id'] == $classroom->school_id)
                                 @if(strpos($exam->name,$data['name']) === false)
                                     @continue
                                 @endif
