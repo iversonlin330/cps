@@ -51,7 +51,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-3 col-form-label">密碼</label>
                                 <div class="col-9">
-                                    <input name="password" type="text" class="form-control" id="inputEmail3">
+                                    <input name="password" type="password" class="form-control" id="inputEmail3">
                                 </div>
                             </div>
 

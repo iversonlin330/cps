@@ -9,7 +9,7 @@
                 <button type="button" class="btn btn-dark">待審核單元</button>
             </div-->
             <div class="float-right">
-                <form action="{{ url('units') }}" class="form-inline float-right">
+                <form action="{{ url('units/verify') }}" class="form-inline float-right">
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
                            aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>

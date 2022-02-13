@@ -15,7 +15,7 @@
             <div class="float-right">
                 <form action="{{ url()->current() }}" class="form-inline float-right">
                     <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..."
-                           aria-label="搜尋...">
+                           aria-label="搜尋..." required>
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">送出搜尋</button>
                 </form>
             </div>

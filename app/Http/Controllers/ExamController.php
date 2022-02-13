@@ -221,6 +221,7 @@ class ExamController extends Controller
         } else {
             $exams = Exam::where('user_id', $user->id)->get();
             $tutor_classrooms = $user->tutor_classroom($data['cycle_id']);
+            $data['school_id'] = $user->school->id;
         }
 
         unset($data['city_id']);
@@ -229,7 +230,7 @@ class ExamController extends Controller
 
         $cycles = Cycle::orderBy('id', 'desc')->get();
 
-        return view('exams.score', compact('targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classrooms'));
+        return view('exams.score', compact('user', 'targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classrooms'));
     }
 
     public function scoreExport($exam_id, $classroom_id)

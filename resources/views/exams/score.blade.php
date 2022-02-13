@@ -188,5 +188,14 @@
         $("[name='cycle_id']").val({{ $data['cycle_id'] }});
         @endif
         $("[name='city_id']").trigger('change');
+        @if($user->role == 4)
+        let school_id = "{!! $user->school->id !!}";
+        let city_id = "{!! $user->school->city !!}";
+        $("[name='school_id']").val(school_id);
+        $("[name='city_id']").val(city_id);
+        $("[name='school_id']").prop("disabled", true);
+        //$("[name='cycle_id']").prop("disabled", true);
+        $("[name='city_id']").prop("disabled", true);
+        @endif
     </script>
 @endsection
