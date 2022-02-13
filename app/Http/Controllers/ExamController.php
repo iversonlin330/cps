@@ -221,7 +221,7 @@ class ExamController extends Controller
         } else {
             $exams = Exam::where('user_id', $user->id)->get();
             $tutor_classrooms = $user->tutor_classroom($data['cycle_id']);
-            $data['school_id'] = $user->school->id;
+            //$data['school_id'] = $user->school->id;
         }
 
         unset($data['city_id']);
