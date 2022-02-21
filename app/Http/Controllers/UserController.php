@@ -18,7 +18,7 @@ class UserController extends Controller
         $citys = $this->getSchool();
         $user_accounts = User::all()->pluck('account')->toArray();
 
-        return view("users.teacher-register", compact('citys','user_accounts'));
+        return view("users.teacher-register", compact('citys', 'user_accounts'));
     }
 
     public function postTeacherRegister(Request $request)
@@ -46,11 +46,17 @@ class UserController extends Controller
         return view("users.teacher-edit", compact('user', 'citys'));
     }
 
-    public function contactTeachersEdit()
+    public function contactTeachersEdit(Request $request)
     {
         $user = Auth::user();
+        $data = $request->all();
+        $name = array_key_exists('name', $data) ? $data['name'] : '';
 
-        $users = User::teacher()->where('school_id', $user->school_id)->get();
+        $users = User::teacher()->where('school_id', $user->school_id);
+        if ($name) {
+            $users->where('name', 'like', "%$name%");
+        }
+        $users = $users->get();
 
         foreach ($users as $user) {
             if (is_null($user->tutor_classroom_id)) {

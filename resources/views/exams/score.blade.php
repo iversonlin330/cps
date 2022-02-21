@@ -92,7 +92,11 @@
                 @endforeach
                 @foreach($tutor_classrooms as $tutor_classroom)
                     @if($tutor_classroom->exams)
-                        @foreach($tutor_classroom->exams as $exam)
+                        @php
+                            $exams = $tutor_classroom->exams;
+                            $exams = $exams->where('name', 'like', "%$name%");
+                        @endphp
+                        @foreach($exams as $exam)
                             @if(array_key_exists('school_id',$data))
                                 @if($data['school_id'] == $tutor_classroom->school_id)
                                     @if(strpos($exam->name,$data['name']) === false)

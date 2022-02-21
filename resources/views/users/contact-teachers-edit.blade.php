@@ -5,8 +5,8 @@
     <div class="row main-padding mb-2">
         <div class="col-12">
             <div class="float-right">
-                <form class="form-inline float-right">
-                    <input class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
+                <form action="{{ url('users/contact-teachers-edit') }}" class="form-inline float-right">
+                    <input name="name" class="form-control mr-sm-2" type="search" placeholder="搜尋..." aria-label="搜尋...">
                     <button class="btn btn-secondary my-2 my-sm-0 mr-1" type="submit">送出搜尋</button>
                     <a class="btn btn-warning my-2 my-sm-0" onclick="form_submit()">儲存</a>
                 </form>

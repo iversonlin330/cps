@@ -215,13 +215,35 @@ class ExamController extends Controller
 
         //$exams = $user->classroom->exams->whereIn('id', $exam_id_array)->all();
 
+        $name = array_key_exists('name', $data) ? $data['name'] : '';
+        $school_id = array_key_exists('school_id', $data) ? $data['school_id'] : '';
         $tutor_classrooms = [];
         if ($user->role == 9) {
             $exams = Exam::all();
         } else {
-            $exams = Exam::where('user_id', $user->id)->get();
+            //$exams = Exam::where('user_id', $user->id)->get();
+            $cycle_id = $data['cycle_id'];
+            $exams = Exam::where('user_id', $user->id)->whereHas('classrooms', function ($query) use ($cycle_id, $school_id) {
+                $query->where('cycle_id', $cycle_id);
+                if ($school_id) {
+                    $query->where('school_id', $school_id);
+                }
+            });
+            if ($name) {
+                $exams->where('name', 'like', "%$name%");
+            }
+            $exams = $exams->get();
+
+            //Tutor
             $tutor_classrooms = $user->tutor_classroom($data['cycle_id']);
-            //$data['school_id'] = $user->school->id;
+            if ($school_id) {
+                $tutor_classrooms = $tutor_classrooms->where('school_id', $school_id);
+            }
+            $tutor_classrooms->load('exams');
+//            if ($name) {
+//                $tutor_classrooms->where('exams.name', 'like', "%$name%");
+//                dd($tutor_classrooms);
+//            }
         }
 
         unset($data['city_id']);
@@ -230,7 +252,7 @@ class ExamController extends Controller
 
         $cycles = Cycle::orderBy('id', 'desc')->get();
 
-        return view('exams.score', compact('user', 'targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classrooms'));
+        return view('exams.score', compact('user', 'targets', 'exams', 'citys', 'cycles', 'data', 'tutor_classrooms', 'name'));
     }
 
     public function scoreExport($exam_id, $classroom_id)
